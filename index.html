@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body {
+        background-color: lightblue;
+      }
+
+      .container {
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: lightblue;
+      }
+
+      label {
+        text-align: center;
+        max-width: 80%;
+        margin-bottom: 0.5em;
+      }
+
+      .achieved {
+        margin: 0.25em;
+        display: none;
+        color: red;
+        font-family: arial;
+        font-weight: 600;
+      }
+
+      button {
+        background-color: lightblue;
+        margin: 1em;
+        padding: 0.25em 1em;
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <label for="text"></label>
+      <textarea name="text" id="textarea" rows="5" cols="75"></textarea>
+      <div class="btn-container">
+        <button id="next" disabled="true">Next</button>
+        <button id="reset">Reset</button>
+      </div>
+      <div class="achieved">Achieved!</div>
+    </div>
+    <script>
+      const textarea = document.getElementById("textarea");
+      const achieved = document.getElementsByClassName("achieved")[0];
+      const resetBtn = document.getElementById("reset");
+      const nextBtn = document.getElementById("next");
+      const button4 = document.getElementById("btn-4");
+      const isMac = window.navigator.userAgent.includes("Macintosh");
+      const label = document.getElementsByTagName("label")[0];
+      let labelText = `Use ${
+        isMac ? "option" : "alt"
+      } + shift + right arrow to highlight the first word when cursor at the beginning of the text:`;
+      const text =
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit.\nSuscipit nemo odit optio architecto aperiam incidunt pariatur reiciendis ea!\nUt, id.";
+      let currentLevel = 0;
+
+      const levels = [
+        {
+          chord: `${isMac ? "option" : "alt"} + shift + right arrow`,
+          action: "highlight the first word",
+          cursorPlacement: "the beginning of the text",
+          keyword: "Right",
+          activeKeys: ["alt", "shift"],
+          cursorLocation: [0, 0],
+          successMessage: "Achieved level 1!",
+        },
+        {
+          chord: `${isMac ? "command" : "Windows"} + down arrow`,
+          action: "skip to the end of the text",
+          cursorPlacement: "the beginning",
+          keyword: "Down",
+          activeKeys: ["meta"],
+          cursorLocation: [0, 0],
+          successMessage: "Achieved level 2!",
+        },
+      ];
+
+      const generateLabelText = (level) => {
+        levelToUse = levels[level];
+        labelText = `${currentLevel + 1}. Use ${levelToUse.chord} to ${
+          levelToUse.action
+        } with the cursor at ${levelToUse.cursorPlacement}:`;
+      };
+
+      const setTextarea = (level) => {
+        generateLabelText(level);
+        label.innerText = labelText;
+        textarea.value = text;
+        textarea.focus();
+        textarea.setSelectionRange(0, 0);
+      };
+
+      label.innerText = labelText;
+      setTextarea(currentLevel);
+
+      const resetTextarea = (level) => {
+        setTextarea(level);
+        nextBtn.disabled = true;
+        achieved.style.display = "none";
+      };
+
+      resetBtn.addEventListener("click", () => {
+        currentLevel = 0;
+        resetTextarea(currentLevel);
+      });
+      nextBtn.addEventListener("click", () => {
+        if (currentLevel == levels.length - 1) {
+          nextBtn.disabled = true;
+          return;
+        }
+        currentLevel += 1;
+        resetTextarea(currentLevel);
+      });
+
+      // (TODO) may not need to check for anything but keydown events
+      const detectKeystroke = (e, eventType, level) => {
+        if (!e.code.includes("Arrow")) {
+          return;
+        }
+
+        // Prevents multiple events if key held down
+        if (e.repeat) {
+          return;
+        }
+
+        const cursorStart = textarea.selectionStart;
+        const cursorEnd = textarea.selectionEnd;
+
+        const localLevel = levels[level];
+
+        const checkActiveKeys = () => {
+          return (
+            localLevel.activeKeys.includes("alt") == e.altKey &&
+            localLevel.activeKeys.includes("shift") == e.shiftKey &&
+            localLevel.activeKeys.includes("meta") == e.metaKey
+          );
+        };
+
+        const checkCursorCoordinates = () => {
+          return (
+            cursorStart == localLevel.cursorLocation[0] &&
+            cursorEnd == localLevel.cursorLocation[1]
+          );
+        };
+
+        if (
+          checkCursorCoordinates() &&
+          e.code.includes(localLevel.keyword) &&
+          checkActiveKeys()
+        ) {
+          // (TODO) Not *really* checking for result - displaying "Achieved!" before checking if correct text selected
+          achieved.innerText = localLevel.successMessage;
+          achieved.style.display = "block";
+          if (currentLevel !== levels.length - 1) {
+            nextBtn.disabled = false;
+          }
+        }
+      };
+
+      textarea.addEventListener("keydown", (e) =>
+        detectKeystroke(e, "keydown", currentLevel)
+      );
+    </script>
+  </body>
+</html>
