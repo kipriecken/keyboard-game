@@ -3,7 +3,11 @@
   <head>
     <style>
       body {
-        background-color: lightblue;
+        height: 100vh;
+        background-repeat: no-repeat;
+        object-fit: cover;
+        background-image: linear-gradient(80deg, lightblue, transparent);
+        pointer-events: none;
       }
 
       .container {
@@ -12,13 +16,21 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        background-color: lightblue;
+        /* background-color: lightblue; */
+        background-color: gradient(20, 300);
+      }
+
+      textarea {
+        background: transparent;
+        border-radius: 1em;
+        padding: 4px;
       }
 
       label {
         text-align: center;
-        max-width: 80%;
+        max-width: 350px;
         margin-bottom: 0.5em;
+        margin: 2em 0;
       }
 
       .achieved {
@@ -27,13 +39,15 @@
         color: red;
         font-family: arial;
         font-weight: 600;
+        text-align: center;
       }
 
       button {
         background-color: lightblue;
         margin: 1em;
-        padding: 0.25em 1em;
-        border-radius: 4px;
+        padding: 0.5em 3em;
+        border-radius: 9px;
+        box-shadow: 2px 2px 4px grey;
       }
     </style>
   </head>
@@ -45,6 +59,8 @@
         <button id="next" disabled="true">Next</button>
         <button id="reset">Reset</button>
       </div>
+    </div>
+    <div class="achieved-container">
       <div class="achieved">Achieved!</div>
     </div>
     <script>
@@ -70,7 +86,17 @@
           keyword: "Right",
           activeKeys: ["alt", "shift"],
           cursorLocation: [0, 0],
-          successMessage: "Achieved level 1!",
+          successMessage:
+            "Achieved level 1!\n\nUse tab to change the focus to the Next button, then Enter to click it",
+        },
+        {
+          chord: `${isMac ? "command" : "Windows"} + right arrow`,
+          action: "skip to the end of the line",
+          cursorPlacement: "the beginning",
+          keyword: "Right",
+          activeKeys: ["meta"],
+          cursorLocation: [0, 0],
+          successMessage: "Achieved level 2!",
         },
         {
           chord: `${isMac ? "command" : "Windows"} + down arrow`,
@@ -79,13 +105,13 @@
           keyword: "Down",
           activeKeys: ["meta"],
           cursorLocation: [0, 0],
-          successMessage: "Achieved level 2!",
+          successMessage: "Achieved level 3!",
         },
       ];
 
       const generateLabelText = (level) => {
         levelToUse = levels[level];
-        labelText = `${currentLevel + 1}. Use ${levelToUse.chord} to ${
+        labelText = `LEVEL ${currentLevel + 1}\n\nUse ${levelToUse.chord} to ${
           levelToUse.action
         } with the cursor at ${levelToUse.cursorPlacement}:`;
       };
@@ -122,7 +148,7 @@
 
       // (TODO) may not need to check for anything but keydown events
       const detectKeystroke = (e, eventType, level) => {
-        if (!e.code.includes("Arrow")) {
+        if (!e.code.includes("Arrow" || !e.code.includes("Backspace"))) {
           return;
         }
 
@@ -161,12 +187,16 @@
           achieved.style.display = "block";
           if (currentLevel !== levels.length - 1) {
             nextBtn.disabled = false;
+          } else {
+            achieved.innerText =
+              achieved.innerText +
+              "\nThank you for playing - please tab to the Reset button to start again.";
           }
         }
       };
 
       textarea.addEventListener("keydown", (e) =>
-        detectKeystroke(e, "keydown", currentLevel)
+        detectKeystroke(e, "keyup", currentLevel)
       );
     </script>
   </body>
