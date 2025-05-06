@@ -49,6 +49,23 @@
         border-radius: 9px;
         box-shadow: 2px 2px 4px grey;
       }
+
+      .help {
+        margin: 1em;
+      }
+
+      .timer {
+        margin: 2em;
+      }
+
+      #editable {
+        padding: 0.4em;
+        border: 1px solid blue;
+      }
+
+      .remove {
+        color: yellow;
+      }
     </style>
   </head>
   <body>
@@ -59,12 +76,25 @@
         <button id="next" disabled="true">Next</button>
         <button id="reset">Reset</button>
       </div>
-    </div>
-    <div class="achieved-container">
-      <div class="achieved">Achieved!</div>
+      <div class="achieved-container">
+        <div class="achieved">Achieved!</div>
+      </div>
+      <br />
+      <br />
+      <br />
+      <div class="help">
+        Help! Can you remove the "banana"s without a mouse? Hint: use what you
+        learned above.
+      </div>
+      <div contenteditable="true" id="editable">
+        I Have Cherry I Have <span class="remove">Banana</span> I Have Apple I
+        Have <span class="remove">Banana</span> I Have Strawberry
+      </div>
+      <div class="timer"></div>
     </div>
     <script>
       const textarea = document.getElementById("textarea");
+      const editable = document.getElementById("editable");
       const achieved = document.getElementsByClassName("achieved")[0];
       const resetBtn = document.getElementById("reset");
       const nextBtn = document.getElementById("next");
@@ -190,14 +220,39 @@
           } else {
             achieved.innerText =
               achieved.innerText +
-              "\nThank you for playing - please tab to the Reset button to start again.";
+              "\n\nThank you for playing - please tab to the Reset button to start again.\n\nOr, try the banana challenge below 🐵";
           }
         }
       };
 
       textarea.addEventListener("keydown", (e) =>
-        detectKeystroke(e, "keyup", currentLevel)
+        detectKeystroke(e, "keydown", currentLevel)
       );
+      editable.addEventListener("keyup", (e) => {
+        console.log(editable.innerText);
+        const targetString =
+          "I Have Cherry I Have I Have Apple I Have I Have Strawberry";
+        if (
+          editable.innerText.substring(0, 21) == targetString.substring(0, 21)
+        ) {
+          console.log("Hooray!");
+        } else if (
+          editable.innerText ==
+          "I Have Cherry I Have Banana I Have Apple I Have Banana I Have Strawberry"
+        ) {
+          console.log("Original text!");
+        } else {
+          console.log(
+            `21st character of div: |${editable.innerText.substring(20, 21)}|`
+          );
+          console.log(
+            `21st character of target string: |${targetString.substring(
+              20,
+              21
+            )}|`
+          );
+        }
+      });
     </script>
   </body>
 </html>
