@@ -8,6 +8,7 @@
         object-fit: cover;
         background-image: linear-gradient(80deg, lightblue, transparent);
         pointer-events: none;
+        background-color: gradient(20, 300);
       }
 
       .container {
@@ -16,8 +17,6 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        /* background-color: lightblue; */
-        background-color: gradient(20, 300);
       }
 
       textarea {
@@ -66,36 +65,52 @@
       .remove {
         color: yellow;
       }
+
+      .monkey {
+        margin: 1rem;
+        display: none;
+      }
     </style>
   </head>
   <body>
     <div class="container">
-      <label for="text"></label>
-      <textarea name="text" id="textarea" rows="5" cols="75"></textarea>
-      <div class="btn-container">
+      <div class="text-game container">
+        <div class="intro">
+          Use this game to help familiarize yourself with keyboard shortcuts and
+          to think differently about how you use your computer. Try it for a few
+          minutes a day. Best served with a bit of calm, nonjudgmental typing
+          practice.
+        </div>
+        <label for="text"></label>
+        <textarea name="text" id="textarea" rows="5" cols="75"></textarea>
         <button id="next" disabled="true">Next</button>
-        <button id="reset">Reset</button>
+        <div class="btn-container">
+          <button id="reset">Reset</button>
+        </div>
+        <div class="achieved-container">
+          <div class="achieved"></div>
+        </div>
       </div>
-      <div class="achieved-container">
-        <div class="achieved">Achieved!</div>
+      <div class="banana container">
+        <div class="help">
+          Help! Can you remove the "banana"s using just the keyboard? Hint: use
+          what you learned above.
+        </div>
+        <div contenteditable="true" id="editable">
+          I Have Cherry I Have <span class="remove">Banana</span> I Have Apple I
+          Have <span class="remove">Banana</span> I Have Strawberry
+        </div>
+        <div class="monkey">
+          <div>Happy monkey! 🍌🐵🍌</div>
+        </div>
       </div>
-      <br />
-      <br />
-      <br />
-      <div class="help">
-        Help! Can you remove the "banana"s without a mouse? Hint: use what you
-        learned above.
-      </div>
-      <div contenteditable="true" id="editable">
-        I Have Cherry I Have <span class="remove">Banana</span> I Have Apple I
-        Have <span class="remove">Banana</span> I Have Strawberry
-      </div>
-      <div class="timer"></div>
     </div>
     <script>
       const textarea = document.getElementById("textarea");
       const editable = document.getElementById("editable");
       const achieved = document.getElementsByClassName("achieved")[0];
+      const monkey = document.getElementsByClassName("monkey")[0];
+      const counter = document.getElementsByClassName("counter")[0];
       const resetBtn = document.getElementById("reset");
       const nextBtn = document.getElementById("next");
       const button4 = document.getElementById("btn-4");
@@ -176,7 +191,6 @@
         resetTextarea(currentLevel);
       });
 
-      // (TODO) may not need to check for anything but keydown events
       const detectKeystroke = (e, eventType, level) => {
         if (!e.code.includes("Arrow" || !e.code.includes("Backspace"))) {
           return;
@@ -229,28 +243,11 @@
         detectKeystroke(e, "keydown", currentLevel)
       );
       editable.addEventListener("keyup", (e) => {
-        console.log(editable.innerText);
+        // TODO - is possible to? if editable contains &nbsp, replace it with a regular space
         const targetString =
-          "I Have Cherry I Have I Have Apple I Have I Have Strawberry";
-        if (
-          editable.innerText.substring(0, 21) == targetString.substring(0, 21)
-        ) {
-          console.log("Hooray!");
-        } else if (
-          editable.innerText ==
-          "I Have Cherry I Have Banana I Have Apple I Have Banana I Have Strawberry"
-        ) {
-          console.log("Original text!");
-        } else {
-          console.log(
-            `21st character of div: |${editable.innerText.substring(20, 21)}|`
-          );
-          console.log(
-            `21st character of target string: |${targetString.substring(
-              20,
-              21
-            )}|`
-          );
+          "I Have Cherry I Have I Have Apple I Have I Have Strawberry";
+        if (editable.innerText == targetString) {
+          monkey.style.display = "block";
         }
       });
     </script>
