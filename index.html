@@ -11,6 +11,12 @@
         background-color: gradient(20, 300);
       }
 
+      .intro {
+        margin-top: 1rem;
+        max-width: 500px;
+        text-align: center;
+      }
+
       .container {
         margin: auto;
         display: flex;
@@ -81,17 +87,25 @@
       .keystrokes {
         visibility: hidden;
       }
+
+      .monkey-btn {
+        display: none;
+      }
+
+      .banana {
+        display: none;
+      }
     </style>
   </head>
   <body>
     <div class="container">
+      <div class="intro">
+        Use these games to help familiarize yourself with keyboard shortcuts and
+        to think differently about how you use your computer. Try it for a few
+        minutes a day. Best served with a bit of calm, nonjudgmental typing
+        practice.
+      </div>
       <div class="text-game container">
-        <div class="intro">
-          Use this game to help familiarize yourself with keyboard shortcuts and
-          to think differently about how you use your computer. Try it for a few
-          minutes a day. Best served with a bit of calm, nonjudgmental typing
-          practice.
-        </div>
         <label for="text"></label>
         <textarea name="text" id="textarea" rows="5" cols="75"></textarea>
         <button id="next" disabled="true">Next</button>
@@ -104,12 +118,12 @@
         <div class="achieved-container">
           <div class="keystrokes">Mininum keystrokes - way to go! 🦾</div>
           <div class="achieved"></div>
+          <button class="monkey-btn">Monkey game</button>
         </div>
       </div>
       <div class="banana container">
         <div class="help">
-          Help! Can you remove the "banana"s using just the keyboard? Hint: use
-          what you learned above.
+          Help! Can you remove the "banana"s using just the keyboard?
         </div>
         <div contenteditable="true" id="editable">
           I Have Cherry I Have <span class="remove">Banana</span> I Have Apple I
@@ -125,7 +139,10 @@
       const editable = document.getElementById("editable");
       const achieved = document.getElementsByClassName("achieved")[0];
       const monkey = document.getElementsByClassName("monkey")[0];
+      const monkeyBtn = document.getElementsByClassName("monkey-btn")[0];
       const counter = document.getElementsByClassName("counter")[0];
+      const textGameContainer = document.getElementsByClassName("text-game")[0];
+      const bananaContainer = document.getElementsByClassName("banana")[0];
       const keystrokesText = document.getElementsByClassName("keystrokes")[0];
       const resetBtn = document.getElementById("reset");
       const nextBtn = document.getElementById("next");
@@ -215,6 +232,10 @@
         currentLevel += 1;
         resetTextarea(currentLevel);
       });
+      monkeyBtn.addEventListener("click", () => {
+        textGameContainer.style.display = "none";
+        bananaContainer.style.display = "flex";
+      });
 
       const detectKeystroke = (e, eventType, level) => {
         // Prevents multiple events if key held down
@@ -263,6 +284,7 @@
           if (currentLevel !== levels.length - 1) {
             nextBtn.disabled = false;
           } else {
+            monkeyBtn.style.display = "block";
             achieved.innerText =
               achieved.innerText +
               "\n\nThank you for playing - please tab to the Reset button to start again.\n\nOr, try the banana challenge 🐵";
