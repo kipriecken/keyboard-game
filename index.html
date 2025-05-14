@@ -19,6 +19,13 @@
         align-items: center;
       }
 
+      .achieved-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+      }
+
       textarea {
         background: transparent;
         border-radius: 1em;
@@ -70,6 +77,10 @@
         margin: 1rem;
         display: none;
       }
+
+      .keystrokes {
+        visibility: hidden;
+      }
     </style>
   </head>
   <body>
@@ -87,7 +98,11 @@
         <div class="btn-container">
           <button id="reset">Reset</button>
         </div>
+        <div class="counter-container">
+          <span class="counter">0</span> keystrokes
+        </div>
         <div class="achieved-container">
+          <div class="keystrokes">Mininum keystrokes - way to go! 🦾</div>
           <div class="achieved"></div>
         </div>
       </div>
@@ -111,6 +126,7 @@
       const achieved = document.getElementsByClassName("achieved")[0];
       const monkey = document.getElementsByClassName("monkey")[0];
       const counter = document.getElementsByClassName("counter")[0];
+      const keystrokesText = document.getElementsByClassName("keystrokes")[0];
       const resetBtn = document.getElementById("reset");
       const nextBtn = document.getElementById("next");
       const button4 = document.getElementById("btn-4");
@@ -122,6 +138,7 @@
       const text =
         "Lorem ipsum dolor sit amet consectetur adipisicing elit.\nSuscipit nemo odit optio architecto aperiam incidunt pariatur reiciendis ea!\nUt, id.";
       let currentLevel = 0;
+      let keystrokes = 0;
 
       const levels = [
         {
@@ -130,6 +147,7 @@
           cursorPlacement: "the beginning of the text",
           keyword: "Right",
           activeKeys: ["alt", "shift"],
+          minKeystrokes: 3,
           cursorLocation: [0, 0],
           successMessage:
             "Achieved level 1!\n\nUse tab to change the focus to the Next button, then Enter to click it",
@@ -140,6 +158,7 @@
           cursorPlacement: "the beginning",
           keyword: "Right",
           activeKeys: ["meta"],
+          minKeystrokes: 2,
           cursorLocation: [0, 0],
           successMessage: "Achieved level 2!",
         },
@@ -149,6 +168,7 @@
           cursorPlacement: "the beginning",
           keyword: "Down",
           activeKeys: ["meta"],
+          minKeystrokes: 2,
           cursorLocation: [0, 0],
           successMessage: "Achieved level 3!",
         },
@@ -170,17 +190,22 @@
       };
 
       label.innerText = labelText;
+      counter.innerText = keystrokes;
       setTextarea(currentLevel);
 
       const resetTextarea = (level) => {
         setTextarea(level);
         nextBtn.disabled = true;
         achieved.style.display = "none";
+        counter.innerText = keystrokes = 0;
+        keystrokesText.style.visibility = "hidden";
       };
 
       resetBtn.addEventListener("click", () => {
+        keystrokesText.style.visibility = "hidden";
         currentLevel = 0;
         resetTextarea(currentLevel);
+        keystrokes = 0;
       });
       nextBtn.addEventListener("click", () => {
         if (currentLevel == levels.length - 1) {
@@ -192,12 +217,15 @@
       });
 
       const detectKeystroke = (e, eventType, level) => {
-        if (!e.code.includes("Arrow" || !e.code.includes("Backspace"))) {
-          return;
-        }
-
         // Prevents multiple events if key held down
         if (e.repeat) {
+          return;
+        }
+        if (!e.code.includes("Tab") && !e.code.includes("Escape")) {
+          // TODO - disable this if the level is over
+          counter.innerText = ++keystrokes;
+        }
+        if (!e.code.includes("Arrow" || !e.code.includes("Backspace"))) {
           return;
         }
 
@@ -229,12 +257,15 @@
           // (TODO) Not *really* checking for result - displaying "Achieved!" before checking if correct text selected
           achieved.innerText = localLevel.successMessage;
           achieved.style.display = "block";
+          if (keystrokes == localLevel.minKeystrokes) {
+            keystrokesText.style.visibility = "visible";
+          }
           if (currentLevel !== levels.length - 1) {
             nextBtn.disabled = false;
           } else {
             achieved.innerText =
               achieved.innerText +
-              "\n\nThank you for playing - please tab to the Reset button to start again.\n\nOr, try the banana challenge below 🐵";
+              "\n\nThank you for playing - please tab to the Reset button to start again.\n\nOr, try the banana challenge 🐵";
           }
         }
       };
