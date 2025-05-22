@@ -230,6 +230,15 @@
           minKeystrokes: 3,
           finalCursorLocation: [0, 5],
         },
+        {
+          chord: `${isMac ? "option" : "alt"} + shift + down arrow`,
+          action: "highlight the first line",
+          cursorPlacement: "the beginning of the text",
+          keyword: "Down",
+          activeKeys: ["alt", "shift"],
+          minKeystrokes: 3,
+          finalCursorLocation: [0, 57],
+        },
       ];
 
       const generateLabelText = (levelIndex) => {
@@ -291,18 +300,13 @@
       });
 
       const detectKeystroke = (e, eventType, levelIndex) => {
-        // Prevents multiple events if key held down
-        if (e.repeat) {
+        if (e.repeat || levelOver) {
           return;
         }
 
         const localLevel = levels[levelIndex];
 
-        if (
-          !e.code.includes("Tab") &&
-          !e.code.includes("Escape" && !levelOver)
-        ) {
-          // TODO - disable this if the level is over
+        if (!e.code.includes("Tab") && !e.code.includes("Escape")) {
           counter.innerText = ++keystrokes;
         }
         if (!e.code.includes("Arrow" || !e.code.includes("Backspace"))) {
