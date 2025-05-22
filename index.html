@@ -135,10 +135,10 @@
           <button id="reset">Reset</button>
         </div>
         <div class="counter-container">
-          <span class="counter">0</span> keystrokes
+          Keystrokes: <span class="counter">0</span>
         </div>
         <div class="achieved-container">
-          <div class="keystrokes">Mininum keystrokes - way to go! 🦾</div>
+          <div class="keystrokes">Minimum keystrokes - way to go! 🦾</div>
           <div class="achieved"></div>
           <button class="monkey-btn">Monkey game</button>
         </div>
@@ -168,18 +168,21 @@
       const keystrokesText = document.getElementsByClassName("keystrokes")[0];
       const resetBtn = document.getElementById("reset");
       const nextBtn = document.getElementById("next");
-      const button4 = document.getElementById("btn-4");
       const isMac = window.navigator.userAgent.includes("Macintosh");
       const label = document.getElementsByTagName("label")[0];
-      let labelText = `Use ${
-        isMac ? "option" : "alt"
-      } + shift + right arrow to highlight the first word when cursor at the beginning of the text:`;
+
+      // Constants
       const text =
         "Lorem ipsum dolor sit amet consectetur adipisicing elit.\nSuscipit nemo odit optio architecto aperiam incidunt pariatur reiciendis ea!\nUt, id.";
+
+      // State
+      let labelText = "";
       let levelIndex = 0;
       let keystrokes = 0;
       let areRequirementsMet = false;
+      let levelOver = false;
 
+      // Data
       const levels = [
         {
           chord: `${isMac ? "command" : "Windows"} + left arrow`,
@@ -198,6 +201,16 @@
           activeKeys: ["meta"],
           minKeystrokes: 2,
           finalCursorLocation: [56, 56],
+        },
+        {
+          chord: `${isMac ? "command" : "Windows"} + up arrow`,
+          action: "skip to the beginning of the text",
+          cursorPlacement: "the end",
+          keyword: "Up",
+          activeKeys: ["meta"],
+          minKeystrokes: 2,
+          startingCursorPosition: [141, 141],
+          finalCursorLocation: [0, 0],
         },
         {
           chord: `${isMac ? "command" : "Windows"} + down arrow`,
@@ -226,7 +239,7 @@
         } with the cursor at ${levelToUse.cursorPlacement}:`;
       };
 
-      const setTextarea = (levelIndex) => {
+      const prepareTextArea = (levelIndex) => {
         const localLevel = levels[levelIndex];
         generateLabelText(levelIndex);
         label.innerText = labelText;
@@ -244,10 +257,10 @@
 
       label.innerText = labelText;
       counter.innerText = keystrokes;
-      setTextarea(levelIndex);
+      prepareTextArea(levelIndex);
 
       const resetTextarea = (level) => {
-        setTextarea(level);
+        prepareTextArea(level);
         areRequirementsMet = false;
         nextBtn.disabled = true;
         achieved.style.display = "none";
@@ -260,6 +273,7 @@
         levelIndex = 0;
         resetTextarea(levelIndex);
         keystrokes = 0;
+        monkeyBtn.style.display = "none";
       });
       nextBtn.addEventListener("click", () => {
         if (levelIndex == levels.length - 1) {
@@ -272,6 +286,7 @@
       monkeyBtn.addEventListener("click", () => {
         textGameContainer.style.display = "none";
         bananaContainer.style.display = "flex";
+        editable.focus();
       });
 
       const detectKeystroke = (e, eventType, levelIndex) => {
@@ -323,7 +338,6 @@
         };
 
         if (isCursorInPlace()) {
-          // (TODO) Not *really* checking for result - displaying "Achieved!" before checking if correct text selected
           achieved.innerText = `Achieved level ${levelIndex + 1}!`;
           achieved.style.display = "block";
           if (keystrokes == localLevel.minKeystrokes) {
