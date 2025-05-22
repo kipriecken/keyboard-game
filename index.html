@@ -11,9 +11,16 @@
         background-color: gradient(20, 300);
       }
 
+      .header {
+        padding: 2rem;
+        display: flex;
+        justify-content: space-between;
+        border-bottom: 1px solid grey;
+      }
+
       .intro {
         margin-top: 1rem;
-        max-width: 500px;
+        width: 38vw;
         text-align: center;
       }
 
@@ -23,6 +30,11 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
+      }
+
+      .main {
+        flex-direction: row;
+        height: calc(100vh - 82px);
       }
 
       .achieved-container {
@@ -98,12 +110,22 @@
     </style>
   </head>
   <body>
-    <div class="container">
+    <div class="header">
+      <div>Keyboard Shortcuts game</div>
+      <div>Sign in</div>
+    </div>
+    <div class="main container">
       <div class="intro">
         Use these games to help familiarize yourself with keyboard shortcuts and
         to think differently about how you use your computer. Try it for a few
         minutes a day. Best served with a bit of calm, nonjudgmental typing
         practice.
+        <br />
+        <br />
+        <div class="subtext">
+          The page does not allow mouse clicks. Use tab or shift + tab to
+          navigate.
+        </div>
       </div>
       <div class="text-game container">
         <label for="text"></label>
@@ -154,20 +176,19 @@
       } + shift + right arrow to highlight the first word when cursor at the beginning of the text:`;
       const text =
         "Lorem ipsum dolor sit amet consectetur adipisicing elit.\nSuscipit nemo odit optio architecto aperiam incidunt pariatur reiciendis ea!\nUt, id.";
-      let currentLevel = 0;
+      let levelIndex = 0;
       let keystrokes = 0;
+      let areRequirementsMet = false;
 
       const levels = [
         {
-          chord: `${isMac ? "option" : "alt"} + shift + right arrow`,
-          action: "highlight the first word",
-          cursorPlacement: "the beginning of the text",
-          keyword: "Right",
-          activeKeys: ["alt", "shift"],
-          minKeystrokes: 3,
-          cursorLocation: [0, 0],
-          successMessage:
-            "Achieved level 1!\n\nUse tab to change the focus to the Next button, then Enter to click it",
+          chord: `${isMac ? "command" : "Windows"} + left arrow`,
+          action: "skip to the beginning of the line",
+          cursorPlacement: "the middle",
+          keyword: "Left",
+          activeKeys: ["meta"],
+          minKeystrokes: 2,
+          startingCursorPosition: [12, 12],
         },
         {
           chord: `${isMac ? "command" : "Windows"} + right arrow`,
@@ -176,8 +197,7 @@
           keyword: "Right",
           activeKeys: ["meta"],
           minKeystrokes: 2,
-          cursorLocation: [0, 0],
-          successMessage: "Achieved level 2!",
+          finalCursorLocation: [56, 56],
         },
         {
           chord: `${isMac ? "command" : "Windows"} + down arrow`,
@@ -186,32 +206,49 @@
           keyword: "Down",
           activeKeys: ["meta"],
           minKeystrokes: 2,
-          cursorLocation: [0, 0],
-          successMessage: "Achieved level 3!",
+          finalCursorLocation: [141, 141],
+        },
+        {
+          chord: `${isMac ? "option" : "alt"} + shift + right arrow`,
+          action: "highlight the first word",
+          cursorPlacement: "the beginning of the text",
+          keyword: "Right",
+          activeKeys: ["alt", "shift"],
+          minKeystrokes: 3,
+          finalCursorLocation: [0, 5],
         },
       ];
 
-      const generateLabelText = (level) => {
-        levelToUse = levels[level];
-        labelText = `LEVEL ${currentLevel + 1}\n\nUse ${levelToUse.chord} to ${
+      const generateLabelText = (levelIndex) => {
+        levelToUse = levels[levelIndex];
+        labelText = `LEVEL ${levelIndex + 1}\n\nUse ${levelToUse.chord} to ${
           levelToUse.action
         } with the cursor at ${levelToUse.cursorPlacement}:`;
       };
 
-      const setTextarea = (level) => {
-        generateLabelText(level);
+      const setTextarea = (levelIndex) => {
+        const localLevel = levels[levelIndex];
+        generateLabelText(levelIndex);
         label.innerText = labelText;
         textarea.value = text;
         textarea.focus();
-        textarea.setSelectionRange(0, 0);
+        textarea.setSelectionRange(
+          localLevel.startingCursorPosition
+            ? localLevel.startingCursorPosition[0]
+            : 0,
+          localLevel.startingCursorPosition
+            ? localLevel.startingCursorPosition[1]
+            : 0
+        );
       };
 
       label.innerText = labelText;
       counter.innerText = keystrokes;
-      setTextarea(currentLevel);
+      setTextarea(levelIndex);
 
       const resetTextarea = (level) => {
         setTextarea(level);
+        areRequirementsMet = false;
         nextBtn.disabled = true;
         achieved.style.display = "none";
         counter.innerText = keystrokes = 0;
@@ -220,28 +257,31 @@
 
       resetBtn.addEventListener("click", () => {
         keystrokesText.style.visibility = "hidden";
-        currentLevel = 0;
-        resetTextarea(currentLevel);
+        levelIndex = 0;
+        resetTextarea(levelIndex);
         keystrokes = 0;
       });
       nextBtn.addEventListener("click", () => {
-        if (currentLevel == levels.length - 1) {
+        if (levelIndex == levels.length - 1) {
           nextBtn.disabled = true;
           return;
         }
-        currentLevel += 1;
-        resetTextarea(currentLevel);
+        resetTextarea(levelIndex + 1);
+        levelIndex++;
       });
       monkeyBtn.addEventListener("click", () => {
         textGameContainer.style.display = "none";
         bananaContainer.style.display = "flex";
       });
 
-      const detectKeystroke = (e, eventType, level) => {
+      const detectKeystroke = (e, eventType, levelIndex) => {
         // Prevents multiple events if key held down
         if (e.repeat) {
           return;
         }
+
+        const localLevel = levels[levelIndex];
+
         if (!e.code.includes("Tab") && !e.code.includes("Escape")) {
           // TODO - disable this if the level is over
           counter.innerText = ++keystrokes;
@@ -250,12 +290,7 @@
           return;
         }
 
-        const cursorStart = textarea.selectionStart;
-        const cursorEnd = textarea.selectionEnd;
-
-        const localLevel = levels[level];
-
-        const checkActiveKeys = () => {
+        const areActiveKeysPressed = () => {
           return (
             localLevel.activeKeys.includes("alt") == e.altKey &&
             localLevel.activeKeys.includes("shift") == e.shiftKey &&
@@ -263,25 +298,38 @@
           );
         };
 
-        const checkCursorCoordinates = () => {
+        if (e.code.includes(localLevel.keyword) && areActiveKeysPressed()) {
+          areRequirementsMet = true;
+        }
+      };
+
+      textarea.addEventListener("keydown", (e) => {
+        detectKeystroke(e, "keydown", levelIndex);
+      });
+      textarea.addEventListener("keyup", () => {
+        if (!areRequirementsMet) {
+          return;
+        }
+        const localLevel = levels[levelIndex];
+
+        const isCursorInPlace = () => {
+          const finalCursorLocation = localLevel.finalCursorLocation
+            ? localLevel.finalCursorLocation
+            : [0, 0];
           return (
-            cursorStart == localLevel.cursorLocation[0] &&
-            cursorEnd == localLevel.cursorLocation[1]
+            textarea.selectionStart == finalCursorLocation[0] &&
+            textarea.selectionEnd == finalCursorLocation[1]
           );
         };
 
-        if (
-          checkCursorCoordinates() &&
-          e.code.includes(localLevel.keyword) &&
-          checkActiveKeys()
-        ) {
+        if (isCursorInPlace()) {
           // (TODO) Not *really* checking for result - displaying "Achieved!" before checking if correct text selected
-          achieved.innerText = localLevel.successMessage;
+          achieved.innerText = `Achieved level ${levelIndex + 1}!`;
           achieved.style.display = "block";
           if (keystrokes == localLevel.minKeystrokes) {
             keystrokesText.style.visibility = "visible";
           }
-          if (currentLevel !== levels.length - 1) {
+          if (levelIndex !== levels.length - 1) {
             nextBtn.disabled = false;
           } else {
             monkeyBtn.style.display = "block";
@@ -290,11 +338,7 @@
               "\n\nThank you for playing - please tab to the Reset button to start again.\n\nOr, try the banana challenge 🐵";
           }
         }
-      };
-
-      textarea.addEventListener("keydown", (e) =>
-        detectKeystroke(e, "keydown", currentLevel)
-      );
+      });
       editable.addEventListener("keyup", (e) => {
         // TODO - is possible to? if editable contains &nbsp, replace it with a regular space
         const targetString =
