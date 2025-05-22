@@ -272,6 +272,7 @@
         keystrokesText.style.visibility = "hidden";
         levelIndex = 0;
         resetTextarea(levelIndex);
+        levelOver = false;
         keystrokes = 0;
         monkeyBtn.style.display = "none";
       });
@@ -297,7 +298,10 @@
 
         const localLevel = levels[levelIndex];
 
-        if (!e.code.includes("Tab") && !e.code.includes("Escape")) {
+        if (
+          !e.code.includes("Tab") &&
+          !e.code.includes("Escape" && !levelOver)
+        ) {
           // TODO - disable this if the level is over
           counter.innerText = ++keystrokes;
         }
@@ -339,6 +343,7 @@
 
         if (isCursorInPlace()) {
           achieved.innerText = `Achieved level ${levelIndex + 1}!`;
+          levelOver = true;
           achieved.style.display = "block";
           if (keystrokes == localLevel.minKeystrokes) {
             keystrokesText.style.visibility = "visible";
