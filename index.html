@@ -231,6 +231,16 @@
           finalCursorLocation: [0, 5],
         },
         {
+          chord: `${isMac ? "option" : "alt"} + shift + left arrow`,
+          action: "highlight the first word",
+          cursorPlacement: "after the first word",
+          keyword: "Left",
+          activeKeys: ["alt", "shift"],
+          minKeystrokes: 3,
+          startingCursorPosition: [5, 5],
+          finalCursorLocation: [0, 5],
+        },
+        {
           chord: `${isMac ? "option" : "alt"} + shift + down arrow`,
           action: "highlight the first line",
           cursorPlacement: "the beginning of the text",
@@ -238,6 +248,16 @@
           activeKeys: ["alt", "shift"],
           minKeystrokes: 3,
           finalCursorLocation: [0, 57],
+        },
+        {
+          chord: `${isMac ? "option" : "alt"} + shift + up arrow`,
+          action: "highlight the first line",
+          cursorPlacement: "at the end of the first line",
+          keyword: "Up",
+          activeKeys: ["alt", "shift"],
+          minKeystrokes: 3,
+          startingCursorPosition: [56, 56],
+          finalCursorLocation: [0, 56],
         },
       ];
 
