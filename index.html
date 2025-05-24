@@ -132,7 +132,7 @@
         <textarea name="text" id="textarea" rows="5" cols="75"></textarea>
         <button id="next" disabled="true">Next</button>
         <div class="btn-container">
-          <button id="reset">Reset</button>
+          <button onclick="handleReset()">Reset</button>
         </div>
         <div class="counter-container">
           Keystrokes: <span class="counter">0</span>
@@ -153,6 +153,9 @@
         </div>
         <div class="monkey">
           <div>Happy monkey! 🍌🐵🍌</div>
+          <div class="btn-container">
+            <button onclick="handleReset()">Reset</button>
+          </div>
         </div>
       </div>
     </div>
@@ -166,7 +169,6 @@
       const textGameContainer = document.getElementsByClassName("text-game")[0];
       const bananaContainer = document.getElementsByClassName("banana")[0];
       const keystrokesText = document.getElementsByClassName("keystrokes")[0];
-      const resetBtn = document.getElementById("reset");
       const nextBtn = document.getElementById("next");
       const isMac = window.navigator.userAgent.includes("Macintosh");
       const label = document.getElementsByTagName("label")[0];
@@ -185,7 +187,7 @@
       let levelIndex = 0;
       let keystrokes = 0;
       let areRequirementsMet = false;
-      let levelOver = false;
+      let isLevelOver = false;
 
       // Data
       const levels = [
@@ -304,26 +306,32 @@
       };
 
       const prepareTextArea = (levelIndex) => {
-        const localLevel = levels[levelIndex];
+        const level = levels[levelIndex];
         generateLabelText(levelIndex);
         label.innerText = labelText;
         textarea.value = text;
         textarea.focus();
         textarea.setSelectionRange(
-          localLevel.startingCursorPosition
-            ? localLevel.startingCursorPosition[0]
-            : 0,
-          localLevel.startingCursorPosition
-            ? localLevel.startingCursorPosition[1]
-            : 0
+          level.startingCursorPosition ? level.startingCursorPosition[0] : 0,
+          level.startingCursorPosition ? level.startingCursorPosition[1] : 0
         );
       };
 
-      label.innerText = labelText;
       counter.innerText = keystrokes;
       prepareTextArea(levelIndex);
 
+      const handleReset = () => {
+        keystrokesText.style.visibility = "hidden";
+        levelIndex = 0;
+        resetTextarea(levelIndex);
+        isLevelOver = false;
+        keystrokes = 0;
+        monkeyBtn.style.display = "none";
+      };
+
       const resetTextarea = (level) => {
+        textGameContainer.style.display = "flex";
+        bananaContainer.style.display = "none";
         prepareTextArea(level);
         areRequirementsMet = false;
         nextBtn.disabled = true;
@@ -332,35 +340,34 @@
         keystrokesText.style.visibility = "hidden";
       };
 
-      resetBtn.addEventListener("click", () => {
-        keystrokesText.style.visibility = "hidden";
-        levelIndex = 0;
-        resetTextarea(levelIndex);
-        levelOver = false;
-        keystrokes = 0;
-        monkeyBtn.style.display = "none";
-      });
       nextBtn.addEventListener("click", () => {
         if (levelIndex == levels.length - 1) {
           nextBtn.disabled = true;
           return;
         }
         resetTextarea(levelIndex + 1);
-        levelOver = false;
+        isLevelOver = false;
         levelIndex++;
       });
+
+      const handleMonkeyBtnClick = () => {
+        textGameContainer.style.display = "none";
+        bananaContainer.style.display = "flex";
+        editable.focus();
+      };
+
       monkeyBtn.addEventListener("click", () => {
         textGameContainer.style.display = "none";
         bananaContainer.style.display = "flex";
         editable.focus();
       });
 
-      const detectKeystroke = (e, eventType, levelIndex) => {
-        if (e.repeat || levelOver) {
+      const handleTextareaKeydown = (e) => {
+        if (e.repeat || isLevelOver) {
           return;
         }
 
-        const localLevel = levels[levelIndex];
+        const level = levels[levelIndex];
 
         if (!e.code.includes("Tab") && !e.code.includes("Escape")) {
           counter.innerText = ++keystrokes;
@@ -375,30 +382,31 @@
 
         const areActiveKeysPressed = () => {
           return (
-            localLevel.activeKeys.includes("alt") == e.altKey &&
-            localLevel.activeKeys.includes("shift") == e.shiftKey &&
-            localLevel.activeKeys.includes("control") == e.ctrlKey &&
-            localLevel.activeKeys.includes("meta") == e.metaKey
+            level.activeKeys.includes("alt") == e.altKey &&
+            level.activeKeys.includes("shift") == e.shiftKey &&
+            level.activeKeys.includes("control") == e.ctrlKey &&
+            level.activeKeys.includes("meta") == e.metaKey
           );
         };
 
-        if (e.code.includes(localLevel.keyword) && areActiveKeysPressed()) {
+        if (e.code.includes(level.keyword) && areActiveKeysPressed()) {
           areRequirementsMet = true;
         }
       };
 
       textarea.addEventListener("keydown", (e) => {
-        detectKeystroke(e, "keydown", levelIndex);
+        handleTextareaKeydown(e);
       });
+
       textarea.addEventListener("keyup", () => {
         if (!areRequirementsMet) {
           return;
         }
-        const localLevel = levels[levelIndex];
+        const level = levels[levelIndex];
 
         const isCursorInPlace = () => {
-          const finalCursorLocation = localLevel.finalCursorLocation
-            ? localLevel.finalCursorLocation
+          const finalCursorLocation = level.finalCursorLocation
+            ? level.finalCursorLocation
             : [0, 0];
           return (
             textarea.selectionStart == finalCursorLocation[0] &&
@@ -408,9 +416,9 @@
 
         if (isCursorInPlace()) {
           achieved.innerText = `Achieved level ${levelIndex + 1}!`;
-          levelOver = true;
+          isLevelOver = true;
           achieved.style.display = "block";
-          if (keystrokes == localLevel.minKeystrokes) {
+          if (keystrokes == level.minKeystrokes) {
             keystrokesText.style.visibility = "visible";
           }
           if (levelIndex !== levels.length - 1) {
