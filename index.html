@@ -313,10 +313,10 @@
         : (mobileDiv.style.display = "none");
 
       const generateLabelText = (levelIndex) => {
-        levelToUse = levels[levelIndex];
-        labelText = `LEVEL ${levelIndex + 1}\n\nUse ${levelToUse.chord} to ${
-          levelToUse.action
-        } with the text-cursor at ${levelToUse.cursorPlacement}:`;
+        level = levels[levelIndex];
+        labelText = `Level ${levelIndex + 1}\n\nUse ${level.chord} to ${
+          level.action
+        } with the text-cursor at ${level.cursorPlacement}:`;
       };
 
       const prepareTextArea = (levelIndex) => {
