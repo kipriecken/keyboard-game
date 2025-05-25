@@ -24,6 +24,10 @@
         text-align: center;
       }
 
+      .main > .intro {
+        visibility: hidden;
+      }
+
       .container {
         margin: auto;
         display: flex;
@@ -34,6 +38,10 @@
 
       .is-mobile {
         padding: 10rem;
+      }
+
+      .game-play {
+        display: none;
       }
 
       .main {
@@ -111,6 +119,10 @@
       .banana {
         display: none;
       }
+
+      .play {
+        margin-top: 4rem;
+      }
     </style>
   </head>
   <body>
@@ -136,19 +148,38 @@
         </div>
       </div>
       <div class="text-game container">
-        <label for="text"></label>
-        <textarea name="text" id="textarea" rows="5" cols="75"></textarea>
-        <button id="next" disabled="true">Next</button>
-        <div class="btn-container">
-          <button onclick="handleReset()">Reset</button>
+        <div class="pre-game container">
+          <div class="intro">
+            Use these games to help familiarize yourself with keyboard shortcuts
+            and to think differently about how you use your computer. Try it for
+            a few minutes a day. Best served with a bit of calm, nonjudgmental
+            typing practice.
+            <br />
+            <br />
+            <div class="subtext">
+              The page does not allow mouse clicks. Use tab or shift + tab to
+              navigate.
+            </div>
+          </div>
+          <div class="btn-container">
+            <button class="play">Play</button>
+          </div>
         </div>
-        <div class="counter-container">
-          Keystrokes: <span class="counter">0</span>
-        </div>
-        <div class="achieved-container">
-          <div class="keystrokes">Minimum keystrokes - way to go! 🦾</div>
-          <div class="achieved"></div>
-          <button class="monkey-btn">Monkey game</button>
+        <div class="game-play container">
+          <label for="text"></label>
+          <textarea name="text" id="textarea" rows="5" cols="75"></textarea>
+          <button id="next" disabled="true">Next</button>
+          <div class="btn-container">
+            <button onclick="handleReset()">Reset</button>
+          </div>
+          <div class="counter-container">
+            Keystrokes: <span class="counter">0</span>
+          </div>
+          <div class="achieved-container">
+            <div class="keystrokes">Minimum keystrokes - way to go! 🦾</div>
+            <div class="achieved"></div>
+            <button class="monkey-btn">Monkey game</button>
+          </div>
         </div>
       </div>
       <div class="banana container">
@@ -171,8 +202,12 @@
       const textarea = document.getElementById("textarea");
       const editable = document.getElementById("editable");
       const achieved = document.getElementsByClassName("achieved")[0];
+      const intro = document.getElementsByClassName("intro")[0];
+      const preGame = document.getElementsByClassName("pre-game")[0];
+      const gamePlay = document.getElementsByClassName("game-play")[0];
       const monkey = document.getElementsByClassName("monkey")[0];
       const monkeyBtn = document.getElementsByClassName("monkey-btn")[0];
+      const playBtn = document.getElementsByClassName("play")[0];
       const counter = document.getElementsByClassName("counter")[0];
       const textGameContainer = document.getElementsByClassName("text-game")[0];
       const bananaContainer = document.getElementsByClassName("banana")[0];
@@ -353,6 +388,13 @@
         counter.innerText = keystrokes = 0;
         keystrokesText.style.visibility = "hidden";
       };
+
+      playBtn.addEventListener("click", () => {
+        intro.style.visibility = "visible";
+        preGame.style.display = "none";
+        gamePlay.style.display = "flex";
+        handleReset();
+      });
 
       nextBtn.addEventListener("click", () => {
         if (levelIndex == levels.length - 1) {
