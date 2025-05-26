@@ -90,6 +90,10 @@
         box-shadow: 2px 2px 4px grey;
       }
 
+      button:focus {
+        background: white;
+      }
+
       .help {
         margin: 1em;
       }
@@ -139,23 +143,22 @@
         <div class="outer">
           <div class="pre-game container">
             <div class="intro">
-              <p>Welcome to the keyboard shortcuts game!</p>
-              <p>
-                This game is designed to introduce you to a new way to interact
-                with text on your computer.
-              </p>
-              <p>
-                Each level introduces a keyboard shortcut for text. Follow the
-                instruction to pass to the next level.
-              </p>
-              <p>
-                Using the mouse on this page has been deactivated. Please
-                navigate with tab or shift + tab.
-              </p>
-              <p>Happy learning!</p>
-            </div>
-            <div class="btn-container">
-              <button class="play">Play</button>
+              <div class="part-one">
+                <p>Welcome to the keyboard shortcuts game!</p>
+                <p>Use tab to shift the focus on the below button.</p>
+                <div class="btn-container">
+                  <button class="focus">Focus on me</button>
+                </div>
+                <p>And use shift + tab to focus on the previous button.</p>
+                <div class="btn-container">
+                  <button class="focus">Focus on me too</button>
+                </div>
+                <p>Ready to learn some shortcuts?</p>
+                <p>Focus on this final button and hit return to 'click'.</p>
+                <div class="btn-container">
+                  <button class="play">Focus and click</button>
+                </div>
+              </div>
             </div>
           </div>
           <div class="game-play container">
@@ -343,17 +346,17 @@
 
       const generateLabelText = (levelIndex) => {
         level = levels[levelIndex];
-        labelText = `Level ${levelIndex + 1}\n\n${
-          level.chord
-        }\n\nUse this chord to ${level.action} with the text-cursor at ${
+        labelText = `<h3>Level ${levelIndex + 1}</h3>
+        <h4><strong>${level.chord}</strong></h4>
+        <div>Use these keys to ${level.action} with the text-cursor at ${
           level.cursorPlacement
-        }.`;
+        }.</div>`;
       };
 
       const prepareTextArea = (levelIndex) => {
         const level = levels[levelIndex];
         generateLabelText(levelIndex);
-        label.innerText = labelText;
+        label.innerHTML = labelText;
         textarea.value = text;
         textarea.focus();
         textarea.setSelectionRange(
