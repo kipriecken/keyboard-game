@@ -20,7 +20,6 @@
 
       .intro {
         margin-top: 1rem;
-        width: 38vw;
         text-align: center;
       }
 
@@ -34,6 +33,10 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
+      }
+
+      .outer {
+        min-height: 60vh;
       }
 
       .is-mobile {
@@ -60,6 +63,7 @@
         background: transparent;
         border-radius: 1em;
         padding: 4px;
+        font-family: sans-serif;
       }
 
       label {
@@ -119,10 +123,6 @@
       .banana {
         display: none;
       }
-
-      .play {
-        margin-top: 4rem;
-      }
     </style>
   </head>
   <body>
@@ -135,50 +135,44 @@
       a computer.
     </div>
     <div class="main container">
-      <div class="intro">
-        Use these games to help familiarize yourself with keyboard shortcuts and
-        to think differently about how you use your computer. Try it for a few
-        minutes a day. Best served with a bit of calm, nonjudgmental typing
-        practice.
-        <br />
-        <br />
-        <div class="subtext">
-          The page does not allow mouse clicks. Use tab or shift + tab to
-          navigate.
-        </div>
-      </div>
       <div class="text-game container">
-        <div class="pre-game container">
-          <div class="intro">
-            Use these games to help familiarize yourself with keyboard shortcuts
-            and to think differently about how you use your computer. Try it for
-            a few minutes a day. Best served with a bit of calm, nonjudgmental
-            typing practice.
-            <br />
-            <br />
-            <div class="subtext">
-              The page does not allow mouse clicks. Use tab or shift + tab to
-              navigate.
+        <div class="outer">
+          <div class="pre-game container">
+            <div class="intro">
+              <p>Welcome to the keyboard shortcuts game!</p>
+              <p>
+                This game is designed to introduce you to a new way to interact
+                with text on your computer.
+              </p>
+              <p>
+                Each level introduces a keyboard shortcut for text. Follow the
+                instruction to pass to the next level.
+              </p>
+              <p>
+                Using the mouse on this page has been deactivated. Please
+                navigate with tab or shift + tab.
+              </p>
+              <p>Happy learning!</p>
+            </div>
+            <div class="btn-container">
+              <button class="play">Play</button>
             </div>
           </div>
-          <div class="btn-container">
-            <button class="play">Play</button>
-          </div>
-        </div>
-        <div class="game-play container">
-          <label for="text"></label>
-          <textarea name="text" id="textarea" rows="5" cols="75"></textarea>
-          <button id="next" disabled="true">Next</button>
-          <div class="btn-container">
-            <button onclick="handleReset()">Reset</button>
-          </div>
-          <div class="counter-container">
-            Keystrokes: <span class="counter">0</span>
-          </div>
-          <div class="achieved-container">
-            <div class="keystrokes">Minimum keystrokes - way to go! 🦾</div>
-            <div class="achieved"></div>
-            <button class="monkey-btn">Monkey game</button>
+          <div class="game-play container">
+            <label for="text"></label>
+            <textarea name="text" id="textarea" rows="5" cols="75"></textarea>
+            <div class="btn-container">
+              <button id="next" disabled="true">Next</button>
+              <button onclick="handleReset()">Reset</button>
+            </div>
+            <div class="counter-container">
+              Keystrokes: <span class="counter">0</span>
+            </div>
+            <div class="achieved-container">
+              <div class="keystrokes">Minimum keystrokes - way to go! 🦾</div>
+              <div class="achieved"></div>
+              <button class="monkey-btn">Monkey game</button>
+            </div>
           </div>
         </div>
       </div>
@@ -349,9 +343,11 @@
 
       const generateLabelText = (levelIndex) => {
         level = levels[levelIndex];
-        labelText = `Level ${levelIndex + 1}\n\nUse ${level.chord} to ${
-          level.action
-        } with the text-cursor at ${level.cursorPlacement}:`;
+        labelText = `Level ${levelIndex + 1}\n\n${
+          level.chord
+        }\n\nUse this chord to ${level.action} with the text-cursor at ${
+          level.cursorPlacement
+        }.`;
       };
 
       const prepareTextArea = (levelIndex) => {
