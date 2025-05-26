@@ -127,12 +127,15 @@
       .banana {
         display: none;
       }
+
+      .safari {
+        display: none;
+      }
     </style>
   </head>
   <body>
     <div class="header">
       <div>Keyboard Shortcuts game</div>
-      <div>Sign in</div>
     </div>
     <div class="is-mobile container">
       This game has no current applications for mobile devices. Please visit on
@@ -143,22 +146,24 @@
         <div class="outer">
           <div class="pre-game container">
             <div class="intro">
-              <div class="part-one">
-                <p>Welcome to the keyboard shortcuts game!</p>
-                <p>Use tab to shift the focus on the below button.</p>
-                <div class="btn-container">
-                  <button class="focus">Focus on me</button>
-                </div>
-                <p>And use shift + tab to focus on the previous button.</p>
-                <div class="btn-container">
-                  <button class="focus">Focus on me too</button>
-                </div>
-                <p>Ready to learn some shortcuts?</p>
-                <p>Focus on this final button and hit return to 'click'.</p>
-                <div class="btn-container">
-                  <button class="play">Focus and click</button>
-                </div>
+              <p>Welcome to the keyboard shortcuts game!</p>
+              <p>Use tab to shift the focus on the below button.</p>
+              <div class="btn-container">
+                <button class="focus">Focus on me</button>
               </div>
+              <p>And use shift + tab to focus on the previous button.</p>
+              <div class="btn-container">
+                <button class="focus">Focus on me too</button>
+              </div>
+              <p>Ready to learn some shortcuts?</p>
+              <p>Focus on this final button and hit return to 'click'.</p>
+              <div class="btn-container">
+                <button class="play">Focus and click</button>
+              </div>
+              <p class="safari">
+                To play this game, you will need to check the box at Safari >
+                Preferences > Press Tab to highlight each item on a web page
+              </p>
             </div>
           </div>
           <div class="game-play container">
@@ -200,6 +205,7 @@
       const editable = document.getElementById("editable");
       const achieved = document.getElementsByClassName("achieved")[0];
       const intro = document.getElementsByClassName("intro")[0];
+      const safari = document.getElementsByClassName("safari")[0];
       const preGame = document.getElementsByClassName("pre-game")[0];
       const gamePlay = document.getElementsByClassName("game-play")[0];
       const monkey = document.getElementsByClassName("monkey")[0];
@@ -215,6 +221,9 @@
       const label = document.getElementsByTagName("label")[0];
 
       const isMac = window.navigator.userAgent.includes("Macintosh");
+      const isSafari =
+        window.navigator.userAgent.includes("Safari") &&
+        !window.navigator.userAgent.includes("Chrome");
       const isMobile =
         /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
           window.navigator.userAgent
@@ -352,6 +361,10 @@
           level.cursorPlacement
         }.</div>`;
       };
+
+      if (isSafari) {
+        safari.style.display = "block";
+      }
 
       const prepareTextArea = (levelIndex) => {
         const level = levels[levelIndex];
