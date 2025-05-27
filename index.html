@@ -466,37 +466,42 @@
         handleTextareaKeydown(e);
       });
 
+      const offerMonkeyGame = () => {
+        monkeyBtn.style.display = "block";
+        achieved.innerText =
+          achieved.innerText +
+          "\n\nThank you for playing - please tab to the Reset button to start again.\n\nOr, try the banana challenge 🐵";
+      };
+
+      const handleLevelWin = (minKeystrokes) => {
+        achieved.innerText = `Achieved level ${levelIndex + 1}!`;
+        isLevelOver = true;
+        achieved.style.display = "block";
+        if (keystrokes == minKeystrokes) {
+          keystrokesText.style.visibility = "visible";
+        }
+        if (levelIndex !== levels.length - 1) {
+          nextBtn.disabled = false;
+        } else {
+          offerMonkeyGame();
+        }
+      };
+
       textarea.addEventListener("keyup", () => {
         if (!areRequirementsMet) {
           return;
         }
         const level = levels[levelIndex];
+        const finalCursorLocation = level.finalCursorLocation
+          ? level.finalCursorLocation
+          : [0, 0];
 
-        const isCursorInPlace = () => {
-          const finalCursorLocation = level.finalCursorLocation
-            ? level.finalCursorLocation
-            : [0, 0];
-          return (
-            textarea.selectionStart == finalCursorLocation[0] &&
-            textarea.selectionEnd == finalCursorLocation[1]
-          );
-        };
+        const isCursorInPlace =
+          textarea.selectionStart == finalCursorLocation[0] &&
+          textarea.selectionEnd == finalCursorLocation[1];
 
-        if (isCursorInPlace()) {
-          achieved.innerText = `Achieved level ${levelIndex + 1}!`;
-          isLevelOver = true;
-          achieved.style.display = "block";
-          if (keystrokes == level.minKeystrokes) {
-            keystrokesText.style.visibility = "visible";
-          }
-          if (levelIndex !== levels.length - 1) {
-            nextBtn.disabled = false;
-          } else {
-            monkeyBtn.style.display = "block";
-            achieved.innerText =
-              achieved.innerText +
-              "\n\nThank you for playing - please tab to the Reset button to start again.\n\nOr, try the banana challenge 🐵";
-          }
+        if (isCursorInPlace) {
+          handleLevelWin(level.minKeystrokes);
         }
       });
       editable.addEventListener("keyup", (e) => {
