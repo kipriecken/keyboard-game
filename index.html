@@ -131,6 +131,10 @@
       .safari {
         display: none;
       }
+
+      .reset {
+        display: none;
+      }
     </style>
   </head>
   <body>
@@ -171,7 +175,7 @@
             <textarea name="text" id="textarea" rows="5" cols="75"></textarea>
             <div class="btn-container">
               <button id="next" disabled="true">Next</button>
-              <button onclick="handleReset()">Reset</button>
+              <button class="reset" onclick="handleReset()">Reset</button>
             </div>
             <div class="counter-container">
               Keystrokes: <span class="counter">0</span>
@@ -213,6 +217,7 @@
       const monkey = document.getElementsByClassName("monkey")[0];
       const monkeyBtn = document.getElementsByClassName("monkey-btn")[0];
       const playBtn = document.getElementsByClassName("play")[0];
+      const resetBtn = document.getElementsByClassName("reset")[0];
       const counter = document.getElementsByClassName("counter")[0];
       const textGameContainer = document.getElementsByClassName("text-game")[0];
       const bananaContainer = document.getElementsByClassName("banana")[0];
@@ -244,101 +249,101 @@
 
       // Data
       const levels = [
-        {
-          chord: `${isMac ? "command" : "Windows"} + left arrow`,
-          action: "skip to the beginning of the line",
-          cursorPlacement: "the middle",
-          keyword: "Left",
-          activeKeys: ["meta"],
-          minKeystrokes: 2,
-          startingCursorPosition: [12, 12],
-        },
-        {
-          chord: `${isMac ? "command" : "Windows"} + right arrow`,
-          action: "skip to the end of the line",
-          cursorPlacement: "the beginning",
-          keyword: "Right",
-          activeKeys: ["meta"],
-          minKeystrokes: 2,
-          finalCursorLocation: [56, 56],
-        },
-        {
-          chord: `${isMac ? "command" : "Windows"} + up arrow`,
-          action: "skip to the beginning of the text",
-          cursorPlacement: "the end",
-          keyword: "Up",
-          activeKeys: ["meta"],
-          minKeystrokes: 2,
-          startingCursorPosition: [141, 141],
-          finalCursorLocation: [0, 0],
-        },
-        {
-          chord: `${isMac ? "command" : "Windows"} + down arrow`,
-          action: "skip to the end of the text",
-          cursorPlacement: "the beginning",
-          keyword: "Down",
-          activeKeys: ["meta"],
-          minKeystrokes: 2,
-          finalCursorLocation: [141, 141],
-        },
-        {
-          chord: `${isMac ? "option" : "alt"} + shift + right arrow`,
-          action: "highlight the first word",
-          cursorPlacement: "the beginning of the text",
-          keyword: "Right",
-          activeKeys: ["alt", "shift"],
-          minKeystrokes: 3,
-          finalCursorLocation: [0, 5],
-        },
-        {
-          chord: `${isMac ? "option" : "alt"} + shift + left arrow`,
-          action: "highlight the first word",
-          cursorPlacement: "after the first word",
-          keyword: "Left",
-          activeKeys: ["alt", "shift"],
-          minKeystrokes: 3,
-          startingCursorPosition: [5, 5],
-          finalCursorLocation: [0, 5],
-        },
-        {
-          chord: `${isMac ? "option" : "alt"} + shift + down arrow`,
-          action: "highlight the first line",
-          cursorPlacement: "the beginning of the text",
-          keyword: "Down",
-          activeKeys: ["alt", "shift"],
-          minKeystrokes: 3,
-          finalCursorLocation: [0, 57],
-        },
-        {
-          chord: `${isMac ? "option" : "alt"} + shift + up arrow`,
-          action: "highlight the first line",
-          cursorPlacement: "at the end of the first line",
-          keyword: "Up",
-          activeKeys: ["alt", "shift"],
-          minKeystrokes: 3,
-          startingCursorPosition: [56, 56],
-          finalCursorLocation: [0, 56],
-        },
-        {
-          chord: `${isMac ? "option" : "alt"} + delete`,
-          action: "delete the first word",
-          cursorPlacement: "after the first word",
-          keyword: "Backspace",
-          activeKeys: ["alt"],
-          minKeystrokes: 2,
-          startingCursorPosition: [5, 5],
-          finalCursorLocation: [0, 0],
-        },
-        {
-          chord: `${isMac ? "command" : "Windows"} + delete`,
-          action: "delete the first line",
-          cursorPlacement: "at the end of the first line",
-          keyword: "Backspace",
-          activeKeys: ["meta"],
-          minKeystrokes: 2,
-          startingCursorPosition: [56, 56],
-          finalCursorLocation: [0, 0],
-        },
+        // {
+        //   chord: `${isMac ? "command" : "Windows"} + left arrow`,
+        //   action: "skip to the beginning of the line",
+        //   cursorPlacement: "the middle",
+        //   keyword: "Left",
+        //   activeKeys: ["meta"],
+        //   minKeystrokes: 2,
+        //   startingCursorPosition: [12, 12],
+        // },
+        // {
+        //   chord: `${isMac ? "command" : "Windows"} + right arrow`,
+        //   action: "skip to the end of the line",
+        //   cursorPlacement: "the beginning",
+        //   keyword: "Right",
+        //   activeKeys: ["meta"],
+        //   minKeystrokes: 2,
+        //   finalCursorLocation: [56, 56],
+        // },
+        // {
+        //   chord: `${isMac ? "command" : "Windows"} + up arrow`,
+        //   action: "skip to the beginning of the text",
+        //   cursorPlacement: "the end",
+        //   keyword: "Up",
+        //   activeKeys: ["meta"],
+        //   minKeystrokes: 2,
+        //   startingCursorPosition: [141, 141],
+        //   finalCursorLocation: [0, 0],
+        // },
+        // {
+        //   chord: `${isMac ? "command" : "Windows"} + down arrow`,
+        //   action: "skip to the end of the text",
+        //   cursorPlacement: "the beginning",
+        //   keyword: "Down",
+        //   activeKeys: ["meta"],
+        //   minKeystrokes: 2,
+        //   finalCursorLocation: [141, 141],
+        // },
+        // {
+        //   chord: `${isMac ? "option" : "alt"} + shift + right arrow`,
+        //   action: "highlight the first word",
+        //   cursorPlacement: "the beginning of the text",
+        //   keyword: "Right",
+        //   activeKeys: ["alt", "shift"],
+        //   minKeystrokes: 3,
+        //   finalCursorLocation: [0, 5],
+        // },
+        // {
+        //   chord: `${isMac ? "option" : "alt"} + shift + left arrow`,
+        //   action: "highlight the first word",
+        //   cursorPlacement: "after the first word",
+        //   keyword: "Left",
+        //   activeKeys: ["alt", "shift"],
+        //   minKeystrokes: 3,
+        //   startingCursorPosition: [5, 5],
+        //   finalCursorLocation: [0, 5],
+        // },
+        // {
+        //   chord: `${isMac ? "option" : "alt"} + shift + down arrow`,
+        //   action: "highlight the first line",
+        //   cursorPlacement: "the beginning of the text",
+        //   keyword: "Down",
+        //   activeKeys: ["alt", "shift"],
+        //   minKeystrokes: 3,
+        //   finalCursorLocation: [0, 57],
+        // },
+        // {
+        //   chord: `${isMac ? "option" : "alt"} + shift + up arrow`,
+        //   action: "highlight the first line",
+        //   cursorPlacement: "at the end of the first line",
+        //   keyword: "Up",
+        //   activeKeys: ["alt", "shift"],
+        //   minKeystrokes: 3,
+        //   startingCursorPosition: [56, 56],
+        //   finalCursorLocation: [0, 56],
+        // },
+        // {
+        //   chord: `${isMac ? "option" : "alt"} + delete`,
+        //   action: "delete the first word",
+        //   cursorPlacement: "after the first word",
+        //   keyword: "Backspace",
+        //   activeKeys: ["alt"],
+        //   minKeystrokes: 2,
+        //   startingCursorPosition: [5, 5],
+        //   finalCursorLocation: [0, 0],
+        // },
+        // {
+        //   chord: `${isMac ? "command" : "Windows"} + delete`,
+        //   action: "delete the first line",
+        //   cursorPlacement: "at the end of the first line",
+        //   keyword: "Backspace",
+        //   activeKeys: ["meta"],
+        //   minKeystrokes: 2,
+        //   startingCursorPosition: [56, 56],
+        //   finalCursorLocation: [0, 0],
+        // },
         {
           chord: `control + K`,
           action: "delete the last word of the first line",
@@ -490,10 +495,11 @@
       });
 
       const offerMonkeyGame = () => {
+        resetBtn.style.display = "inline";
         monkeyBtn.style.display = "block";
         achieved.innerText =
           achieved.innerText +
-          "\n\nThank you for playing - please tab to the Reset button to start again.\n\nOr, try the banana challenge 🐵";
+          "\n\nThank you for playing and congratulations! Please tab to the Reset button to start again.\n\nOr, try the banana challenge 🐵";
       };
 
       const handleLevelWin = (minKeystrokes) => {
