@@ -396,6 +396,7 @@
         isLevelOver = false;
         keystrokes = 0;
         monkeyBtn.style.display = "none";
+        resetBtn.style.display = "none";
       };
 
       const resetTextarea = (level) => {
@@ -403,6 +404,7 @@
         bananaContainer.style.display = "none";
         prepareTextArea(level);
         areRequirementsMet = false;
+        nextBtn.style.display = "inline";
         nextBtn.disabled = true;
         achieved.style.display = "none";
         counter.innerText = keystrokes = 0;
@@ -497,6 +499,7 @@
       const offerMonkeyGame = () => {
         resetBtn.style.display = "inline";
         monkeyBtn.style.display = "block";
+        nextBtn.style.display = "none";
         achieved.innerText =
           achieved.innerText +
           "\n\nThank you for playing and congratulations! Please tab to the Reset button to start again.\n\nOr, try the banana challenge 🐵";
