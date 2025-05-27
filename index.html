@@ -153,7 +153,7 @@
               </div>
               <p>And use shift + tab to focus on the previous button.</p>
               <div class="btn-container">
-                <button class="focus">Focus on me too</button>
+                <button class="focus-too">Focus on me too</button>
               </div>
               <p>Ready to learn some shortcuts?</p>
               <p>Focus on this final button and hit return to 'click'.</p>
@@ -207,6 +207,8 @@
       const intro = document.getElementsByClassName("intro")[0];
       const safari = document.getElementsByClassName("safari")[0];
       const preGame = document.getElementsByClassName("pre-game")[0];
+      const focusBtn = document.getElementsByClassName("focus")[0];
+      const focusTooBtn = document.getElementsByClassName("focus-too")[0];
       const gamePlay = document.getElementsByClassName("game-play")[0];
       const monkey = document.getElementsByClassName("monkey")[0];
       const monkeyBtn = document.getElementsByClassName("monkey-btn")[0];
@@ -371,6 +373,7 @@
         generateLabelText(levelIndex);
         label.innerHTML = labelText;
         textarea.value = text;
+        textarea.disabled = false;
         textarea.focus();
         textarea.setSelectionRange(
           level.startingCursorPosition ? level.startingCursorPosition[0] : 0,
@@ -400,6 +403,19 @@
         counter.innerText = keystrokes = 0;
         keystrokesText.style.visibility = "hidden";
       };
+
+      focusBtn.addEventListener("focus", () => {
+        focusBtn.innerText = "Focused!";
+      });
+      focusBtn.addEventListener("blur", () => {
+        focusBtn.innerText = "Focus on me";
+      });
+      focusTooBtn.addEventListener("focus", () => {
+        focusTooBtn.innerText = "Focused!";
+      });
+      focusTooBtn.addEventListener("blur", () => {
+        focusTooBtn.innerText = "Focus on me too";
+      });
 
       playBtn.addEventListener("click", () => {
         intro.style.visibility = "visible";
@@ -474,6 +490,7 @@
       };
 
       const handleLevelWin = (minKeystrokes) => {
+        textarea.disabled = true;
         achieved.innerText = `Achieved level ${levelIndex + 1}!`;
         isLevelOver = true;
         achieved.style.display = "block";
@@ -482,6 +499,7 @@
         }
         if (levelIndex !== levels.length - 1) {
           nextBtn.disabled = false;
+          nextBtn.focus();
         } else {
           offerMonkeyGame();
         }
