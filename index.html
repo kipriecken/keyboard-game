@@ -158,7 +158,7 @@
               <p>Ready to learn some shortcuts?</p>
               <p>Focus on this final button and hit return to 'click'.</p>
               <div class="btn-container">
-                <button class="play">Focus and click</button>
+                <button class="play">Focus and hit return</button>
               </div>
               <p class="safari">
                 To play this game, you will need to check the box at Safari >
@@ -415,6 +415,13 @@
       });
       focusTooBtn.addEventListener("blur", () => {
         focusTooBtn.innerText = "Focus on me too";
+      });
+
+      playBtn.addEventListener("focus", () => {
+        playBtn.innerText = "Hit return";
+      });
+      playBtn.addEventListener("blur", () => {
+        playBtn.innerText = "Focus and hit return";
       });
 
       playBtn.addEventListener("click", () => {
