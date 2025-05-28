@@ -241,12 +241,6 @@ nextBtn.addEventListener("click", () => {
   levelIndex++;
 });
 
-const handleMonkeyBtnClick = () => {
-  textGameContainer.style.display = "none";
-  bananaContainer.style.display = "flex";
-  editable.focus();
-};
-
 monkeyBtn.addEventListener("click", () => {
   textGameContainer.style.display = "none";
   bananaContainer.style.display = "flex";
