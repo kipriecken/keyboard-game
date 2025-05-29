@@ -20,13 +20,13 @@ const mainDiv = document.getElementsByClassName("main")[0];
 const mobileDiv = document.getElementsByClassName("is-mobile")[0];
 const label = document.getElementsByTagName("label")[0];
 
-const isMac = window.navigator.userAgent.includes("Macintosh");
-const isSafari =
-  window.navigator.userAgent.includes("Safari") &&
-  !window.navigator.userAgent.includes("Chrome");
+const userAgent = window.navigator.userAgent;
+
+const isMac = userAgent.includes("Macintosh");
+const isSafari = userAgent.includes("Safari") && !userAgent.includes("Chrome");
 const isMobile =
   /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-    window.navigator.userAgent
+    userAgent
   );
 
 // Constants
