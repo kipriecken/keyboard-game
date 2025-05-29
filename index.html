@@ -17,7 +17,7 @@
           <div class="pre-game container">
             <div class="intro">
               <p>Welcome to the keyboard shortcuts game!</p>
-              <p>Use tab to shift the focus on the below button.</p>
+              <p>Use tab to select the below button.</p>
               <div class="btn-container">
                 <button class="focus">Focus on me</button>
               </div>
@@ -38,7 +38,13 @@
           </div>
           <div class="game-play container">
             <label for="text"></label>
-            <textarea name="text" id="textarea" rows="5" cols="75"></textarea>
+            <textarea
+              name="text"
+              id="textarea"
+              rows="5"
+              cols="75"
+              spellcheck="false"
+            ></textarea>
             <div class="btn-container">
               <button id="next" disabled="true">Next</button>
               <button class="reset" onclick="handleReset()">Reset</button>
