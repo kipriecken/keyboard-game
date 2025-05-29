@@ -5,6 +5,7 @@ body {
   background-image: linear-gradient(80deg, lightblue, transparent);
   pointer-events: none;
   background-color: gradient(20, 300);
+  font-size: 3vh;
 }
 
 .header {
@@ -32,7 +33,7 @@ body {
 }
 
 .outer {
-  min-height: 60vh;
+  height: 100%;
 }
 
 .is-mobile {
@@ -62,6 +63,10 @@ textarea {
   font-family: sans-serif;
 }
 
+.text-game {
+  height: 100%;
+}
+
 label {
   text-align: center;
   max-width: 350px;
@@ -84,6 +89,7 @@ button {
   padding: 0.5em 3em;
   border-radius: 9px;
   box-shadow: 2px 2px 4px grey;
+  font-size: 2vh;
 }
 
 button:focus {
