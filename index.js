@@ -171,7 +171,6 @@ const prepareTextArea = (levelIndex) => {
   generateLabelText(levelIndex);
   label.innerHTML = labelText;
   textarea.value = text;
-  textarea.disabled = false;
   textarea.focus();
   textarea.setSelectionRange(
     level.startingCursorPosition ? level.startingCursorPosition[0] : 0,
@@ -293,7 +292,6 @@ const offerMonkeyGame = () => {
 };
 
 const handleLevelWin = (minKeystrokes) => {
-  textarea.disabled = true;
   achieved.innerText = `Achieved level ${levelIndex + 1}!`;
   isLevelOver = true;
   achieved.style.display = "block";
@@ -302,7 +300,6 @@ const handleLevelWin = (minKeystrokes) => {
   }
   if (levelIndex !== levels.length - 1) {
     nextBtn.disabled = false;
-    nextBtn.focus();
   } else {
     offerMonkeyGame();
   }
