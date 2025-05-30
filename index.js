@@ -40,227 +40,12 @@ let keystrokes = 0;
 let areRequirementsMet = false;
 let isLevelOver = false;
 
-// Data
-const levels = [
-  {
-    chord: `right arrow`,
-    action: "move to the second character",
-    cursorPlacement: "the beginning",
-    keyword: "Right",
-    activeKeys: [],
-    minKeystrokes: 1,
-    startingCursorPosition: [0, 0],
-    finalCursorLocation: [1, 1],
-  },
-  {
-    chord: `right arrow + right arrow`,
-    action: "move to the third character",
-    cursorPlacement: "the beginning",
-    keyword: "Right",
-    activeKeys: [],
-    minKeystrokes: 2,
-    startingCursorPosition: [0, 0],
-    finalCursorLocation: [2, 2],
-  },
-  {
-    chord: `right arrow + right arrow + right arrow`,
-    action: "move to the third character",
-    cursorPlacement: "the beginning",
-    keyword: "Right",
-    activeKeys: [],
-    minKeystrokes: 3,
-    startingCursorPosition: [0, 0],
-    finalCursorLocation: [3, 3],
-  },
-  {
-    chord: `right arrow + right arrow + right arrow + right arrow`,
-    action: "move to the fourth character",
-    cursorPlacement: "the beginning",
-    keyword: "Right",
-    activeKeys: [],
-    minKeystrokes: 4,
-    startingCursorPosition: [0, 0],
-    finalCursorLocation: [4, 4],
-  },
-  {
-    chord: `right arrow + right arrow + right arrow + right arrow + right arrow`,
-    action: "move to the fifth character",
-    cursorPlacement: "the beginning",
-    keyword: "Right",
-    activeKeys: [],
-    minKeystrokes: 5,
-    startingCursorPosition: [0, 0],
-    finalCursorLocation: [5, 5],
-  },
-  {
-    chord: `${isMac ? "option" : "alt"} + right arrow`,
-    action: "move to the end of the first word",
-    cursorPlacement: "the beginning",
-    keyword: "Right",
-    activeKeys: ["alt"],
-    minKeystrokes: 2,
-    startingCursorPosition: [0, 0],
-    finalCursorLocation: [5, 5],
-  },
-  {
-    chord: `${isMac ? "option" : "alt"} + right arrow + right arrow`,
-    action: "move to the end of the second word",
-    cursorPlacement: "the beginning",
-    keyword: "Right",
-    activeKeys: ["alt"],
-    minKeystrokes: 3,
-    startingCursorPosition: [0, 0],
-    finalCursorLocation: [11, 11],
-  },
-  {
-    chord: `${
-      isMac ? "option" : "alt"
-    } + right arrow + right arrow + right arrow`,
-    action: "move to the end of the third word",
-    cursorPlacement: "the beginning",
-    keyword: "Right",
-    activeKeys: ["alt"],
-    minKeystrokes: 4,
-    startingCursorPosition: [0, 0],
-    finalCursorLocation: [17, 17],
-  },
-  {
-    chord: `${
-      isMac ? "option" : "alt"
-    } + right arrow + right arrow + right arrow + right arrow`,
-    action: "move to the end of the fourth word",
-    cursorPlacement: "the beginning",
-    keyword: "Right",
-    activeKeys: ["alt"],
-    minKeystrokes: 5,
-    startingCursorPosition: [0, 0],
-    finalCursorLocation: [21, 21],
-  },
-  {
-    chord: `${
-      isMac ? "option" : "alt"
-    } + right arrow + right arrow + right arrow + right arrow + ...`,
-    action: "move to the end of the line",
-    cursorPlacement: "the beginning",
-    keyword: "Right",
-    activeKeys: ["alt"],
-    minKeystrokes: 9,
-    startingCursorPosition: [0, 0],
-    finalCursorLocation: [55, 55],
-  },
-  {
-    chord: `${isMac ? "command" : "Windows"} + right arrow`,
-    action: "skip to the end of the line",
-    cursorPlacement: "the beginning",
-    keyword: "Right",
-    activeKeys: ["meta"],
-    minKeystrokes: 2,
-    finalCursorLocation: [56, 56],
-  },
-  {
-    chord: `${isMac ? "command" : "Windows"} + left arrow`,
-    action: "skip to the beginning of the line",
-    cursorPlacement: "the middle",
-    keyword: "Left",
-    activeKeys: ["meta"],
-    minKeystrokes: 2,
-    startingCursorPosition: [12, 12],
-  },
-  {
-    chord: `${isMac ? "command" : "Windows"} + up arrow`,
-    action: "skip to the beginning of the text",
-    cursorPlacement: "the end",
-    keyword: "Up",
-    activeKeys: ["meta"],
-    minKeystrokes: 2,
-    startingCursorPosition: [141, 141],
-    finalCursorLocation: [0, 0],
-  },
-  {
-    chord: `${isMac ? "command" : "Windows"} + down arrow`,
-    action: "skip to the end of the text",
-    cursorPlacement: "the beginning",
-    keyword: "Down",
-    activeKeys: ["meta"],
-    minKeystrokes: 2,
-    finalCursorLocation: [141, 141],
-  },
-  {
-    chord: `${isMac ? "option" : "alt"} + shift + right arrow`,
-    action: "highlight the first word",
-    cursorPlacement: "the beginning of the text",
-    keyword: "Right",
-    activeKeys: ["alt", "shift"],
-    minKeystrokes: 3,
-    finalCursorLocation: [0, 5],
-  },
-  {
-    chord: `${isMac ? "option" : "alt"} + shift + left arrow`,
-    action: "highlight the first word",
-    cursorPlacement: "after the first word",
-    keyword: "Left",
-    activeKeys: ["alt", "shift"],
-    minKeystrokes: 3,
-    startingCursorPosition: [5, 5],
-    finalCursorLocation: [0, 5],
-  },
-  {
-    chord: `${isMac ? "option" : "alt"} + shift + down arrow`,
-    action: "highlight the first line",
-    cursorPlacement: "the beginning of the text",
-    keyword: "Down",
-    activeKeys: ["alt", "shift"],
-    minKeystrokes: 3,
-    finalCursorLocation: [0, 57],
-  },
-  {
-    chord: `${isMac ? "option" : "alt"} + shift + up arrow`,
-    action: "highlight the first line",
-    cursorPlacement: "at the end of the first line",
-    keyword: "Up",
-    activeKeys: ["alt", "shift"],
-    minKeystrokes: 3,
-    startingCursorPosition: [56, 56],
-    finalCursorLocation: [0, 56],
-  },
-  {
-    chord: `${isMac ? "option" : "alt"} + delete`,
-    action: "delete the first word",
-    cursorPlacement: "after the first word",
-    keyword: "Backspace",
-    activeKeys: ["alt"],
-    minKeystrokes: 2,
-    startingCursorPosition: [5, 5],
-    finalCursorLocation: [0, 0],
-  },
-  {
-    chord: `${isMac ? "command" : "Windows"} + delete`,
-    action: "delete the first line",
-    cursorPlacement: "at the end of the first line",
-    keyword: "Backspace",
-    activeKeys: ["meta"],
-    minKeystrokes: 2,
-    startingCursorPosition: [56, 56],
-    finalCursorLocation: [0, 0],
-  },
-  {
-    chord: `control + K`,
-    action: "delete the last word of the first line",
-    cursorPlacement: "before the last word of the first line",
-    keyword: "K",
-    activeKeys: ["control"],
-    minKeystrokes: 2,
-    startingCursorPosition: [50, 50],
-    finalCursorLocation: [50, 50],
-  },
-];
-
 isMobile
   ? (mainDiv.style.display = "none")
   : (mobileDiv.style.display = "none");
 
 const generateLabelText = (levelIndex) => {
-  level = levels[levelIndex];
+  level = levelsData[levelIndex];
   labelText = `<h3>Level ${levelIndex + 1}</h3>
         <h4><strong>${level.chord}</strong></h4>
         <div>Use these keys to ${level.action} with the text-cursor at ${
@@ -272,8 +57,12 @@ if (isSafari) {
   safari.style.display = "block";
 }
 
+console.log(window.levels);
+
+const levelsData = JSON.parse(localStorage.levels);
+
 const prepareTextArea = (levelIndex) => {
-  const level = levels[levelIndex];
+  const level = levelsData[levelIndex];
   generateLabelText(levelIndex);
   label.innerHTML = labelText;
   textarea.value = text;
@@ -337,7 +126,7 @@ playBtn.addEventListener("click", () => {
 });
 
 nextBtn.addEventListener("click", () => {
-  if (levelIndex == levels.length - 1) {
+  if (levelIndex == levelsData.length - 1) {
     nextBtn.disabled = true;
     return;
   }
@@ -357,7 +146,8 @@ const handleTextareaKeydown = (e) => {
     return;
   }
 
-  const level = levels[levelIndex];
+  const level = levelsData[levelIndex];
+  console.log(e.code);
 
   if (!e.code.includes("Tab") && !e.code.includes("Escape")) {
     counter.innerText = ++keystrokes;
@@ -404,7 +194,7 @@ const handleLevelWin = (minKeystrokes) => {
   if (keystrokes == minKeystrokes) {
     keystrokesText.style.visibility = "visible";
   }
-  if (levelIndex !== levels.length - 1) {
+  if (levelIndex !== levelsData.length - 1) {
     nextBtn.disabled = false;
   } else {
     offerMonkeyGame();
@@ -415,7 +205,7 @@ textarea.addEventListener("keyup", () => {
   if (!areRequirementsMet) {
     return;
   }
-  const level = levels[levelIndex];
+  const level = levelsData[levelIndex];
   const finalCursorLocation = level.finalCursorLocation
     ? level.finalCursorLocation
     : [0, 0];
