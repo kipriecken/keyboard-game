@@ -2,6 +2,8 @@ const textarea = document.getElementById("textarea");
 const editable = document.getElementById("editable");
 const achieved = document.getElementsByClassName("achieved")[0];
 const intro = document.getElementsByClassName("intro")[0];
+const partTwo = document.getElementsByClassName("part-two")[0];
+const partThree = document.getElementsByClassName("part-three")[0];
 const safari = document.getElementsByClassName("safari")[0];
 const preGame = document.getElementsByClassName("pre-game")[0];
 const windows = document.getElementsByClassName("windows")[0];
@@ -115,23 +117,10 @@ const resetTextarea = (level) => {
 };
 
 focusBtn.addEventListener("focus", () => {
-  focusBtn.innerText = "Focused!";
-});
-focusBtn.addEventListener("blur", () => {
-  focusBtn.innerText = "Focus on me";
+  partTwo.style.display = "block";
 });
 focusTooBtn.addEventListener("focus", () => {
-  focusTooBtn.innerText = "Focused!";
-});
-focusTooBtn.addEventListener("blur", () => {
-  focusTooBtn.innerText = "Focus on me too";
-});
-
-playBtn.addEventListener("focus", () => {
-  playBtn.innerText = "Hit return";
-});
-playBtn.addEventListener("blur", () => {
-  playBtn.innerText = "Focus and hit return";
+  partThree.style.display = "block";
 });
 
 playBtn.addEventListener("click", () => {
