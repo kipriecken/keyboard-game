@@ -54,7 +54,7 @@ isMobile
   ? (mainDiv.style.display = "none")
   : (mobileDiv.style.display = "none");
 
-if (!isMac) windows.display = "block";
+if (!isMac) windows.style.display = "block";
 
 const generateLabelText = (levelIndex) => {
   level = levelsData[levelIndex];
