@@ -4,6 +4,7 @@ const achieved = document.getElementsByClassName("achieved")[0];
 const intro = document.getElementsByClassName("intro")[0];
 const safari = document.getElementsByClassName("safari")[0];
 const preGame = document.getElementsByClassName("pre-game")[0];
+const windows = document.getElementsByClassName("windows")[0];
 const focusBtn = document.getElementsByClassName("focus")[0];
 const focusTooBtn = document.getElementsByClassName("focus-too")[0];
 const gamePlay = document.getElementsByClassName("game-play")[0];
@@ -52,6 +53,8 @@ const modifierToKeyName = {
 isMobile
   ? (mainDiv.style.display = "none")
   : (mobileDiv.style.display = "none");
+
+if (!isMac) windows.display = "block";
 
 const generateLabelText = (levelIndex) => {
   level = levelsData[levelIndex];

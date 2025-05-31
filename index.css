@@ -33,6 +33,10 @@ body {
   align-items: center;
 }
 
+.windows {
+  display: none;
+}
+
 .outer {
   height: 100%;
 }
