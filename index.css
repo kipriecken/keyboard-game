@@ -66,6 +66,7 @@ body {
 
 .game-play {
   display: none;
+  position: relative;
 }
 
 .main {
@@ -80,8 +81,37 @@ body {
   justify-content: space-evenly;
 }
 
+.container-mirror {
+  position: absolute;
+  top: 36.2%;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  color: transparent;
+  visibility: hidden;
+}
+
+.container-cursor {
+  position: absolute;
+  background-color: lab(7.93% 10.21 -26.58);
+  width: 4px;
+  animation: blink 0.9s infinite;
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    background-color: transparent;
+  }
+  50% {
+    background-color: lab(7.93% 10.21 -26.58);
+  }
+}
+
 textarea {
   background: transparent;
+  position: relative;
   border-radius: 1em;
   padding: 4px;
   /* font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
@@ -90,10 +120,12 @@ textarea {
   /* "Lucida Sans Unicode", Geneva, Verdana, sans-serif; */
   /* font-family: sans-serif; */
   font-size: 2vh;
+  caret-color: transparent;
 }
 
 .text-game {
   height: 100%;
+  position: relative;
 }
 
 label {
@@ -110,6 +142,10 @@ label {
   font-family: arial;
   font-weight: 600;
   text-align: center;
+}
+
+.relative {
+  position: relative;
 }
 
 button {

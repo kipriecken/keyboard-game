@@ -50,13 +50,16 @@
           </div>
           <div class="game-play container">
             <label for="text"></label>
-            <textarea
-              name="text"
-              id="textarea"
-              rows="5"
-              cols="75"
-              spellcheck="false"
-            ></textarea>
+            <div class="relative">
+              <textarea
+                name="text"
+                id="textarea"
+                rows="5"
+                cols="75"
+                spellcheck="false"
+                class="container-textarea"
+              ></textarea>
+            </div>
             <div class="btn-container">
               <button id="next" disabled="true">Next</button>
               <button class="reset" onclick="handleReset()">Reset</button>

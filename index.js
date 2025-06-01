@@ -58,6 +58,72 @@ isMobile
 
 if (!isMac) windows.style.display = "block";
 
+const mirroredEle = document.createElement("div");
+mirroredEle.textContent = textarea.value;
+mirroredEle.classList.add("container-mirror");
+textGameContainer.prepend(mirroredEle);
+
+const textareaStyles = window.getComputedStyle(textarea);
+[
+  "border",
+  "boxSizing",
+  "fontFamily",
+  "fontSize",
+  "fontWeight",
+  "letterSpacing",
+  "lineHeight",
+  "padding",
+  "textDecoration",
+  "textIndent",
+  "textTransform",
+  "whiteSpace",
+  "wordSpacing",
+  "wordWrap",
+].forEach((property) => {
+  mirroredEle.style[property] = textareaStyles[property];
+});
+mirroredEle.style.borderColor = "transparent";
+const parseValue = (v) => (v.endsWith("px") ? parseInt(v.slice(0, -2), 10) : 0);
+const borderWidth = parseValue(textareaStyles.borderWidth);
+
+const cursorPos = textarea.selectionStart;
+const textBeforeCursor = textarea.value.substring(0, cursorPos);
+const textAfterCursor = textarea.value.substring(cursorPos);
+const pre = document.createTextNode(textBeforeCursor);
+const post = document.createTextNode(textAfterCursor);
+const caretEl = document.createElement("span");
+caretEl.classList.add("container-cursor");
+caretEl.innerHTML = "&nbsp;";
+
+mirroredEle.innerHTML = "";
+mirroredEle.append(pre, caretEl, post);
+
+const ro = new ResizeObserver(() => {
+  mirroredEle.style.width = `${textarea.clientWidth + 2 * borderWidth}px`;
+  mirroredEle.style.height = `${textarea.clientHeight + 2 * borderWidth}px`;
+});
+ro.observe(textarea);
+
+textarea.addEventListener("scroll", () => {
+  mirroredEle.scrollTop = textarea.scrollTop;
+});
+
+const handleCaretMovement = () => {
+  const cursorPos = textarea.selectionStart;
+  const textBeforeCursor = textarea.value.substring(0, cursorPos);
+  const textAfterCursor = textarea.value.substring(cursorPos);
+  const pre = document.createTextNode(textBeforeCursor);
+  const post = document.createTextNode(textAfterCursor);
+  const caretEl = document.createElement("span");
+  caretEl.classList.add("container-cursor");
+  caretEl.innerHTML = "&nbsp;";
+
+  mirroredEle.innerHTML = "";
+  mirroredEle.append(pre, caretEl, post);
+};
+
+textarea.addEventListener("selectionchange", handleCaretMovement);
+
 const generateLabelText = (levelIndex) => {
   level = levelsData[levelIndex];
   let chord = "";
@@ -127,6 +193,7 @@ playBtn.addEventListener("click", () => {
   intro.style.visibility = "visible";
   preGame.style.display = "none";
   gamePlay.style.display = "flex";
+  mirroredEle.style.visibility = "visible";
   handleReset();
 });
 
@@ -163,6 +230,8 @@ const handleTextareaKeydown = (e) => {
   ) {
     return;
   }
+
+  handleCaretMovement();
 
   const areActiveKeysPressed = () => {
     return (
