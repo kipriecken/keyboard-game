@@ -15,7 +15,7 @@ const monkeyBtn = document.getElementsByClassName("monkey-btn")[0];
 const playBtn = document.getElementsByClassName("play")[0];
 const resetBtn = document.getElementsByClassName("reset")[0];
 const counter = document.getElementsByClassName("counter")[0];
-const textGameContainer = document.getElementsByClassName("text-game")[0];
+const innerContainer = document.getElementsByClassName("inner")[0];
 const bananaContainer = document.getElementsByClassName("banana")[0];
 const keystrokesText = document.getElementsByClassName("keystrokes")[0];
 const nextBtn = document.getElementById("next");
@@ -61,7 +61,7 @@ if (!isMac) windows.style.display = "block";
 const mirroredEle = document.createElement("div");
 mirroredEle.textContent = textarea.value;
 mirroredEle.classList.add("container-mirror");
-textGameContainer.prepend(mirroredEle);
+innerContainer.prepend(mirroredEle);
 
 const textareaStyles = window.getComputedStyle(textarea);
 [
@@ -171,7 +171,7 @@ const handleReset = () => {
 };
 
 const resetTextarea = (level) => {
-  textGameContainer.style.display = "flex";
+  innerContainer.style.display = "flex";
   bananaContainer.style.display = "none";
   prepareTextArea(level);
   areRequirementsMet = false;
@@ -208,7 +208,7 @@ nextBtn.addEventListener("click", () => {
 });
 
 monkeyBtn.addEventListener("click", () => {
-  textGameContainer.style.display = "none";
+  innerContainer.style.display = "none";
   bananaContainer.style.display = "flex";
   editable.focus();
 });
