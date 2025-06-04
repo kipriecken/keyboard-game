@@ -14,7 +14,7 @@ const monkey = document.getElementsByClassName("monkey")[0];
 const monkeyBtn = document.getElementsByClassName("monkey-btn")[0];
 const playBtn = document.getElementsByClassName("play")[0];
 const resetBtn = document.getElementsByClassName("reset")[0];
-const counter = document.getElementsByClassName("counter")[0];
+const keystrokesCounter = document.getElementsByClassName("counter")[0];
 const innerContainer = document.getElementsByClassName("inner")[0];
 const bananaContainer = document.getElementsByClassName("banana")[0];
 const keystrokesText = document.getElementsByClassName("keystrokes")[0];
@@ -58,8 +58,7 @@ isMobile
 
 if (!isMac) windows.style.display = "block";
 
-const generateLabelText = (levelIndex) => {
-  level = levelsData[levelIndex];
+const populateLabel = (level) => {
   let chord = "";
   level.activeKeys.map((keyName) =>
     isMac
@@ -73,16 +72,14 @@ const generateLabelText = (levelIndex) => {
         <div>Use these keys to ${level.action} with the text-cursor at ${
     level.cursorPlacement
   }.</div>`;
+  label.innerHTML = labelText;
 };
 
 if (isSafari) {
   safari.style.display = "block";
 }
-
-const prepareTextArea = (levelIndex) => {
-  const level = levelsData[levelIndex];
-  generateLabelText(levelIndex);
-  label.innerHTML = labelText;
+const prepareTextarea = (level) => {
+  textarea.style.display = "block";
   textarea.value = text;
   textarea.focus();
   textarea.setSelectionRange(
@@ -91,8 +88,14 @@ const prepareTextArea = (levelIndex) => {
   );
 };
 
-counter.innerText = keystrokes;
-prepareTextArea(levelIndex);
+const updateLevel = (levelIndex) => {
+  const level = levelsData[levelIndex];
+  populateLabel(level);
+  prepareTextarea(level);
+};
+
+keystrokesCounter.innerText = keystrokes;
+updateLevel(levelIndex);
 
 const handleReset = () => {
   keystrokesText.style.visibility = "hidden";
@@ -104,15 +107,15 @@ const handleReset = () => {
   resetBtn.style.display = "none";
 };
 
-const resetTextarea = (level) => {
+const resetTextarea = (levelIndex) => {
   innerContainer.style.display = "flex";
   bananaContainer.style.display = "none";
-  prepareTextArea(level);
+  updateLevel(levelIndex);
   areRequirementsMet = false;
   nextBtn.style.display = "inline";
   nextBtn.disabled = true;
   achieved.style.display = "none";
-  counter.innerText = keystrokes = 0;
+  keystrokesCounter.innerText = keystrokes = 0;
   keystrokesText.style.visibility = "hidden";
 };
 
@@ -154,7 +157,7 @@ const handleTextareaKeydown = (e) => {
   const level = levelsData[levelIndex];
 
   if (!e.code.includes("Tab") && !e.code.includes("Escape")) {
-    counter.innerText = ++keystrokes;
+    keystrokesCounter.innerText = ++keystrokes;
   }
   if (
     !e.code.includes("Arrow") &&

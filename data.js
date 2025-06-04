@@ -97,23 +97,6 @@ const levels = [
     finalCursorLocation: [21, 21],
   },
   {
-    // If more than five, add ellipsis
-    actionKeys: [
-      "right arrow",
-      "right arrow",
-      "right arrow",
-      "right arrow",
-      "right arrow",
-    ],
-    action: "move to the end of the line",
-    cursorPlacement: "the beginning",
-    keyword: "Right",
-    activeKeys: ["alt"],
-    minKeystrokes: 9,
-    startingCursorPosition: [0, 0],
-    finalCursorLocation: [55, 55],
-  },
-  {
     actionKeys: ["right arrow"],
     action: "skip to the end of the line",
     cursorPlacement: "the beginning",
