@@ -138,9 +138,8 @@ nextBtn.addEventListener("click", () => {
     nextBtn.disabled = true;
     return;
   }
-  resetTextarea(levelIndex + 1);
+  resetTextarea(++levelIndex);
   isLevelOver = false;
-  levelIndex++;
 });
 
 monkeyBtn.addEventListener("click", () => {
