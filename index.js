@@ -35,21 +35,28 @@ const isMobile =
 const text =
   "Lorem ipsum dolor sit amet consectetur adipisicing elit.\nSuscipit nemo odit optio architecto aperiam incidunt pariatur reiciendis ea!\nUt, id.";
 
+// Fetch data
+const levelsData = window.games;
+
 // State
 let labelText = "";
+let gameIndex = 0;
 let levelIndex = 0;
 let keystrokes = 0;
 let areRequirementsMet = false;
 let isLevelOver = false;
 
-// Fetch data
-const levelsData = window.levels;
+const indexToGameTitle = {
+  0: "Navigation",
+  1: "Highlighting",
+  2: "Deletion",
+};
 
 const modifierToKeyName = {
-  alt: ["option", "alt"],
-  meta: ["command", "windows"],
-  shift: ["shift", "shift"],
-  control: ["control", "control"],
+  alt: "option",
+  meta: "command",
+  shift: "shift",
+  control: "control",
 };
 
 isMobile
@@ -60,14 +67,13 @@ if (!isMac) windows.style.display = "block";
 
 const populateLabel = (level) => {
   let chord = "";
-  level.activeKeys.map((keyName) =>
-    isMac
-      ? (chord += `${modifierToKeyName[keyName][0]} + `)
-      : (chord += `${modifierToKeyName[keyName][1]} + `)
+  level.activeKeys.map(
+    (keyName) => (chord += `${modifierToKeyName[keyName]} + `)
   );
   level.actionKeys.map((key) => (chord += `${key} + `));
   chord = chord.slice(0, -3);
-  labelText = `<h3>Level ${levelIndex + 1}</h3>
+  labelText = `<h3>${indexToGameTitle[gameIndex]}</h3>
+        <h3>Level ${levelIndex + 1}</h3>
         <h4><strong>${chord}</strong></h4>
         <div>Use these keys to ${level.action} with the text-cursor at ${
     level.cursorPlacement
@@ -88,8 +94,11 @@ const prepareTextarea = (level) => {
   );
 };
 
+let isOnFinalLevel = () => levelIndex == levelsData[gameIndex].length - 1;
+let isOnFinalGame = () => gameIndex == levelsData.length - 1;
+
 const updateLevel = (levelIndex) => {
-  const level = levelsData[levelIndex];
+  const level = levelsData[gameIndex][levelIndex];
   populateLabel(level);
   prepareTextarea(level);
 };
@@ -99,6 +108,7 @@ updateLevel(levelIndex);
 
 const handleReset = () => {
   keystrokesText.style.visibility = "hidden";
+  gameIndex = 0;
   levelIndex = 0;
   resetTextarea(levelIndex);
   isLevelOver = false;
@@ -134,9 +144,14 @@ playBtn.addEventListener("click", () => {
 });
 
 nextBtn.addEventListener("click", () => {
-  if (levelIndex == levelsData.length - 1) {
-    nextBtn.disabled = true;
-    return;
+  if (isOnFinalLevel()) {
+    if (isOnFinalGame()) {
+      gameIndex = 0; // not sure if should be done here or later
+      nextBtn.disabled = true;
+      return;
+    }
+    ++gameIndex;
+    levelIndex = 0;
   }
   resetTextarea(++levelIndex);
   isLevelOver = false;
@@ -153,7 +168,7 @@ const handleTextareaKeydown = (e) => {
     return;
   }
 
-  const level = levelsData[levelIndex];
+  const level = levelsData[gameIndex][levelIndex];
 
   if (!e.code.includes("Tab") && !e.code.includes("Escape")) {
     keystrokesCounter.innerText = ++keystrokes;
@@ -200,10 +215,10 @@ const handleLevelWin = (minKeystrokes) => {
   if (keystrokes == minKeystrokes) {
     keystrokesText.style.visibility = "visible";
   }
-  if (levelIndex !== levelsData.length - 1) {
-    nextBtn.disabled = false;
-  } else {
+  if (isOnFinalLevel() && isOnFinalGame()) {
     offerMonkeyGame();
+  } else {
+    nextBtn.disabled = false;
   }
 };
 
@@ -211,7 +226,7 @@ textarea.addEventListener("keyup", () => {
   if (!areRequirementsMet) {
     return;
   }
-  const level = levelsData[levelIndex];
+  const level = levelsData[gameIndex][levelIndex];
   const finalCursorLocation = level.finalCursorLocation
     ? level.finalCursorLocation
     : [0, 0];
