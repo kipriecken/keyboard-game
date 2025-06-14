@@ -72,8 +72,8 @@ const populateLabel = (level) => {
   );
   level.actionKeys.map((key) => (chord += `${key} + `));
   chord = chord.slice(0, -3);
-  labelText = `<h3>${indexToGameTitle[gameIndex]}</h3>
-        <h3>Level ${levelIndex + 1}</h3>
+  labelText = `
+        <h3>${indexToGameTitle[gameIndex]}: Level ${levelIndex + 1}</h3>
         <h4><strong>${chord}</strong></h4>
         <div>Use these keys to ${level.action} with the text-cursor at ${
     level.cursorPlacement
