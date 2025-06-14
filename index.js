@@ -97,30 +97,30 @@ const prepareTextarea = (level) => {
 let isOnFinalLevel = () => levelIndex == levelsData[gameIndex].length - 1;
 let isOnFinalGame = () => gameIndex == levelsData.length - 1;
 
-const updateLevel = (levelIndex) => {
+const updateLevel = () => {
   const level = levelsData[gameIndex][levelIndex];
   populateLabel(level);
   prepareTextarea(level);
 };
 
 keystrokesCounter.innerText = keystrokes;
-updateLevel(levelIndex);
+updateLevel();
 
 const handleReset = () => {
   keystrokesText.style.visibility = "hidden";
   gameIndex = 0;
   levelIndex = 0;
-  resetTextarea(levelIndex);
+  resetTextarea();
   isLevelOver = false;
   keystrokes = 0;
   monkeyBtn.style.display = "none";
   resetBtn.style.display = "none";
 };
 
-const resetTextarea = (levelIndex) => {
+const resetTextarea = () => {
   innerContainer.style.display = "flex";
   bananaContainer.style.display = "none";
-  updateLevel(levelIndex);
+  updateLevel();
   areRequirementsMet = false;
   nextBtn.style.display = "inline";
   nextBtn.disabled = true;
@@ -153,7 +153,8 @@ nextBtn.addEventListener("click", () => {
     ++gameIndex;
     levelIndex = 0;
   }
-  resetTextarea(++levelIndex);
+  ++levelIndex;
+  resetTextarea();
   isLevelOver = false;
 });
 
