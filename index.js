@@ -152,8 +152,9 @@ nextBtn.addEventListener("click", () => {
     }
     ++gameIndex;
     levelIndex = 0;
+  } else {
+    ++levelIndex;
   }
-  ++levelIndex;
   resetTextarea();
   isLevelOver = false;
 });
