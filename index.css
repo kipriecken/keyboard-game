@@ -68,6 +68,7 @@ body {
 }
 
 .is-mobile {
+  text-align: center;
   padding: 10rem;
 }
 

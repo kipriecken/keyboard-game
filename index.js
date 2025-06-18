@@ -19,7 +19,6 @@ const innerContainer = document.getElementsByClassName("inner")[0];
 const bananaContainer = document.getElementsByClassName("banana")[0];
 const keystrokesText = document.getElementsByClassName("keystrokes")[0];
 const nextBtn = document.getElementById("next");
-const mainDiv = document.getElementsByClassName("main")[0];
 const mobileDiv = document.getElementsByClassName("is-mobile")[0];
 const label = document.getElementsByTagName("label")[0];
 
@@ -60,7 +59,7 @@ const modifierToKeyName = {
 };
 
 isMobile
-  ? (mainDiv.style.display = "none")
+  ? (innerContainer.style.display = "none")
   : (mobileDiv.style.display = "none");
 
 if (!isMac) windows.style.display = "block";
