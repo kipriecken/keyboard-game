@@ -69,12 +69,14 @@ const populateLabel = (level) => {
   level.activeKeys.map(
     (keyName) => (chord += `${modifierToKeyName[keyName]} + `)
   );
-  level.actionKeys.map((key) => (chord += `${key} + `));
-  chord = chord.slice(0, -3);
+  level.actionKeys.map((key) => (chord += `${key}, `));
+  chord = chord.slice(0, -2);
   labelText = `
         <h3>${indexToGameTitle[gameIndex]}: Level ${levelIndex + 1}</h3>
         <h4><strong>${chord}</strong></h4>
-        <div>Use these keys to ${level.action} with the text-cursor at ${
+        <div>Use ${
+          level.activeKeys.length > 1 ? "these keys" : "this key"
+        } to ${level.action} with the text-cursor at ${
     level.cursorPlacement
   }.</div>`;
   label.innerHTML = labelText;
@@ -206,7 +208,7 @@ const offerMonkeyGame = () => {
   nextBtn.style.display = "none";
   achieved.innerText =
     achieved.innerText +
-    "\n\nThank you for playing and congratulations! Please tab to the Reset button to start again.\n\nOr, try the banana challenge 🐵";
+    "\n\nThank you for playing and congratulations! Please tab to the Reset button to start again.\n\nOr, try the monkey game:";
 };
 
 const handleLevelWin = (minKeystrokes) => {
@@ -245,6 +247,6 @@ editable.addEventListener("keyup", (e) => {
   const targetString =
     "I Have Cherry I Have I Have Apple I Have I Have Strawberry";
   if (editable.innerText == targetString) {
-    monkey.style.display = "block";
+    monkey.style.display = "flex";
   }
 });
