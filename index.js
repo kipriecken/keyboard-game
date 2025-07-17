@@ -75,7 +75,7 @@ const populateLabel = (level) => {
         <h3>${indexToGameTitle[gameIndex]}: Level ${levelIndex + 1}</h3>
         <h4><strong>${chord}</strong></h4>
         <div>Use ${
-          level.activeKeys.length > 1 ? "these keys" : "this key"
+          level.actionKeys.length > 1 ? "these keys" : "this key"
         } to ${level.action} with the text-cursor at ${
     level.cursorPlacement
   }.</div>`;
