@@ -3,8 +3,8 @@ const games = [
   [
     {
       actionKeys: ["right arrow"],
-      action: "move to the second character",
       cursorPlacement: "the beginning",
+      newCursorPlacement: "after the first character",
       keyword: "Right",
       activeKeys: [],
       minKeystrokes: 1,
@@ -13,8 +13,8 @@ const games = [
     },
     {
       actionKeys: ["right arrow", "right arrow"],
-      action: "move to the third character",
       cursorPlacement: "the beginning",
+      newCursorPlacement: "after the second character",
       keyword: "Right",
       activeKeys: [],
       minKeystrokes: 2,
@@ -23,8 +23,8 @@ const games = [
     },
     {
       actionKeys: ["right arrow", "right arrow", "right arrow"],
-      action: "move to the third character",
       cursorPlacement: "the beginning",
+      newCursorPlacement: "after the third character",
       keyword: "Right",
       activeKeys: [],
       minKeystrokes: 3,
@@ -33,8 +33,8 @@ const games = [
     },
     {
       actionKeys: ["right arrow", "right arrow", "right arrow", "right arrow"],
-      action: "move to the fourth character",
       cursorPlacement: "the beginning",
+      newCursorPlacement: "to after the fourth character",
       keyword: "Right",
       activeKeys: [],
       minKeystrokes: 4,
@@ -49,8 +49,8 @@ const games = [
         "right arrow",
         "right arrow",
       ],
-      action: "move to the fifth character",
       cursorPlacement: "the beginning",
+      newCursorPlacement: "after the fifth character",
       keyword: "Right",
       activeKeys: [],
       minKeystrokes: 5,
@@ -59,8 +59,8 @@ const games = [
     },
     {
       actionKeys: ["right arrow"],
-      action: "move to the end of the first word",
       cursorPlacement: "the beginning",
+      newCursorPlacement: "the end of the first word",
       keyword: "Right",
       activeKeys: ["alt"],
       minKeystrokes: 2,
@@ -69,8 +69,8 @@ const games = [
     },
     {
       actionKeys: ["right arrow", "right arrow"],
-      action: "move to the end of the second word",
       cursorPlacement: "the beginning",
+      newCursorPlacement: "the end of the second word",
       keyword: "Right",
       activeKeys: ["alt"],
       minKeystrokes: 3,
@@ -79,8 +79,8 @@ const games = [
     },
     {
       actionKeys: ["right arrow", "right arrow", "right arrow"],
-      action: "move to the end of the third word",
       cursorPlacement: "the beginning",
+      newCursorPlacement: "the end of the third word",
       keyword: "Right",
       activeKeys: ["alt"],
       minKeystrokes: 4,
@@ -89,8 +89,8 @@ const games = [
     },
     {
       actionKeys: ["right arrow", "right arrow", "right arrow", "right arrow"],
-      action: "move to the end of the fourth word",
       cursorPlacement: "the beginning",
+      newCursorPlacement: "the end of the fourth word",
       keyword: "Right",
       activeKeys: ["alt"],
       minKeystrokes: 5,
@@ -99,8 +99,8 @@ const games = [
     },
     {
       actionKeys: ["right arrow"],
-      action: "skip to the end of the line",
       cursorPlacement: "the beginning",
+      newCursorPlacement: "the end of the line",
       keyword: "Right",
       activeKeys: ["meta"],
       minKeystrokes: 2,
@@ -108,8 +108,8 @@ const games = [
     },
     {
       actionKeys: ["left arrow"],
-      action: "skip to the beginning of the line",
       cursorPlacement: "the middle",
+      newCursorPlacement: "the beginning of the line",
       keyword: "Left",
       activeKeys: ["meta"],
       minKeystrokes: 2,
@@ -117,8 +117,8 @@ const games = [
     },
     {
       actionKeys: ["up arrow"],
-      action: "skip to the beginning of the text",
       cursorPlacement: "the end",
+      newCursorPlacement: "the beginning of the text",
       keyword: "Up",
       activeKeys: ["meta"],
       minKeystrokes: 2,
@@ -127,8 +127,8 @@ const games = [
     },
     {
       actionKeys: ["down arrow"],
-      action: "skip to the end of the text",
       cursorPlacement: "the beginning",
+      newCursorPlacement: "the end of the text",
       keyword: "Down",
       activeKeys: ["meta"],
       minKeystrokes: 2,

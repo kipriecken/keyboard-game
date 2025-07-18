@@ -74,11 +74,13 @@ const populateLabel = (level) => {
   labelText = `
         <h3>${indexToGameTitle[gameIndex]}: Level ${levelIndex + 1}</h3>
         <h4><strong>${chord}</strong></h4>
-        <div>Use ${
-          level.actionKeys.length > 1 ? "these keys" : "this key"
-        } to ${level.action} with the text-cursor at ${
-    level.cursorPlacement
-  }.</div>`;
+        <div>Use the above key${
+          level.actionKeys.length + level.activeKeys.length > 1 ? "s" : ""
+        } to ${
+    level.action
+      ? `${level.action}.`
+      : `move the blinking cursor from ${level.cursorPlacement} to ${level.newCursorPlacement}.`
+  }</div>`;
   label.innerHTML = labelText;
 };
 
@@ -208,7 +210,7 @@ const offerMonkeyGame = () => {
   nextBtn.style.display = "none";
   achieved.innerText =
     achieved.innerText +
-    "\n\nThank you for playing and congratulations! Please tab to the Reset button to start again.\n\nOr, try the monkey game:";
+    "\nYou've completed the tutorial!\nPlease tab to the Reset button to play again.\nOr, try the monkey game:";
 };
 
 const handleLevelWin = (minKeystrokes) => {
