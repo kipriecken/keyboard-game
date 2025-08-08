@@ -2,9 +2,8 @@ body {
   height: 100vh;
   background-repeat: no-repeat;
   object-fit: cover;
-  /* background-image: linear-gradient(80deg, lightblue, transparent); */
+  background-image: linear-gradient(80deg, rgb(76, 163, 192), lightblue);
   pointer-events: none;
-  /* background-color: gradient(20, 300); */
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-size: 2.3vh;
   line-height: 1.4;
@@ -17,9 +16,21 @@ body {
   border-bottom: 1px solid grey;
 }
 
+.pre-game {
+  align-items: flex-start;
+  height: 100%;
+}
+
+.pre-game div {
+  align-items: center;
+  flex-direction: column;
+}
+
 .intro {
+  height: 100%;
   margin-top: 1rem;
   text-align: center;
+  display: flex;
 }
 
 .main > .intro {
@@ -94,14 +105,9 @@ body {
 }
 
 textarea {
-  background: transparent;
+  /* background: white; */
   border-radius: 6px;
   padding: 4px;
-  /* font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
-    "Lucida Sans", Arial, sans-serif; */
-  /* font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", */
-  /* "Lucida Sans Unicode", Geneva, Verdana, sans-serif; */
-  /* font-family: sans-serif; */
   font-size: 2vh;
 }
 
@@ -117,6 +123,10 @@ textarea:focus {
 label {
   text-align: center;
   margin: 2em 0;
+}
+
+label > h3 {
+  font-weight: 500;
 }
 
 .label {
