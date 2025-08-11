@@ -4,30 +4,30 @@
     <link rel="stylesheet" href="index.css" />
   </head>
   <body>
-    <div class="header">
-      <div>Keyboard Shortcuts game</div>
-    </div>
-    <div class="is-mobile container">
-      This game has no current applications for mobile devices. Please visit on
-      a computer.
-    </div>
+      <div class="header">
+        <div>Keyboard Shortcuts game</div>
+      </div>
+      <div class="is-mobile container">
+        This game has no current applications for mobile devices. Please visit
+        on a computer.
+      </div>
     <div class="inner container">
       <div class="drawer"></div>
-      <div class="pre-game container">
-        <div class="intro">
+        <div class="pre-game container">
+          <div class="intro">
           <p>Welcome to the Keyboard Shortcuts game!</p>
-          <p class="safari">
-            To play on Safari, check the box at Safari > Preferences > Press Tab
-            to highlight each item on a web page.
-          </p>
-          <p class="windows">
-            Note: unfortunately this game will not work properly on Windows.
-          </p>
+            <p class="safari">
+              To play on Safari, check the box at Safari > Preferences > Press
+              Tab to highlight each item on a web page.
+            </p>
+            <p class="windows">
+              Note: unfortunately this game will not work properly on Windows.
+            </p>
           <p>Let's start by pressing the tab button with your left pinky.</p>
           <div class="btn-container">
             <button class="focus">Tab here to move forward</button>
-          </div>
-          <div class="part-two">
+            </div>
+            <div class="part-two">
             <p>Great!</p>
             <p>Tab lets you walk through elements of a page.</p>
             <p>Shift + tab moves you backward.</p>
@@ -35,62 +35,61 @@
             <div class="btn-container">
               <button class="focus-too">Tab here</button>
             </div>
-          </div>
-          <div class="part-three">
+            </div>
+            <div class="part-three">
             <p>Got it?</p>
             <p>Focus on this final button and hit return to 'click'.</p>
             <div class="btn-container">
               <button class="play">Focus and hit return</button>
             </div>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="game-play container">
-        <div class="label">
-          <label for="text"></label>
-        </div>
-        <div class="relative">
-          <textarea
-            name="text"
-            id="textarea"
-            rows="5"
-            cols="75"
-            spellcheck="false"
-          ></textarea>
-        </div>
-        <div class="stats">
-          <div class="btn-container">
+        <div class="game-play container">
+          <div class="label">
+            <label for="text"></label>
+          </div>
+          <div class="relative">
+            <textarea
+              name="text"
+              id="textarea"
+              rows="5"
+              cols="75"
+              spellcheck="false"
+            ></textarea>
+          </div>
+          <div class="stats">
+            <div class="btn-container">
             <button id="next" disabled="true">Next</button>
             <button class="reset" onclick="handleReset()">Reset</button>
-          </div>
-          <div class="counter-container">
-            Keystrokes: <span class="counter">0</span>
-          </div>
-          <div class="achieved-container">
-            <div class="keystrokes">Minimum keystrokes!</div>
-            <div class="achieved"></div>
+            </div>
+            <div class="counter-container">
+              Keystrokes: <span class="counter">0</span>
+            </div>
+            <div class="achieved-container">
+              <div class="keystrokes">Minimum keystrokes!</div>
+              <div class="achieved"></div>
             <button class="monkey-btn">Monkey game</button>
           </div>
         </div>
+        <div class="sidebar"></div>
       </div>
-      <div class="sidebar"></div>
     </div>
-    <div class="banana container">
-      <div class="help">
-        Help! Can you remove the "banana"s using just the keyboard?
-      </div>
-      <div contenteditable="true" id="editable">
-        I Have Cherry I Have <span class="remove">Banana</span> I Have Apple I
-        Have <span class="remove">Banana</span> I Have Strawberry
-      </div>
-      <div class="monkey">
-        <!-- <div>Happy monkey! 🍌🐵🍌</div> -->
-        <div>Great work!</div>
+      <div class="banana container">
+        <div class="help">
+          Help! Can you remove the "Banana"s using just the keyboard?
+        </div>
+        <div contenteditable="true" id="editable">
+          I Have Cherry I Have <span class="remove">Banana</span> I Have Apple I
+          Have <span class="remove">Banana</span> I Have Strawberry
+        </div>
+        <div class="monkey">
+          <!-- <div>Happy monkey! 🍌🐵🍌</div> -->
+          <div>Great work!</div>
         <div class="btn-container">
           <button onclick="handleReset()">Reset</button>
         </div>
       </div>
-    </div>
     <script src="data.js"></script>
     <script src="index.js"></script>
   </body>
