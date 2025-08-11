@@ -1,8 +1,90 @@
+:root {
+  /* CSS HEX */
+  --charcoal: #28536bff;
+  --rosy-brown: #c2948aff;
+  --air-superiority-blue: #7ea8beff;
+  --isabelline: #f6f0edff;
+  --khaki: #bbb193ff;
+
+  /* SCSS Gradient */
+  --gradient-top: linear-gradient(
+    0deg,
+    #28536bff,
+    #c2948aff,
+    #7ea8beff,
+    #f6f0edff,
+    #bbb193ff
+  );
+  --gradient-right: linear-gradient(
+    90deg,
+    #28536bff,
+    #c2948aff,
+    #7ea8beff,
+    #f6f0edff,
+    #bbb193ff
+  );
+  --gradient-bottom: linear-gradient(
+    180deg,
+    #28536bff,
+    #c2948aff,
+    #7ea8beff,
+    #f6f0edff,
+    #bbb193ff
+  );
+  --gradient-left: linear-gradient(
+    270deg,
+    #28536bff,
+    #c2948aff,
+    #7ea8beff,
+    #f6f0edff,
+    #bbb193ff
+  );
+  --gradient-top-right: linear-gradient(
+    45deg,
+    #28536bff,
+    #c2948aff,
+    #7ea8beff,
+    #f6f0edff,
+    #bbb193ff
+  );
+  --gradient-bottom-right: linear-gradient(
+    135deg,
+    #28536bff,
+    #c2948aff,
+    #7ea8beff,
+    #f6f0edff,
+    #bbb193ff
+  );
+  --gradient-top-left: linear-gradient(
+    225deg,
+    #28536bff,
+    #c2948aff,
+    #7ea8beff,
+    #f6f0edff,
+    #bbb193ff
+  );
+  --gradient-bottom-left: linear-gradient(
+    315deg,
+    #28536bff,
+    #c2948aff,
+    #7ea8beff,
+    #f6f0edff,
+    #bbb193ff
+  );
+  --gradient-radial: radial-gradient(
+    #28536bff,
+    #c2948aff,
+    #7ea8beff,
+    #f6f0edff,
+    #bbb193ff
+  );
+}
+
 body {
   height: 100vh;
   background-repeat: no-repeat;
   object-fit: cover;
-  background-image: linear-gradient(80deg, rgb(76, 163, 192), lightblue);
+  background-color: var(--air-superiority-blue);
   pointer-events: none;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-size: 2.3vh;
@@ -169,7 +251,7 @@ button {
 
 button:focus {
   transition: 1s ease-in-out;
-  background: hsl(195, 53%, 69%);
+  background: var(--charcoal);
   color: white;
   outline: none;
 }
