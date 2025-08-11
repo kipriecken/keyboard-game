@@ -228,7 +228,7 @@ const offerMonkeyGame = () => {
   nextBtn.style.display = "none";
   achieved.innerText =
     achieved.innerText +
-    "\nYou've completed the tutorial!\nPlease tab to the Reset button to play again.\nOr, try the monkey game:";
+    "\nYou've completed the tutorial!\nReset to play again, or try the monkey game.";
 };
 
 const handleLevelWin = (minKeystrokes) => {
