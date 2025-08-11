@@ -33,6 +33,8 @@ const isMobile =
     userAgent
   );
 
+let acceptableKeys = ["Arrow", "Shift", "Option", "Escape", "Meta", "Tab"];
+
 // Constants
 const text =
   "Lorem ipsum dolor sit amet consectetur adipisicing elit.\nSuscipit nemo odit optio architecto aperiam incidunt pariatur reiciendis ea!\nUt, id.";
@@ -121,6 +123,7 @@ const handleReset = () => {
   keystrokes = 0;
   monkeyBtn.style.display = "none";
   resetBtn.style.display = "none";
+  acceptableKeys = ["Arrow", "Shift", "Option", "Escape", "Meta", "Tab"];
 };
 
 const resetTextarea = () => {
@@ -156,7 +159,6 @@ playBtn.addEventListener("focus", () => {
 playBtn.addEventListener("blur", () => {
   playSpan.innerText = "Select me";
 });
-
 playBtn.addEventListener("click", () => {
   intro.style.visibility = "visible";
   preGame.style.display = "none";
@@ -172,6 +174,11 @@ nextBtn.addEventListener("click", () => {
       return;
     }
     ++gameIndex;
+    if (gameIndex == 2) {
+      acceptableKeys.push("Backspace");
+      acceptableKeys.push("KeyK");
+      console.log(`updated acceptable keys: ${acceptableKeys}`);
+    }
     levelIndex = 0;
   } else {
     ++levelIndex;
@@ -187,6 +194,10 @@ monkeyBtn.addEventListener("click", () => {
 });
 
 const handleTextareaKeydown = (e) => {
+  if (!acceptableKeys.some((key) => e.code.includes(key))) {
+    e.preventDefault();
+    return;
+  }
   if (e.repeat || isLevelOver) {
     return;
   }
