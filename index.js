@@ -8,11 +8,14 @@ const safari = document.getElementsByClassName("safari")[0];
 const preGame = document.getElementsByClassName("pre-game")[0];
 const windows = document.getElementsByClassName("windows")[0];
 const focusBtn = document.getElementsByClassName("focus")[0];
+const focusSpan = document.getElementsByClassName("focus-span")[0];
 const focusTooBtn = document.getElementsByClassName("focus-too")[0];
+const focusTooSpan = document.getElementsByClassName("focus-too-span")[0];
+const playBtn = document.getElementsByClassName("play")[0];
+const playSpan = document.getElementsByClassName("play-span")[0];
 const gamePlay = document.getElementsByClassName("game-play")[0];
 const monkey = document.getElementsByClassName("monkey")[0];
 const monkeyBtn = document.getElementsByClassName("monkey-btn")[0];
-const playBtn = document.getElementsByClassName("play")[0];
 const resetBtn = document.getElementsByClassName("reset")[0];
 const keystrokesCounter = document.getElementsByClassName("counter")[0];
 const innerContainer = document.getElementsByClassName("inner")[0];
@@ -133,10 +136,25 @@ const resetTextarea = () => {
 };
 
 focusBtn.addEventListener("focus", () => {
-  partTwo.style.display = "block";
+  focusSpan.innerText = "Selected!";
+  partTwo.style.display = "flex";
+});
+focusBtn.addEventListener("blur", () => {
+  focusSpan.innerText = "Select me";
 });
 focusTooBtn.addEventListener("focus", () => {
-  partThree.style.display = "block";
+  focusTooSpan.innerText = "Selected!";
+  partThree.style.display = "flex";
+});
+focusTooBtn.addEventListener("blur", () => {
+  focusTooSpan.innerText = "Select me";
+});
+
+playBtn.addEventListener("focus", () => {
+  playSpan.innerText = "Hit return!";
+});
+playBtn.addEventListener("blur", () => {
+  playSpan.innerText = "Select me";
 });
 
 playBtn.addEventListener("click", () => {

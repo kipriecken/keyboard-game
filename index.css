@@ -152,20 +152,52 @@ label > h3 {
 }
 
 button {
-  background-color: hsl(195, 53%, 79%);
+  border: 0;
+  height: 32px;
+  position: relative;
+  display: block;
+  width: 100px;
+  height: 32px;
+  background: transparent;
+  border: 1px solid rgb(198, 198, 198);
+  box-sizing: border-box;
   margin: 1em;
   padding: 0.5em 3em;
-  border: 2px solid hsl(195, 53%, 64%);
-  border-radius: 6px;
-  box-shadow: 2px 2px 2px grey;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-size: 2vh;
 }
 
 button:focus {
+  transition: 1s ease-in-out;
   background: hsl(195, 53%, 69%);
+  color: white;
   outline: none;
-  border: 2px solid #add8e6;
+}
+
+button:focus svg {
+  stroke-dashoffset: -256;
+}
+
+button span {
+  width: 100px;
+  position: absolute;
+  left: 0;
+  top: 6px;
+  height: 32px;
+}
+
+svg {
+  display: block;
+  position: absolute;
+  left: -1px;
+  top: -1px;
+  fill: none;
+  width: 100px;
+  height: 32px;
+  stroke: white;
+  stroke-dasharray: 80 256;
+  stroke-dashoffset: 80;
+  transition: 1s ease-in-out;
 }
 
 .help {
