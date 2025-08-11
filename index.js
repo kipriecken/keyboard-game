@@ -6,6 +6,7 @@ const partTwo = document.getElementsByClassName("part-two")[0];
 const partThree = document.getElementsByClassName("part-three")[0];
 const safari = document.getElementsByClassName("safari")[0];
 const preGame = document.getElementsByClassName("pre-game")[0];
+const drawerContainer = document.getElementsByClassName("drawer-container")[0];
 const windows = document.getElementsByClassName("windows")[0];
 const focusBtn = document.getElementsByClassName("focus")[0];
 const focusSpan = document.getElementsByClassName("focus-span")[0];
@@ -125,6 +126,24 @@ const handleReset = () => {
   resetBtn.style.display = "none";
   acceptableKeys = ["Arrow", "Shift", "Option", "Escape", "Meta", "Tab"];
 };
+
+window.addEventListener("keydown", (e) => {
+  if (e.repeat) {
+    return;
+  }
+  if (e.metaKey && e.code.includes("KeyK")) {
+    let isDrawerOpaque = false;
+    console.log("opacity");
+    console.log(drawerContainer.style.opacity);
+    console.log("transform");
+    console.log(drawerContainer.style.transform);
+    isDrawerOpaque = drawerContainer.style.opacity == "1";
+    drawerContainer.style.opacity = isDrawerOpaque ? "0" : "1";
+    drawerContainer.style.transform = isDrawerOpaque
+      ? "translateX(-200px)"
+      : "translateX(0)";
+  }
+});
 
 const resetTextarea = () => {
   innerContainer.style.display = "flex";
