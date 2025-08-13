@@ -1,3 +1,5 @@
+const body = document.querySelector("body");
+const modal = document.getElementsByClassName("modal")[0];
 const textarea = document.getElementById("textarea");
 const editable = document.getElementById("editable");
 const achieved = document.getElementsByClassName("achieved")[0];
@@ -92,6 +94,14 @@ const populateLabel = (level) => {
 if (isSafari) {
   safari.style.display = "block";
 }
+
+window.onblur = () => {
+  modal.style.display = "flex";
+};
+window.onfocus = () => {
+  modal.style.display = "none";
+};
+
 const prepareTextarea = (level) => {
   textarea.style.display = "block";
   textarea.value = text;
