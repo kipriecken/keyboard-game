@@ -1,4 +1,3 @@
-const body = document.querySelector("body");
 const modal = document.getElementsByClassName("modal")[0];
 const textarea = document.getElementById("textarea");
 const editable = document.getElementById("editable");
