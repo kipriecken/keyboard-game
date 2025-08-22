@@ -148,14 +148,14 @@ const resetTextarea = () => {
 };
 
 focusBtn.addEventListener("focus", () => {
-  focusSpan.innerText = "Selected!";
+  focusSpan.innerText = "Selected";
   partTwo.style.display = "flex";
 });
 focusBtn.addEventListener("blur", () => {
   focusSpan.innerText = "Select me";
 });
 focusTooBtn.addEventListener("focus", () => {
-  focusTooSpan.innerText = "Selected!";
+  focusTooSpan.innerText = "Selected";
   partThree.style.display = "flex";
 });
 focusTooBtn.addEventListener("blur", () => {
@@ -163,7 +163,7 @@ focusTooBtn.addEventListener("blur", () => {
 });
 
 playBtn.addEventListener("focus", () => {
-  playSpan.innerText = "Hit return!";
+  playSpan.innerText = "Hit return";
 });
 playBtn.addEventListener("blur", () => {
   playSpan.innerText = "Select me";

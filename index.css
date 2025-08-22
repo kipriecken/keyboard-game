@@ -2,7 +2,7 @@
   /* CSS HEX */
   --charcoal: #28536bff;
   --rosy-brown: #c2948aff;
-  --air-superiority-blue: #7ea8beff;
+  --air-superiority-blue: rgb(92, 158, 194);
   --isabelline: #f6f0edff;
   --khaki: #bbb193ff;
 
@@ -116,6 +116,7 @@ body {
   height: 30%;
   width: 30%;
   display: flex;
+  justify-content: center;
   align-items: center;
   text-align: center;
   padding: 1rem;
@@ -223,7 +224,7 @@ body:focus {
 }
 
 textarea {
-  /* background: white; */
+  background: var(--isabelline);
   border-radius: 6px;
   padding: 4px;
   font-size: 2vh;
