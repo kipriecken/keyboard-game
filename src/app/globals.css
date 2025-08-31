@@ -1,0 +1,363 @@
+@import "tailwindcss";
+
+:root {
+  /* CSS HEX */
+  --charcoal: #28536bff;
+  --rosy-brown: #c2948aff;
+  --air-superiority-blue: rgb(92, 158, 194);
+  --isabelline: #f6f0edff;
+  --khaki: #bbb193ff;
+
+  /* SCSS Gradient */
+  --gradient-top: linear-gradient(
+    0deg,
+    #28536bff,
+    #c2948aff,
+    #7ea8beff,
+    #f6f0edff,
+    #bbb193ff
+  );
+  --gradient-right: linear-gradient(
+    90deg,
+    #28536bff,
+    #c2948aff,
+    #7ea8beff,
+    #f6f0edff,
+    #bbb193ff
+  );
+  --gradient-bottom: linear-gradient(
+    180deg,
+    #28536bff,
+    #c2948aff,
+    #7ea8beff,
+    #f6f0edff,
+    #bbb193ff
+  );
+  --gradient-left: linear-gradient(
+    270deg,
+    #28536bff,
+    #c2948aff,
+    #7ea8beff,
+    #f6f0edff,
+    #bbb193ff
+  );
+  --gradient-top-right: linear-gradient(
+    45deg,
+    #28536bff,
+    #c2948aff,
+    #7ea8beff,
+    #f6f0edff,
+    #bbb193ff
+  );
+  --gradient-bottom-right: linear-gradient(
+    135deg,
+    #28536bff,
+    #c2948aff,
+    #7ea8beff,
+    #f6f0edff,
+    #bbb193ff
+  );
+  --gradient-top-left: linear-gradient(
+    225deg,
+    #28536bff,
+    #c2948aff,
+    #7ea8beff,
+    #f6f0edff,
+    #bbb193ff
+  );
+  --gradient-bottom-left: linear-gradient(
+    315deg,
+    #28536bff,
+    #c2948aff,
+    #7ea8beff,
+    #f6f0edff,
+    #bbb193ff
+  );
+  --gradient-radial: radial-gradient(
+    #28536bff,
+    #c2948aff,
+    #7ea8beff,
+    #f6f0edff,
+    #bbb193ff
+  );
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+  background-repeat: no-repeat;
+  object-fit: cover;
+  background-color: var(--air-superiority-blue);
+  pointer-events: none;
+  font-size: 2.3vh;
+  line-height: 1.4;
+  font-family: "Noto Sans Display", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings: "wdth" 400;
+}
+
+.modal {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background-color: black;
+  opacity: 0.9;
+  display: none;
+  top: 0;
+  left: 0;
+  color: white;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.warning {
+  background-color: var(--charcoal);
+  height: 30%;
+  width: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 1rem;
+  border-radius: 1rem;
+  box-shadow: 0px 1px 10px darkgray;
+}
+
+body:focus {
+  background-color: black;
+}
+
+.header {
+  padding: 2rem;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid grey;
+}
+
+.pre-game {
+  align-items: flex-start;
+  height: 100%;
+}
+
+.pre-game div {
+  align-items: center;
+  flex-direction: column;
+}
+
+.intro {
+  height: 100%;
+  margin-top: 1rem;
+  text-align: center;
+  display: flex;
+}
+
+.main > .intro {
+  visibility: hidden;
+}
+
+.container {
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.windows {
+  display: none;
+}
+
+.part-two,
+.part-three {
+  display: none;
+  opacity: 1;
+  animation-name: fadeInOpacity;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in;
+  animation-duration: 1s;
+}
+
+@keyframes fadeInOpacity {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.outer {
+  height: 100%;
+  position: relative;
+}
+
+.stats {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 200px;
+}
+
+.is-mobile {
+  text-align: center;
+  padding: 10rem;
+}
+
+.game-play {
+  display: none;
+  justify-content: flex-start;
+  flex-direction: column;
+  width: 700px;
+  position: relative;
+}
+
+.main {
+  flex-direction: row;
+  height: calc(100vh - 82px);
+}
+
+.achieved-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+textarea {
+  background: var(--isabelline);
+  border-radius: 6px;
+  padding: 4px;
+  height: 100%;
+  font-size: 2vh;
+}
+
+.text-game {
+  height: 100%;
+}
+
+label {
+  text-align: center;
+  margin: 2em 0;
+}
+
+label > h3 {
+  font-weight: 500;
+}
+
+label > h4 {
+  padding: 1rem;
+}
+
+.label {
+  height: 200px;
+  max-width: 500px;
+  padding: 1rem;
+}
+
+.achieved {
+  margin: 0.25em;
+  display: none;
+  background: lightblue;
+  border-radius: 4px;
+  padding: 2px 6px;
+  color: green;
+  font-weight: 600;
+  text-align: center;
+}
+
+.relative {
+  position: relative;
+  height: 100px;
+}
+
+button {
+  border: 0;
+  height: 32px;
+  position: relative;
+  display: block;
+  width: 100px;
+  height: 32px;
+  background: transparent;
+  border: 1px solid rgb(198, 198, 198);
+  box-sizing: border-box;
+  margin: 1em;
+  padding: 0.5em 3em;
+  font-size: 2vh;
+}
+
+button:focus {
+  transition: 1s ease-in-out;
+  background: var(--charcoal);
+  color: white;
+  outline: none;
+}
+
+button:focus svg {
+  stroke-dashoffset: -256;
+}
+
+button span {
+  width: 100px;
+  position: absolute;
+  left: 0;
+  top: 4px;
+  height: 32px;
+}
+
+svg {
+  display: block;
+  position: absolute;
+  left: -1px;
+  top: -1px;
+  fill: none;
+  width: 100px;
+  height: 32px;
+  stroke: white;
+  stroke-dasharray: 80 256;
+  stroke-dashoffset: 80;
+  transition: 1s ease-in-out;
+}
+
+.help {
+  margin: 1em;
+}
+
+#editable {
+  padding: 0.4em;
+  border: 1px solid blue;
+}
+
+.remove {
+  color: yellow;
+}
+
+.monkey {
+  margin: 1rem;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+}
+
+.keystrokes {
+  visibility: hidden;
+}
+
+.monkey-btn {
+  display: none;
+}
+
+.banana {
+  display: none;
+  flex-direction: column;
+}
+
+.safari {
+  display: none;
+}
+
+.reset {
+  display: none;
+}
