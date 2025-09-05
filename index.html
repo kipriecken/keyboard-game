@@ -1,143 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <link rel="stylesheet" href="index.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Display:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+Display:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + React + TS</title>
   </head>
   <body>
-    <div class="modal">
-      <div class="warning">
-        Press tab to navigate back to the page!
-      </div>
-    </div>
-      <div class="header">
-        <div>Keyboard Shortcuts game</div>
-      </div>
-      <div class="is-mobile container">
-        This game has no current applications for mobile devices. Please visit
-        on a computer.
-      </div>
-    <div class="inner container">
-      <div class="drawer"></div>
-      <div class="pre-game container">
-          <div class="intro">
-            <div>Let's jump right in!</div>
-            <p class="safari">
-              To play on Safari, check the box at Safari > Preferences > Press
-              Tab to highlight each item on a web page. If using an iPad, 
-              go to Settings > Accessibility > Keyboards & Typing, select Full Keyboard Access and switch on.
-            </p>
-            <p class="windows">
-              Note: unfortunately this game will not work properly on Windows.
-            </p>
-            <div>
-              Press the tab button with your left pinky to select the below
-              button.
-            </div>
-            <button class="focus">
-              <svg class="svg" viewbox="0 0 100 32">
-                <polyline points="99,1 99,31 1,31 1,1 99,1" />
-                <polyline points="99,1 99,31 1,31 1,1 99,1" />
-              </svg>
-              <span class="focus-span">Select me</span>
-            </button>
-            <div class="part-two">
-              <div>tab moves you to the next button on a page.</div>
-              <div>shift + tab moves you backward.</div>
-              <div>
-                If you move backward off the page, press tab to move back on.
-              </div>
-              <button class="focus-too">
-                <svg class="svg" viewbox="0 0 100 32">
-                  <polyline points="99,1 99,31 1,31 1,1 99,1" />
-                  <polyline points="99,1 99,31 1,31 1,1 99,1" />
-                </svg>
-                <span class="focus-too-span">Select me</span>
-              </button>
-            </div>
-            <div class="part-three">
-              <div>Got it?</div>
-              <div>Select this final button and hit return to 'click'.</div>
-              <button class="play">
-                <svg class="svg" viewbox="0 0 100 32">
-                  <polyline points="99,1 99,31 1,31 1,1 99,1" />
-                  <polyline points="99,1 99,31 1,31 1,1 99,1" />
-                </svg>
-                <span class="play-span">Select me</span>
-              </button>
-            </div>
-          </div>
-        </div>
-        <div class="game-play container">
-          <div class="label">
-            <label for="text"></label>
-          </div>
-          <div class="relative">
-            <textarea
-              name="text"
-              id="textarea"
-              rows="5"
-              cols="75"
-              spellcheck="false"
-            ></textarea>
-          </div>
-          <div class="stats">
-            <div class="btn-container">
-            <button id="next">
-                <svg class="svg" viewbox="0 0 100 32">
-                  <polyline points="99,1 99,31 1,31 1,1 99,1" />
-                  <polyline points="99,1 99,31 1,31 1,1 99,1" />
-                </svg>
-                <span>Next</span>
-              </button>
-              <button class="reset" onclick="handleReset()">
-                <svg class="svg" viewbox="0 0 100 32">
-                  <polyline points="99,1 99,31 1,31 1,1 99,1" />
-                  <polyline points="99,1 99,31 1,31 1,1 99,1" />
-                </svg>
-                <span>Play again</span>
-              </button>
-            </div>
-            <div class="counter-container">
-              Keystrokes: <span class="counter">0</span>
-            </div>
-            <div class="achieved-container">
-              <div class="keystrokes">Minimum keystrokes!</div>
-              <div class="achieved"></div>
-             <button class="monkey-btn">
-                <svg class="svg" viewbox="0 0 100 32">
-                  <polyline points="99,1 99,31 1,31 1,1 99,1" />
-                  <polyline points="99,1 99,31 1,31 1,1 99,1" />
-                </svg>
-                <span>Monkey</span>
-              </button>
-          </div>
-        </div>
-        <div class="sidebar"></div>
-      </div>
-    </div>
-      <div class="banana container">
-        <div class="help">
-          Help! Can you remove the "Banana"s using just the keyboard?
-        </div>
-        <div contenteditable="true" id="editable">
-          I Have Cherry I Have <span class="remove">Banana</span> I Have Apple I
-          Have <span class="remove">Banana</span> I Have Strawberry
-        </div>
-        <div class="monkey">
-          <!-- <div>Happy monkey! 🍌🐵🍌</div> -->
-          <div>Great work!</div>
-        <button id="reset" onclick="handleReset()">
-            <svg class="svg" viewbox="0 0 100 32">
-              <polyline points="99,1 99,31 1,31 1,1 99,1" />
-              <polyline points="99,1 99,31 1,31 1,1 99,1" />
-            </svg>
-            <span>Reset</span>
-          </button>
-      </div>
-    <script src="data.js"></script>
-    <script src="index.js"></script>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

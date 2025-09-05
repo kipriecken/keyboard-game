@@ -1,5 +1,17 @@
+export type GameLevel = {
+  actionKeys: string[];
+  action?: string;
+  cursorPlacement: string;
+  newCursorPlacement?: string;
+  keyword: string;
+  activeKeys: string[];
+  minKeystrokes: number;
+  startingCursorPosition?: number[];
+  finalCursorLocation?: number[];
+};
+
 // Data
-const games = [
+export const games = [
   [
     {
       actionKeys: ["right arrow"],
@@ -209,4 +221,4 @@ const games = [
   ],
 ];
 
-window.games = games;
+export {};

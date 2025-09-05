@@ -1,3 +1,12 @@
+#root {
+  height: 100%;
+  width: 100%;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+  font-family: "Noto Sans Display", sans-serif;
+}
+
 :root {
   /* CSS HEX */
   --charcoal: #28536bff;
@@ -83,6 +92,7 @@
 body {
   margin: 0;
   height: 100vh;
+  width: 100%;
   background-repeat: no-repeat;
   object-fit: cover;
   background-color: var(--air-superiority-blue);
@@ -227,12 +237,8 @@ textarea {
   background: var(--isabelline);
   border-radius: 6px;
   padding: 4px;
+  height: 100%;
   font-size: 2vh;
-}
-
-textarea:focus {
-  outline: none;
-  border: 1px solid lightblue;
 }
 
 .text-game {
@@ -248,9 +254,14 @@ label > h3 {
   font-weight: 500;
 }
 
+label > h4 {
+  padding: 1rem;
+}
+
 .label {
   height: 200px;
   max-width: 500px;
+  padding: 1rem;
 }
 
 .achieved {
@@ -266,7 +277,6 @@ label > h3 {
 
 .relative {
   position: relative;
-  height: 100px;
 }
 
 button {
@@ -278,6 +288,7 @@ button {
   height: 32px;
   background: transparent;
   border: 1px solid rgb(198, 198, 198);
+  border-radius: 0;
   box-sizing: border-box;
   margin: 1em;
   padding: 0.5em 3em;
@@ -299,7 +310,7 @@ button span {
   width: 100px;
   position: absolute;
   left: 0;
-  top: 8px;
+  top: 4px;
   height: 32px;
 }
 
