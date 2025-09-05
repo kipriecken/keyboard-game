@@ -122,13 +122,6 @@ body:focus {
   background-color: black;
 }
 
-.header {
-  padding: 2rem;
-  display: flex;
-  justify-content: space-between;
-  border-bottom: 1px solid grey;
-}
-
 .pre-game {
   align-items: flex-start;
   height: 100%;

@@ -3,6 +3,7 @@ import "./App.css";
 import { useEffect } from "react";
 import { games as levelsData, type GameLevel } from "./data";
 import Modal from "./components/Modal";
+import Header from "./components/Header";
 
 function App() {
   useEffect(() => {
@@ -303,9 +304,7 @@ function App() {
   return (
     <>
       <Modal></Modal>
-      <div className="header">
-        <div>Keyboard Shortcuts game</div>
-      </div>
+      <Header></Header>
       <div className="is-mobile container">
         This game has no current applications for mobile devices. Please visit
         on a computer.
