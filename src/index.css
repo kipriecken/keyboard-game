@@ -105,21 +105,6 @@ body {
   font-variation-settings: "wdth" 400;
 }
 
-.modal {
-  position: fixed;
-  height: 100%;
-  width: 100%;
-  background-color: black;
-  opacity: 0.9;
-  display: none;
-  top: 0;
-  left: 0;
-  color: white;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
 .warning {
   background-color: var(--charcoal);
   height: 30%;
