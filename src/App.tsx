@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { games as levelsData, type GameLevel } from "./data";
 import Modal from "./components/Modal";
 import Header from "./components/Header";
+import ButtonSvg from "./components/ButtonSvg";
 import { populateLabel } from "./utils/helpers";
 
 function App() {
@@ -282,7 +283,6 @@ function App() {
         <div className="drawer"></div>
         <div className="pre-game container">
           <div className="intro">
-            <div>Let&apos;s jump right in!</div>
             <p className="safari">
               To play on Safari, check the box at Safari &gt; Preferences &gt;
               Press Tab to highlight each item on a web page. If using an iPad,
@@ -292,15 +292,9 @@ function App() {
             <p className="windows">
               Note: this game is not configured for Windows.
             </p>
-            <div>
-              Press the tab button with your left pinky to select the below
-              button.
-            </div>
+            <div>Locate the tab button and press it.</div>
             <button className="focus">
-              <svg className="svg" viewBox="0 0 100 32">
-                <polyline points="99,1 99,31 1,31 1,1 99,1" />
-                <polyline points="99,1 99,31 1,31 1,1 99,1" />
-              </svg>
+              <ButtonSvg></ButtonSvg>
               <span className="focus-span">Select me</span>
             </button>
             <div className="part-two">
@@ -310,10 +304,7 @@ function App() {
                 If you move backward off the page, press tab to move back on.
               </div>
               <button className="focus-too">
-                <svg className="svg" viewBox="0 0 100 32">
-                  <polyline points="99,1 99,31 1,31 1,1 99,1" />
-                  <polyline points="99,1 99,31 1,31 1,1 99,1" />
-                </svg>
+                <ButtonSvg></ButtonSvg>
                 <span className="focus-too-span">Select me</span>
               </button>
             </div>
@@ -323,10 +314,7 @@ function App() {
                 Select this final button and hit return to &apos;click&apos;.
               </div>
               <button className="play">
-                <svg className="svg" viewBox="0 0 100 32">
-                  <polyline points="99,1 99,31 1,31 1,1 99,1" />
-                  <polyline points="99,1 99,31 1,31 1,1 99,1" />
-                </svg>
+                <ButtonSvg></ButtonSvg>
                 <span className="play-span">Select me</span>
               </button>
             </div>
@@ -348,17 +336,11 @@ function App() {
           <div className="stats">
             <div className="btn-container">
               <button id="next">
-                <svg className="svg" viewBox="0 0 100 32">
-                  <polyline points="99,1 99,31 1,31 1,1 99,1" />
-                  <polyline points="99,1 99,31 1,31 1,1 99,1" />
-                </svg>
+                <ButtonSvg></ButtonSvg>
                 <span>Next</span>
               </button>
               <button className="reset">
-                <svg className="svg" viewBox="0 0 100 32">
-                  <polyline points="99,1 99,31 1,31 1,1 99,1" />
-                  <polyline points="99,1 99,31 1,31 1,1 99,1" />
-                </svg>
+                <ButtonSvg></ButtonSvg>
                 <span>Play again</span>
               </button>
             </div>
