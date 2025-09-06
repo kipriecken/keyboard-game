@@ -1,0 +1,37 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { type GameLevel } from "../data";
+
+export const populateLabel = (
+  level: GameLevel,
+  gameIndex: number,
+  levelIndex: number
+): string => {
+  const indexToGameTitle: any = {
+    0: "Navigation",
+    1: "Highlighting",
+    2: "Deletion",
+  };
+
+  const modifierToKeyName: any = {
+    alt: "option",
+    meta: "command",
+    shift: "shift",
+    control: "control",
+  };
+  let chord = "";
+  level.activeKeys.map(
+    (keyName) => (chord += `${modifierToKeyName[keyName]} + `)
+  );
+  level.actionKeys.map((key) => (chord += `${key}, `));
+  chord = chord.slice(0, -2);
+  return `
+        <h3>${indexToGameTitle[gameIndex]}: Level ${levelIndex + 1}</h3>
+        <h4><strong>${chord}</strong></h4>
+        <div>Use the above key${
+          level.actionKeys.length + level.activeKeys.length > 1 ? "s" : ""
+        } to ${
+    level.action
+      ? `${level.action}.`
+      : `move the blinking cursor from ${level.cursorPlacement} to ${level.newCursorPlacement}.`
+  }</div>`;
+};

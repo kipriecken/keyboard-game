@@ -318,25 +318,8 @@ svg {
   color: yellow;
 }
 
-.monkey {
-  margin: 1rem;
-  display: none;
-  flex-direction: column;
-  align-items: center;
-  align-content: center;
-}
-
 .keystrokes {
   visibility: hidden;
-}
-
-.monkey-btn {
-  display: none;
-}
-
-.banana {
-  display: none;
-  flex-direction: column;
 }
 
 .safari {

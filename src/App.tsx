@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { games as levelsData, type GameLevel } from "./data";
 import Modal from "./components/Modal";
 import Header from "./components/Header";
+import { populateLabel } from "./utils/helpers";
 
 function App() {
   useEffect(() => {
@@ -75,25 +76,13 @@ function App() {
       "Lorem ipsum dolor sit amet consectetur adipisicing elit.\nSuscipit nemo odit optio architecto aperiam incidunt pariatur reiciendis ea!\nUt, id.";
 
     // State
-    let labelText = "";
     let gameIndex = 0;
     let levelIndex = 0;
     let keystrokes = 0;
     let areRequirementsMet = false;
     let isLevelOver = false;
 
-    const indexToGameTitle: any = {
-      0: "Navigation",
-      1: "Highlighting",
-      2: "Deletion",
-    };
-
-    const modifierToKeyName: any = {
-      alt: "option",
-      meta: "command",
-      shift: "shift",
-      control: "control",
-    };
+    label.innerHTML = "";
 
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     isMobile
@@ -101,26 +90,6 @@ function App() {
       : (mobileDiv.style.display = "none");
 
     if (!isMac) windows.style.display = "block";
-
-    const populateLabel = (level: GameLevel) => {
-      let chord = "";
-      level.activeKeys.map(
-        (keyName) => (chord += `${modifierToKeyName[keyName]} + `)
-      );
-      level.actionKeys.map((key) => (chord += `${key}, `));
-      chord = chord.slice(0, -2);
-      labelText = `
-        <h3>${indexToGameTitle[gameIndex]}: Level ${levelIndex + 1}</h3>
-        <h4><strong>${chord}</strong></h4>
-        <div>Use the above key${
-          level.actionKeys.length + level.activeKeys.length > 1 ? "s" : ""
-        } to ${
-        level.action
-          ? `${level.action}.`
-          : `move the blinking cursor from ${level.cursorPlacement} to ${level.newCursorPlacement}.`
-      }</div>`;
-      label.innerHTML = labelText;
-    };
 
     if (isSafari) {
       safari.style.display = "block";
@@ -148,7 +117,7 @@ function App() {
 
     const updateLevel = () => {
       const level = levelsData[gameIndex][levelIndex];
-      populateLabel(level);
+      label.innerHTML = populateLabel(level, gameIndex, levelIndex);
       prepareTextarea(level);
     };
 
@@ -321,7 +290,7 @@ function App() {
               Full Keyboard Access and switch on.
             </p>
             <p className="windows">
-              Note: unfortunately this game will not work properly on Windows.
+              Note: this game is not configured for Windows.
             </p>
             <div>
               Press the tab button with your left pinky to select the below
