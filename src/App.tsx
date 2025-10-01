@@ -273,6 +273,9 @@ function App() {
   });
   return (
     <>
+      <div className="wave"></div>
+      <div className="wave"></div>
+      <div className="wave"></div>
       <Modal></Modal>
       <Header></Header>
       <div className="is-mobile container">

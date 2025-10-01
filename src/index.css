@@ -3,7 +3,7 @@
   width: 100%;
   margin: 0 auto;
   text-align: center;
-  font-family: "Noto Sans Display", sans-serif;
+  font-family: "Xanh Mono", monospace;
 }
 
 :root {
@@ -94,7 +94,14 @@ body {
   width: 100%;
   background-repeat: no-repeat;
   object-fit: cover;
-  background-color: var(--air-superiority-blue);
+  background: linear-gradient(
+    315deg,
+    #c2948aff 3%,
+    rgb(72, 157, 203) 38%,
+    rgb(92, 158, 194) 68%,
+    rgb(91, 173, 218) 98%
+  );
+  background-size: 400% 400%;
   pointer-events: none;
   font-size: 2.3vh;
   line-height: 1.4;
@@ -103,6 +110,32 @@ body {
   font-weight: 400;
   font-style: normal;
   font-variation-settings: "wdth" 400;
+  overflow: auto;
+}
+
+.wave {
+  background: rgb(255 255 255 / 25%);
+  border-radius: 1000% 1000% 0 0;
+  position: fixed;
+  width: 200%;
+  height: 12em;
+  transform: translate3d(0, 0, 0) translate(-10%);
+  opacity: 0.8;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+}
+
+.wave:nth-of-type(2) {
+  bottom: -1.25em;
+  transform: translateX(-25%);
+  opacity: 0.8;
+}
+
+.wave:nth-of-type(3) {
+  bottom: -2.5em;
+  transform: translateX(-50%);
+  opacity: 0.9;
 }
 
 .warning {
@@ -271,6 +304,7 @@ button {
   margin: 1em;
   padding: 0.5em 3em;
   font-size: 2vh;
+  font-family: "Xanh Mono", monospace;
 }
 
 button:focus {
