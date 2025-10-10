@@ -6,58 +6,53 @@ import Modal from "./components/Modal";
 import Header from "./components/Header";
 import ButtonSvg from "./components/ButtonSvg";
 import { populateLabel } from "./utils/helpers";
+import Button from "./components/Button";
 
 function App() {
   useEffect(() => {
     const modal = document.getElementsByClassName("modal")[0] as HTMLElement;
     const textarea = document.getElementById("textarea") as HTMLTextAreaElement;
     const achieved = document.getElementsByClassName(
-      "achieved"
+      "achieved",
     )[0] as HTMLElement;
     const intro = document.getElementsByClassName("intro")[0] as HTMLElement;
     const partTwo = document.getElementsByClassName(
-      "part-two"
+      "part-two",
     )[0] as HTMLElement;
     const partThree = document.getElementsByClassName(
-      "part-three"
+      "part-three",
     )[0] as HTMLElement;
     const safari = document.getElementsByClassName("safari")[0] as HTMLElement;
     const preGame = document.getElementsByClassName(
-      "pre-game"
+      "pre-game",
     )[0] as HTMLElement;
     const windows = document.getElementsByClassName(
-      "windows"
+      "windows",
     )[0] as HTMLElement;
-    const focusBtn = document.getElementsByClassName("focus")[0] as HTMLElement;
-    const focusSpan = document.getElementsByClassName(
-      "focus-span"
-    )[0] as HTMLElement;
+    const focusBtn = document.getElementsByClassName("one")[0] as HTMLElement;
     const focusTooBtn = document.getElementsByClassName(
-      "focus-too"
+      "two",
     )[0] as HTMLElement;
-    const focusTooSpan = document.getElementsByClassName(
-      "focus-too-span"
-    )[0] as HTMLElement;
-    const playBtn = document.getElementsByClassName("play")[0] as HTMLElement;
+    const playBtn = document.getElementsByClassName("three")[0] as HTMLElement;
     const playSpan = document.getElementsByClassName(
-      "play-span"
+      "three-span",
     )[0] as HTMLElement;
     const gamePlay = document.getElementsByClassName(
-      "game-play"
+      "game-play",
     )[0] as HTMLElement;
     const resetBtn = document.getElementsByClassName("reset")[0] as HTMLElement;
     const keystrokesCounter = document.getElementsByClassName(
-      "counter"
+      "counter",
     )[0] as HTMLElement;
     const innerContainer = document.getElementsByClassName(
-      "inner"
+      "inner",
     )[0] as HTMLElement;
     const keystrokesText = document.getElementsByClassName(
-      "keystrokes"
+      "keystrokes",
     )[0] as HTMLElement;
     const nextBtn = document.getElementById("next") as HTMLButtonElement;
     const mobileDiv = document.getElementsByClassName(
-      "is-mobile"
+      "is-mobile",
     )[0] as HTMLElement;
     const label = document.getElementsByTagName("label")[0] as HTMLElement;
 
@@ -67,7 +62,7 @@ function App() {
       userAgent.includes("Safari") && !userAgent.includes("Chrome");
     const isMobile =
       /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-        userAgent
+        userAgent,
       );
 
     let acceptableKeys = ["Arrow", "Shift", "Option", "Escape", "Meta", "Tab"];
@@ -109,7 +104,7 @@ function App() {
       textarea.focus();
       textarea.setSelectionRange(
         level.startingCursorPosition ? level.startingCursorPosition[0] : 0,
-        level.startingCursorPosition ? level.startingCursorPosition[1] : 0
+        level.startingCursorPosition ? level.startingCursorPosition[1] : 0,
       );
     };
 
@@ -149,18 +144,10 @@ function App() {
     };
 
     focusBtn.addEventListener("focus", () => {
-      focusSpan.innerText = "Selected";
       partTwo.style.display = "flex";
     });
-    focusBtn.addEventListener("blur", () => {
-      focusSpan.innerText = "Select me";
-    });
     focusTooBtn.addEventListener("focus", () => {
-      focusTooSpan.innerText = "Selected";
       partThree.style.display = "flex";
-    });
-    focusTooBtn.addEventListener("blur", () => {
-      focusTooSpan.innerText = "Select me";
     });
 
     playBtn.addEventListener("focus", () => {
@@ -293,30 +280,27 @@ function App() {
               Note: this game is not configured for Windows.
             </p>
             <div>Locate the tab button and press it.</div>
-            <button className="focus">
-              <ButtonSvg></ButtonSvg>
-              <span className="focus-span">Select me</span>
-            </button>
+            <Button focus="Selected" blur="Select me" className="one"></Button>
             <div className="part-two">
               <div>tab moves you to the next button on a page.</div>
               <div>shift + tab moves you backward.</div>
               <div>
                 If you move backward off the page, press tab to move back on.
               </div>
-              <button className="focus-too">
-                <ButtonSvg></ButtonSvg>
-                <span className="focus-too-span">Select me</span>
-              </button>
+              <Button
+                focus="Selected"
+                blur="Select me"
+                className="two"
+              ></Button>
             </div>
             <div className="part-three">
               <div>Got it?</div>
-              <div>
-                Select this final button and hit return to &apos;click&apos;.
-              </div>
-              <button className="play">
-                <ButtonSvg></ButtonSvg>
-                <span className="play-span">Select me</span>
-              </button>
+              <div>Select this final button and hit return to "click".</div>
+              <Button
+                focus="Hit return"
+                blur="Select me"
+                className="three"
+              ></Button>
             </div>
           </div>
         </div>
