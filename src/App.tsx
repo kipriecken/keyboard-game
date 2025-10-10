@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import "./App.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { games as levelsData, type GameLevel } from "./data";
 import Modal from "./components/Modal";
 import Header from "./components/Header";
@@ -9,8 +9,10 @@ import { populateLabel } from "./utils/helpers";
 import Button from "./components/Button";
 
 function App() {
+  const [isModalVisible, setIsModalVisibile] = useState(true);
+
   useEffect(() => {
-    const modal = document.getElementsByClassName("modal")[0] as HTMLElement;
+    // const modal = document.getElementsByClassName("modal")[0 ] as HTMLElement;
     const textarea = document.getElementById("textarea") as HTMLTextAreaElement;
     const achieved = document.getElementsByClassName(
       "achieved",
@@ -92,10 +94,10 @@ function App() {
     }
 
     window.onblur = () => {
-      modal.style.display = "flex";
+      setIsModalVisibile(true);
     };
     window.onfocus = () => {
-      modal.style.display = "none";
+      setIsModalVisibile(false);
     };
 
     const prepareTextarea = (level: GameLevel) => {
@@ -260,7 +262,7 @@ function App() {
   });
   return (
     <>
-      <Modal></Modal>
+      <Modal visibility={isModalVisible}></Modal>
       <Header></Header>
       <div className="is-mobile container">
         This game has no current applications for mobile devices. Please visit

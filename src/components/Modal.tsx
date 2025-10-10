@@ -1,8 +1,11 @@
 import "./modal.css";
 
-export default function Modal() {
+export default function Modal(props: { visibility: boolean }) {
   return (
-    <div className="modal">
+    <div
+      className="modal"
+      style={{ display: props.visibility ? "flex" : "none" }}
+    >
       <div className="warning">Press tab to navigate back to the page!</div>
     </div>
   );
