@@ -9,7 +9,7 @@ import { populateLabel } from "./utils/helpers";
 import Button from "./components/Button";
 
 function App() {
-  const [isModalVisible, setIsModalVisibile] = useState(true);
+  const [isModalVisible, setIsModalVisibile] = useState(false);
 
   useEffect(() => {
     // const modal = document.getElementsByClassName("modal")[0 ] as HTMLElement;
@@ -152,12 +152,6 @@ function App() {
       partThree.style.display = "flex";
     });
 
-    playBtn.addEventListener("focus", () => {
-      playSpan.innerText = "Hit return";
-    });
-    playBtn.addEventListener("blur", () => {
-      playSpan.innerText = "Select me";
-    });
     playBtn.addEventListener("click", () => {
       intro.style.visibility = "visible";
       preGame.style.display = "none";
