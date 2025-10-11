@@ -20,6 +20,13 @@ function App() {
       userAgent,
     );
 
+  window.onblur = () => {
+    setIsModalVisible(true);
+  };
+  window.onfocus = () => {
+    setIsModalVisible(false);
+  };
+
   useEffect(() => {
     const textarea = document.getElementById("textarea") as HTMLTextAreaElement;
     const achieved = document.getElementsByClassName(
@@ -46,9 +53,6 @@ function App() {
     const playBtn = document.getElementsByClassName("three")[0] as HTMLElement;
     const gamePlay = document.getElementsByClassName(
       "game-play",
-    )[0] as HTMLElement;
-    const playSpan = document.getElementsByClassName(
-      "three-span",
     )[0] as HTMLElement;
     const resetBtn = document.getElementsByClassName("reset")[0] as HTMLElement;
     const keystrokesCounter = document.getElementsByClassName(
@@ -90,13 +94,6 @@ function App() {
     if (isSafari) {
       safari.style.display = "block";
     }
-
-    window.onblur = () => {
-      setIsModalVisible(true);
-    };
-    window.onfocus = () => {
-      setIsModalVisible(false);
-    };
 
     const prepareTextarea = (level: GameLevel) => {
       textarea.style.display = "block";
@@ -150,12 +147,6 @@ function App() {
       partThree.style.display = "flex";
     });
 
-    playBtn.addEventListener("focus", () => {
-      playSpan.innerText = "Hit return";
-    });
-    playBtn.addEventListener("blur", () => {
-      playSpan.innerText = "Select me";
-    });
     playBtn.addEventListener("click", () => {
       intro.style.visibility = "visible";
       preGame.style.display = "none";
