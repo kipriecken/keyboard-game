@@ -9,9 +9,7 @@ import { populateLabel } from "./utils/helpers";
 import Button from "./components/Button";
 
 function App() {
-  const [isModalVisible, setIsModalVisibile] = useState(false);
-  const [gameIndex, setGameIndex] = useState(0);
-  const [levelIndex, setLevelIndex] = useState(0);
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const userAgent = window.navigator.userAgent;
   const isMac = userAgent.includes("Macintosh");
@@ -49,6 +47,9 @@ function App() {
     const gamePlay = document.getElementsByClassName(
       "game-play",
     )[0] as HTMLElement;
+    const playSpan = document.getElementsByClassName(
+      "three-span",
+    )[0] as HTMLElement;
     const resetBtn = document.getElementsByClassName("reset")[0] as HTMLElement;
     const keystrokesCounter = document.getElementsByClassName(
       "counter",
@@ -71,6 +72,8 @@ function App() {
       "Lorem ipsum dolor sit amet consectetur adipisicing elit.\nSuscipit nemo odit optio architecto aperiam incidunt pariatur reiciendis ea!\nUt, id.";
 
     // State
+    let gameIndex = 0;
+    let levelIndex = 0;
     let keystrokes = 0;
     let areRequirementsMet = false;
     let isLevelOver = false;
@@ -89,10 +92,10 @@ function App() {
     }
 
     window.onblur = () => {
-      setIsModalVisibile(true);
+      setIsModalVisible(true);
     };
     window.onfocus = () => {
-      setIsModalVisibile(false);
+      setIsModalVisible(false);
     };
 
     const prepareTextarea = (level: GameLevel) => {
@@ -119,8 +122,8 @@ function App() {
 
     const handleReset = () => {
       keystrokesText.style.visibility = "hidden";
-      setGameIndex(0);
-      setLevelIndex(0);
+      gameIndex = 0;
+      levelIndex = 0;
       resetTextarea();
       isLevelOver = false;
       keystrokes = 0;
@@ -147,6 +150,12 @@ function App() {
       partThree.style.display = "flex";
     });
 
+    playBtn.addEventListener("focus", () => {
+      playSpan.innerText = "Hit return";
+    });
+    playBtn.addEventListener("blur", () => {
+      playSpan.innerText = "Select me";
+    });
     playBtn.addEventListener("click", () => {
       intro.style.visibility = "visible";
       preGame.style.display = "none";
@@ -158,18 +167,18 @@ function App() {
     nextBtn.addEventListener("click", () => {
       if (isOnFinalLevel()) {
         if (isOnFinalGame()) {
-          setGameIndex(0); // not sure if should be done here or later
+          gameIndex = 0; // not sure if should be done here or later
           nextBtn.disabled = true;
           return;
         }
-        setGameIndex(gameIndex + 1);
+        ++gameIndex;
         if (gameIndex == 2) {
           acceptableKeys.push("Backspace");
           acceptableKeys.push("KeyK");
         }
-        setLevelIndex(0);
+        levelIndex = 0;
       } else {
-        setLevelIndex(levelIndex + 1);
+        ++levelIndex;
       }
       resetTextarea();
       isLevelOver = false;
