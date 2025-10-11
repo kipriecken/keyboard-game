@@ -36,9 +36,6 @@ function App() {
       "two",
     )[0] as HTMLElement;
     const playBtn = document.getElementsByClassName("three")[0] as HTMLElement;
-    const playSpan = document.getElementsByClassName(
-      "three-span",
-    )[0] as HTMLElement;
     const gamePlay = document.getElementsByClassName(
       "game-play",
     )[0] as HTMLElement;
