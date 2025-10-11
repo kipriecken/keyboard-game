@@ -10,9 +10,19 @@ import Button from "./components/Button";
 
 function App() {
   const [isModalVisible, setIsModalVisibile] = useState(false);
+  const [gameIndex, setGameIndex] = useState(0);
+  const [levelIndex, setLevelIndex] = useState(0);
+
+  const userAgent = window.navigator.userAgent;
+  const isMac = userAgent.includes("Macintosh");
+  const isSafari =
+    userAgent.includes("Safari") && !userAgent.includes("Chrome");
+  const isMobile =
+    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      userAgent,
+    );
 
   useEffect(() => {
-    // const modal = document.getElementsByClassName("modal")[0 ] as HTMLElement;
     const textarea = document.getElementById("textarea") as HTMLTextAreaElement;
     const achieved = document.getElementsByClassName(
       "achieved",
@@ -55,24 +65,12 @@ function App() {
     )[0] as HTMLElement;
     const label = document.getElementsByTagName("label")[0] as HTMLElement;
 
-    const userAgent = window.navigator.userAgent;
-    const isMac = userAgent.includes("Macintosh");
-    const isSafari =
-      userAgent.includes("Safari") && !userAgent.includes("Chrome");
-    const isMobile =
-      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-        userAgent,
-      );
-
     let acceptableKeys = ["Arrow", "Shift", "Option", "Escape", "Meta", "Tab"];
-
     // Constants
     const text =
       "Lorem ipsum dolor sit amet consectetur adipisicing elit.\nSuscipit nemo odit optio architecto aperiam incidunt pariatur reiciendis ea!\nUt, id.";
 
     // State
-    let gameIndex = 0;
-    let levelIndex = 0;
     let keystrokes = 0;
     let areRequirementsMet = false;
     let isLevelOver = false;
@@ -121,8 +119,8 @@ function App() {
 
     const handleReset = () => {
       keystrokesText.style.visibility = "hidden";
-      gameIndex = 0;
-      levelIndex = 0;
+      setGameIndex(0);
+      setLevelIndex(0);
       resetTextarea();
       isLevelOver = false;
       keystrokes = 0;
@@ -160,19 +158,18 @@ function App() {
     nextBtn.addEventListener("click", () => {
       if (isOnFinalLevel()) {
         if (isOnFinalGame()) {
-          gameIndex = 0; // not sure if should be done here or later
+          setGameIndex(0); // not sure if should be done here or later
           nextBtn.disabled = true;
           return;
         }
-        ++gameIndex;
+        setGameIndex(gameIndex + 1);
         if (gameIndex == 2) {
           acceptableKeys.push("Backspace");
           acceptableKeys.push("KeyK");
-          console.log(`updated acceptable keys: ${acceptableKeys}`);
         }
-        levelIndex = 0;
+        setLevelIndex(0);
       } else {
-        ++levelIndex;
+        setLevelIndex(levelIndex + 1);
       }
       resetTextarea();
       isLevelOver = false;
