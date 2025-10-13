@@ -46,11 +46,15 @@ function App() {
     const windows = document.getElementsByClassName(
       "windows",
     )[0] as HTMLElement;
-    const focusBtn = document.getElementsByClassName("one")[0] as HTMLElement;
-    const focusTooBtn = document.getElementsByClassName(
+    const partOneButton = document.getElementsByClassName(
+      "one",
+    )[0] as HTMLElement;
+    const partTwoButton = document.getElementsByClassName(
       "two",
     )[0] as HTMLElement;
-    const playBtn = document.getElementsByClassName("three")[0] as HTMLElement;
+    const partThreeButton = document.getElementsByClassName(
+      "three",
+    )[0] as HTMLElement;
     const gamePlay = document.getElementsByClassName(
       "game-play",
     )[0] as HTMLElement;
@@ -140,19 +144,19 @@ function App() {
       keystrokesText.style.visibility = "hidden";
     };
 
-    focusBtn.addEventListener("focus", () => {
+    partOneButton.addEventListener("focus", () => {
       partTwo.style.display = "flex";
     });
-    focusTooBtn.addEventListener("focus", () => {
+    partTwoButton.addEventListener("focus", () => {
       partThree.style.display = "flex";
     });
-
-    playBtn.addEventListener("click", () => {
+    partThreeButton.addEventListener("click", () => {
       intro.style.visibility = "visible";
       preGame.style.display = "none";
       gamePlay.style.display = "flex";
       handleReset();
     });
+
     resetBtn.addEventListener("click", handleReset);
 
     nextBtn.addEventListener("click", () => {
