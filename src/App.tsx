@@ -109,13 +109,15 @@ function App() {
       );
     };
 
+    const getLevelData = () => levelsData[gameIndex][levelIndex];
+
     const isOnFinalLevel = () => levelIndex == levelsData[gameIndex].length - 1;
     const isOnFinalGame = () => gameIndex == levelsData.length - 1;
 
     const updateLevel = () => {
-      const level = levelsData[gameIndex][levelIndex];
-      label.innerHTML = populateLabel(level, gameIndex, levelIndex);
-      prepareTextarea(level);
+      const levelData = getLevelData();
+      label.innerHTML = populateLabel(levelData, gameIndex, levelIndex);
+      prepareTextarea(levelData);
     };
 
     keystrokesCounter.innerText = keystrokes + "";
@@ -188,7 +190,7 @@ function App() {
         return;
       }
 
-      const level = levelsData[gameIndex][levelIndex];
+      const levelData = getLevelData();
 
       if (!e.code.includes("Tab") && !e.code.includes("Escape")) {
         keystrokesCounter.innerText = ++keystrokes + "";
@@ -203,14 +205,14 @@ function App() {
 
       const areActiveKeysPressed = () => {
         return (
-          level.activeKeys.includes("alt") == e.altKey &&
-          level.activeKeys.includes("shift") == e.shiftKey &&
-          level.activeKeys.includes("control") == e.ctrlKey &&
-          level.activeKeys.includes("meta") == e.metaKey
+          levelData.activeKeys.includes("alt") == e.altKey &&
+          levelData.activeKeys.includes("shift") == e.shiftKey &&
+          levelData.activeKeys.includes("control") == e.ctrlKey &&
+          levelData.activeKeys.includes("meta") == e.metaKey
         );
       };
 
-      if (e.code.includes(level.keyword) && areActiveKeysPressed()) {
+      if (e.code.includes(levelData.keyword) && areActiveKeysPressed()) {
         areRequirementsMet = true;
       }
     };
@@ -238,9 +240,9 @@ function App() {
       if (!areRequirementsMet) {
         return;
       }
-      const level = levelsData[gameIndex][levelIndex];
-      const finalCursorLocation = level.finalCursorLocation
-        ? level.finalCursorLocation
+      const levelData = getLevelData();
+      const finalCursorLocation = levelData.finalCursorLocation
+        ? levelData.finalCursorLocation
         : [0, 0];
 
       const isCursorInPlace =
@@ -248,7 +250,7 @@ function App() {
         textarea.selectionEnd == finalCursorLocation[1];
 
       if (isCursorInPlace) {
-        handleLevelWin(level.minKeystrokes);
+        handleLevelWin(levelData.minKeystrokes);
       }
     });
   });
