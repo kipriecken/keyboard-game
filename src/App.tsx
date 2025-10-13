@@ -8,17 +8,16 @@ import ButtonSvg from "./components/ButtonSvg";
 import { populateLabel } from "./utils/helpers";
 import Button from "./components/Button";
 
+const userAgent = window.navigator.userAgent;
+const isMac = userAgent.includes("Macintosh");
+const isSafari = userAgent.includes("Safari") && !userAgent.includes("Chrome");
+const isMobile =
+  /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+    userAgent,
+  );
+
 function App() {
   const [isModalVisible, setIsModalVisible] = useState(false);
-
-  const userAgent = window.navigator.userAgent;
-  const isMac = userAgent.includes("Macintosh");
-  const isSafari =
-    userAgent.includes("Safari") && !userAgent.includes("Chrome");
-  const isMobile =
-    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-      userAgent,
-    );
 
   window.onblur = () => {
     setIsModalVisible(true);
@@ -26,6 +25,11 @@ function App() {
   window.onfocus = () => {
     setIsModalVisible(false);
   };
+
+  let acceptableKeys = ["Arrow", "Shift", "Option", "Escape", "Meta", "Tab"];
+  // Constants
+  const text =
+    "Lorem ipsum dolor sit amet consectetur adipisicing elit.\nSuscipit nemo odit optio architecto aperiam incidunt pariatur reiciendis ea!\nUt, id.";
 
   useEffect(() => {
     const textarea = document.getElementById("textarea") as HTMLTextAreaElement;
@@ -73,11 +77,6 @@ function App() {
       "is-mobile",
     )[0] as HTMLElement;
     const label = document.getElementsByTagName("label")[0] as HTMLElement;
-
-    let acceptableKeys = ["Arrow", "Shift", "Option", "Escape", "Meta", "Tab"];
-    // Constants
-    const text =
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit.\nSuscipit nemo odit optio architecto aperiam incidunt pariatur reiciendis ea!\nUt, id.";
 
     // State
     let gameIndex = 0;
