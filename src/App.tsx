@@ -26,12 +26,12 @@ function App() {
     setIsModalVisible(false);
   };
 
-  let acceptableKeys = ["Arrow", "Shift", "Option", "Escape", "Meta", "Tab"];
   // Constants
   const text =
     "Lorem ipsum dolor sit amet consectetur adipisicing elit.\nSuscipit nemo odit optio architecto aperiam incidunt pariatur reiciendis ea!\nUt, id.";
 
   useEffect(() => {
+    let acceptableKeys = ["Arrow", "Shift", "Option", "Escape", "Meta", "Tab"];
     const textarea = document.getElementById("textarea") as HTMLTextAreaElement;
     const achieved = document.getElementsByClassName(
       "achieved",
