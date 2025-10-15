@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import "./App.css";
 import { useEffect, useState } from "react";
-import { games as levelsData, type GameLevel } from "./data";
+import { games as levelsData } from "./data";
 import Modal from "./components/Modal";
 import Header from "./components/Header";
 import ButtonSvg from "./components/ButtonSvg";
@@ -45,6 +45,20 @@ function App() {
   // Constants
   const text =
     "Lorem ipsum dolor sit amet consectetur adipisicing elit.\nSuscipit nemo odit optio architecto aperiam incidunt pariatur reiciendis ea!\nUt, id.";
+
+  const prepareTextarea = (textarea: HTMLTextAreaElement) => {
+    textarea.style.display = "block";
+    textarea.value = text;
+    textarea.focus();
+    textarea.setSelectionRange(
+      levelData.startingCursorPosition
+        ? levelData.startingCursorPosition[0]
+        : 0,
+      levelData.startingCursorPosition
+        ? levelData.startingCursorPosition[1]
+        : 0,
+    );
+  };
 
   useEffect(() => {
     const textarea = document.getElementById("textarea") as HTMLTextAreaElement;
@@ -110,22 +124,12 @@ function App() {
       safari.style.display = "block";
     }
 
-    const prepareTextarea = (level: GameLevel) => {
-      textarea.style.display = "block";
-      textarea.value = text;
-      textarea.focus();
-      textarea.setSelectionRange(
-        level.startingCursorPosition ? level.startingCursorPosition[0] : 0,
-        level.startingCursorPosition ? level.startingCursorPosition[1] : 0,
-      );
-    };
-
     const isOnFinalLevel = () => levelIndex == levelsData[gameIndex].length - 1;
     const isOnFinalGame = () => gameIndex == levelsData.length - 1;
 
     const updateLevel = () => {
       label.innerHTML = populateLabel(levelData, gameIndex, levelIndex);
-      prepareTextarea(levelData);
+      prepareTextarea(textarea);
     };
 
     keystrokesCounter.innerText = keystrokes + "";
@@ -267,7 +271,14 @@ function App() {
       textarea.removeEventListener("keyup", handleKeyup);
       textarea.removeEventListener("keydown", handleKeydown);
     };
-  }, [levelIndex, gameIndex, acceptableKeys, levelData, areRequirementsMet]);
+  }, [
+    levelIndex,
+    gameIndex,
+    acceptableKeys,
+    levelData,
+    areRequirementsMet,
+    prepareTextarea,
+  ]);
   return (
     <>
       <Modal visibility={isModalVisible}></Modal>
