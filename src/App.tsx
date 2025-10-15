@@ -18,6 +18,16 @@ const isMobile =
 
 function App() {
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [levelIndex, setLevelIndex] = useState(0);
+  const [gameIndex, setGameIndex] = useState(0);
+  const [acceptableKeys, setAcceptableKeys] = useState([
+    "Arrow",
+    "Shift",
+    "Option",
+    "Escape",
+    "Meta",
+    "Tab",
+  ]);
 
   window.onblur = () => {
     setIsModalVisible(true);
@@ -31,7 +41,6 @@ function App() {
     "Lorem ipsum dolor sit amet consectetur adipisicing elit.\nSuscipit nemo odit optio architecto aperiam incidunt pariatur reiciendis ea!\nUt, id.";
 
   useEffect(() => {
-    let acceptableKeys = ["Arrow", "Shift", "Option", "Escape", "Meta", "Tab"];
     const textarea = document.getElementById("textarea") as HTMLTextAreaElement;
     const achieved = document.getElementsByClassName(
       "achieved",
@@ -79,8 +88,6 @@ function App() {
     const label = document.getElementsByTagName("label")[0] as HTMLElement;
 
     // State
-    let gameIndex = 0;
-    let levelIndex = 0;
     let keystrokes = 0;
     let areRequirementsMet = false;
     let isLevelOver = false;
@@ -124,13 +131,13 @@ function App() {
 
     const handleReset = () => {
       keystrokesText.style.visibility = "hidden";
-      gameIndex = 0;
-      levelIndex = 0;
+      setGameIndex(0);
+      setLevelIndex(0);
       resetTextarea();
       isLevelOver = false;
       keystrokes = 0;
       resetBtn.style.display = "none";
-      acceptableKeys = ["Arrow", "Shift", "Option", "Escape", "Meta", "Tab"];
+      setAcceptableKeys(["Arrow", "Shift", "Option", "Escape", "Meta", "Tab"]);
     };
 
     const resetTextarea = () => {
@@ -160,27 +167,29 @@ function App() {
 
     resetBtn.addEventListener("click", handleReset);
 
-    nextBtn.addEventListener("click", () => {
+    const handleNextClick = () => {
       if (isOnFinalLevel()) {
         if (isOnFinalGame()) {
-          gameIndex = 0; // not sure if should be done here or later
+          setGameIndex(0); // not sure if should be done here or later
           nextBtn.disabled = true;
           return;
         }
-        ++gameIndex;
-        if (gameIndex == 2) {
-          acceptableKeys.push("Backspace");
-          acceptableKeys.push("KeyK");
+        setGameIndex(gameIndex + 1);
+        if (gameIndex == 1) {
+          // gameIndex will be 1 when on final level
+          setAcceptableKeys([...acceptableKeys, "Backspace", "KeyK"]);
         }
-        levelIndex = 0;
+        setLevelIndex(0);
       } else {
-        ++levelIndex;
+        setLevelIndex(levelIndex + 1);
       }
       resetTextarea();
       isLevelOver = false;
-    });
+    };
 
-    const handleTextareaKeydown = (e: KeyboardEvent) => {
+    nextBtn.addEventListener("click", handleNextClick);
+
+    const handleKeydown = (e: KeyboardEvent) => {
       if (!acceptableKeys.some((key) => e.code.includes(key))) {
         e.preventDefault();
         return;
@@ -216,9 +225,7 @@ function App() {
       }
     };
 
-    textarea.addEventListener("keydown", (e) => {
-      handleTextareaKeydown(e);
-    });
+    textarea.addEventListener("keydown", handleKeydown);
 
     const handleLevelWin = (minKeystrokes: number) => {
       achieved.innerText = `Achieved level ${levelIndex + 1}!`;
@@ -235,7 +242,7 @@ function App() {
       }
     };
 
-    textarea.addEventListener("keyup", () => {
+    const handleKeyup = () => {
       if (!areRequirementsMet) {
         return;
       }
@@ -251,8 +258,17 @@ function App() {
       if (isCursorInPlace) {
         handleLevelWin(levelData.minKeystrokes);
       }
-    });
-  });
+    };
+
+    textarea.addEventListener("keyup", handleKeyup);
+
+    return () => {
+      nextBtn.removeEventListener("click", handleNextClick);
+      resetBtn.removeEventListener("click", handleReset);
+      textarea.removeEventListener("keyup", handleKeyup);
+      textarea.removeEventListener("keydown", handleKeydown);
+    };
+  }, [levelIndex, gameIndex, acceptableKeys]);
   return (
     <>
       <Modal visibility={isModalVisible}></Modal>
