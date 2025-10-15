@@ -28,6 +28,12 @@ function App() {
     "Meta",
     "Tab",
   ]);
+  const [levelData, setLevelData] = useState(levelsData[gameIndex][levelIndex]);
+  const [areRequirementsMet, setAreRequirementsMet] = useState(false);
+
+  useEffect(() => {
+    setLevelData(levelsData[gameIndex][levelIndex]);
+  }, [levelIndex, gameIndex]);
 
   window.onblur = () => {
     setIsModalVisible(true);
@@ -89,7 +95,6 @@ function App() {
 
     // State
     let keystrokes = 0;
-    let areRequirementsMet = false;
     let isLevelOver = false;
 
     label.innerHTML = "";
@@ -115,13 +120,10 @@ function App() {
       );
     };
 
-    const getLevelData = () => levelsData[gameIndex][levelIndex];
-
     const isOnFinalLevel = () => levelIndex == levelsData[gameIndex].length - 1;
     const isOnFinalGame = () => gameIndex == levelsData.length - 1;
 
     const updateLevel = () => {
-      const levelData = getLevelData();
       label.innerHTML = populateLabel(levelData, gameIndex, levelIndex);
       prepareTextarea(levelData);
     };
@@ -143,7 +145,7 @@ function App() {
     const resetTextarea = () => {
       innerContainer.style.display = "flex";
       updateLevel();
-      areRequirementsMet = false;
+      setAreRequirementsMet(false);
       nextBtn.style.display = "inline";
       nextBtn.disabled = true;
       achieved.style.display = "none";
@@ -198,8 +200,6 @@ function App() {
         return;
       }
 
-      const levelData = getLevelData();
-
       if (!e.code.includes("Tab") && !e.code.includes("Escape")) {
         keystrokesCounter.innerText = ++keystrokes + "";
       }
@@ -221,7 +221,7 @@ function App() {
       };
 
       if (e.code.includes(levelData.keyword) && areActiveKeysPressed()) {
-        areRequirementsMet = true;
+        setAreRequirementsMet(true);
       }
     };
 
@@ -246,7 +246,6 @@ function App() {
       if (!areRequirementsMet) {
         return;
       }
-      const levelData = getLevelData();
       const finalCursorLocation = levelData.finalCursorLocation
         ? levelData.finalCursorLocation
         : [0, 0];
@@ -268,7 +267,7 @@ function App() {
       textarea.removeEventListener("keyup", handleKeyup);
       textarea.removeEventListener("keydown", handleKeydown);
     };
-  }, [levelIndex, gameIndex, acceptableKeys]);
+  }, [levelIndex, gameIndex, acceptableKeys, levelData, areRequirementsMet]);
   return (
     <>
       <Modal visibility={isModalVisible}></Modal>
