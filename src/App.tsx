@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import "./App.css";
 import { useEffect, useState } from "react";
-import { games as levelsData, type GameLevel } from "./data";
+import { games as levelsData } from "./data";
 import Modal from "./components/Modal";
 import Header from "./components/Header";
 import ButtonSvg from "./components/ButtonSvg";
@@ -110,13 +110,17 @@ function App() {
       safari.style.display = "block";
     }
 
-    const prepareTextarea = (level: GameLevel) => {
+    const prepareTextarea = () => {
       textarea.style.display = "block";
       textarea.value = text;
       textarea.focus();
       textarea.setSelectionRange(
-        level.startingCursorPosition ? level.startingCursorPosition[0] : 0,
-        level.startingCursorPosition ? level.startingCursorPosition[1] : 0,
+        levelData.startingCursorPosition
+          ? levelData.startingCursorPosition[0]
+          : 0,
+        levelData.startingCursorPosition
+          ? levelData.startingCursorPosition[1]
+          : 0,
       );
     };
 
@@ -125,7 +129,7 @@ function App() {
 
     const updateLevel = () => {
       label.innerHTML = populateLabel(levelData, gameIndex, levelIndex);
-      prepareTextarea(levelData);
+      prepareTextarea();
     };
 
     keystrokesCounter.innerText = keystrokes + "";
