@@ -85,6 +85,7 @@ function App() {
       keystrokesRef.current = 0;
       keystrokesCounter.innerText = "0";
       keystrokesText.style.visibility = "hidden";
+      setAreRequirementsMet(false);
     }
   }, [gameIndex, levelIndex]);
 
