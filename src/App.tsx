@@ -1,5 +1,5 @@
 import "./App.css";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { games as levelsData } from "./data";
 import Modal from "./components/Modal";
 import Header from "./components/Header";
@@ -34,8 +34,7 @@ function App() {
   const [isNextBtnVisible, setIsNextBtnVisible] = useState(true);
   const [isResetBtnVisible, setIsResetBtnVisible] = useState(true);
   const [isKeystrokesTextVisible, setIsKeystrokesTextVisible] = useState(false);
-
-  const keystrokesRef = useRef(0);
+  const [keystrokes, setKeystrokes] = useState(0);
 
   window.onblur = () => {
     setIsModalVisible(true);
@@ -53,9 +52,6 @@ function App() {
     const label = document.getElementsByTagName("label")[0] as HTMLElement;
     const innerContainer = document.getElementsByClassName(
       "inner",
-    )[0] as HTMLElement;
-    const keystrokesCounter = document.getElementsByClassName(
-      "counter",
     )[0] as HTMLElement;
 
     if (textarea && label) {
@@ -78,8 +74,7 @@ function App() {
 
       setIsNextBtnDisabled(true);
       setIsAchievedVisible(false);
-      keystrokesRef.current = 0;
-      keystrokesCounter.innerText = "0";
+      setKeystrokes(0);
       setIsKeystrokesTextVisible(false);
       setAreRequirementsMet(false);
     }
@@ -118,9 +113,6 @@ function App() {
       "game-play",
     )[0] as HTMLElement;
     const resetBtn = document.getElementsByClassName("reset")[0] as HTMLElement;
-    const keystrokesCounter = document.getElementsByClassName(
-      "counter",
-    )[0] as HTMLElement;
     const innerContainer = document.getElementsByClassName(
       "inner",
     )[0] as HTMLElement;
@@ -148,14 +140,12 @@ function App() {
 
     label.innerHTML = populateLabel(levelData, gameIndex, levelIndex);
 
-    keystrokesCounter.innerText = keystrokesRef.current + "";
-
     const handleReset = () => {
       setIsKeystrokesTextVisible(false);
       setGameIndex(0);
       setLevelIndex(0);
       setIsLevelOver(false);
-      keystrokesRef.current = 0;
+      setKeystrokes(0);
       setIsNextBtnVisible(true);
       setIsResetBtnVisible(false);
       setAcceptableKeys(["Arrow", "Shift", "Option", "Escape", "Meta", "Tab"]);
@@ -204,8 +194,7 @@ function App() {
       }
 
       if (!e.code.includes("Tab") && !e.code.includes("Escape")) {
-        keystrokesRef.current++;
-        keystrokesCounter.innerText = keystrokesRef.current + "";
+        setKeystrokes((s) => s + 1);
       }
       if (
         !e.code.includes("Arrow") &&
@@ -233,7 +222,7 @@ function App() {
       achieved.innerText = `Achieved level ${levelIndex + 1}!`;
       setIsLevelOver(true);
       setIsAchievedVisible(true);
-      if (keystrokesRef.current == levelData.minKeystrokes) {
+      if (keystrokes == levelData.minKeystrokes) {
         setIsKeystrokesTextVisible(true);
       }
       if (isOnFinalGame() && isOnFinalLevel()) {
@@ -272,7 +261,14 @@ function App() {
       textarea.removeEventListener("keyup", handleKeyup);
       textarea.removeEventListener("keydown", handleKeydown);
     };
-  }, [levelIndex, gameIndex, acceptableKeys, areRequirementsMet, isLevelOver]);
+  }, [
+    levelIndex,
+    gameIndex,
+    acceptableKeys,
+    areRequirementsMet,
+    isLevelOver,
+    keystrokes,
+  ]);
   return (
     <>
       <Modal visibility={isModalVisible}></Modal>
@@ -351,7 +347,7 @@ function App() {
               </button>
             </div>
             <div className="counter-container">
-              Keystrokes: <span className="counter">0</span>
+              Keystrokes: <span className="counter">{keystrokes}</span>
             </div>
             <div className="achieved-container">
               <div
