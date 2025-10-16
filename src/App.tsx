@@ -231,11 +231,11 @@ function App() {
 
     textarea.addEventListener("keydown", handleKeydown);
 
-    const handleLevelWin = (minKeystrokes: number) => {
+    const handleLevelWin = () => {
       achieved.innerText = `Achieved level ${levelIndex + 1}!`;
       isLevelOver = true;
       achieved.style.display = "block";
-      if (keystrokes == minKeystrokes) {
+      if (keystrokes == levelData.minKeystrokes) {
         keystrokesText.style.visibility = "visible";
       }
       if (isOnFinalGame() && isOnFinalLevel()) {
@@ -259,7 +259,7 @@ function App() {
         textarea.selectionEnd == finalCursorLocation[1];
 
       if (isCursorInPlace) {
-        handleLevelWin(levelData.minKeystrokes);
+        handleLevelWin();
       }
     };
 
