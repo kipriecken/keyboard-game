@@ -27,13 +27,13 @@ function App() {
     "Meta",
     "Tab",
   ]);
-  // const [levelData, setLevelData] = useState(levelsData[gameIndex][levelIndex]);
   const [areRequirementsMet, setAreRequirementsMet] = useState(false);
   const [isLevelOver, setIsLevelOver] = useState(false);
   const [isAchievedVisible, setIsAchievedVisible] = useState(false);
   const [isNextBtnDisabled, setIsNextBtnDisabled] = useState(true);
   const [isNextBtnVisible, setIsNextBtnVisible] = useState(true);
   const [isResetBtnVisible, setIsResetBtnVisible] = useState(true);
+  const [isKeystrokesTextVisible, setIsKeystrokesTextVisible] = useState(false);
 
   const keystrokesRef = useRef(0);
 
@@ -49,7 +49,6 @@ function App() {
     "Lorem ipsum dolor sit amet consectetur adipisicing elit.\nSuscipit nemo odit optio architecto aperiam incidunt pariatur reiciendis ea!\nUt, id.";
 
   useEffect(() => {
-    console.log("running textarea useEffect");
     const textarea = document.getElementById("textarea") as HTMLTextAreaElement;
     const label = document.getElementsByTagName("label")[0] as HTMLElement;
     const innerContainer = document.getElementsByClassName(
@@ -57,9 +56,6 @@ function App() {
     )[0] as HTMLElement;
     const keystrokesCounter = document.getElementsByClassName(
       "counter",
-    )[0] as HTMLElement;
-    const keystrokesText = document.getElementsByClassName(
-      "keystrokes",
     )[0] as HTMLElement;
 
     if (textarea && label) {
@@ -84,7 +80,7 @@ function App() {
       setIsAchievedVisible(false);
       keystrokesRef.current = 0;
       keystrokesCounter.innerText = "0";
-      keystrokesText.style.visibility = "hidden";
+      setIsKeystrokesTextVisible(false);
       setAreRequirementsMet(false);
     }
   }, [gameIndex, levelIndex]);
@@ -128,9 +124,6 @@ function App() {
     const innerContainer = document.getElementsByClassName(
       "inner",
     )[0] as HTMLElement;
-    const keystrokesText = document.getElementsByClassName(
-      "keystrokes",
-    )[0] as HTMLElement;
     const nextBtn = document.getElementById("next") as HTMLButtonElement;
     const mobileDiv = document.getElementsByClassName(
       "is-mobile",
@@ -158,13 +151,12 @@ function App() {
     keystrokesCounter.innerText = keystrokesRef.current + "";
 
     const handleReset = () => {
-      keystrokesText.style.visibility = "hidden";
+      setIsKeystrokesTextVisible(false);
       setGameIndex(0);
       setLevelIndex(0);
       setIsLevelOver(false);
       keystrokesRef.current = 0;
       setIsNextBtnVisible(true);
-      // resetBtn.style.display = "none";
       setIsResetBtnVisible(false);
       setAcceptableKeys(["Arrow", "Shift", "Option", "Escape", "Meta", "Tab"]);
       textarea.focus();
@@ -242,7 +234,7 @@ function App() {
       setIsLevelOver(true);
       setIsAchievedVisible(true);
       if (keystrokesRef.current == levelData.minKeystrokes) {
-        keystrokesText.style.visibility = "visible";
+        setIsKeystrokesTextVisible(true);
       }
       if (isOnFinalGame() && isOnFinalLevel()) {
         setIsResetBtnVisible(true);
@@ -362,7 +354,14 @@ function App() {
               Keystrokes: <span className="counter">0</span>
             </div>
             <div className="achieved-container">
-              <div className="keystrokes">Minimum keystrokes!</div>
+              <div
+                className="keystrokes"
+                style={{
+                  visibility: isKeystrokesTextVisible ? "visible" : "hidden",
+                }}
+              >
+                Minimum keystrokes!
+              </div>
               <div
                 className="achieved"
                 style={{ display: isAchievedVisible ? "block" : "none" }}
