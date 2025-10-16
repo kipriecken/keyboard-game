@@ -30,6 +30,8 @@ function App() {
   // const [levelData, setLevelData] = useState(levelsData[gameIndex][levelIndex]);
   const [areRequirementsMet, setAreRequirementsMet] = useState(false);
   const [isLevelOver, setIsLevelOver] = useState(false);
+  const [isAchievedVisible, setIsAchievedVisible] = useState(false);
+  const [isNextBtnDisabled, setIsNextBtnDisabled] = useState(true);
 
   const keystrokesRef = useRef(0);
 
@@ -48,10 +50,6 @@ function App() {
     console.log("running textarea useEffect");
     const textarea = document.getElementById("textarea") as HTMLTextAreaElement;
     const label = document.getElementsByTagName("label")[0] as HTMLElement;
-    const achieved = document.getElementsByClassName(
-      "achieved",
-    )[0] as HTMLElement;
-    const nextBtn = document.getElementById("next") as HTMLButtonElement;
     const innerContainer = document.getElementsByClassName(
       "inner",
     )[0] as HTMLElement;
@@ -80,8 +78,8 @@ function App() {
           : 0,
       );
 
-      nextBtn.disabled = true;
-      achieved.style.display = "none";
+      setIsNextBtnDisabled(true);
+      setIsAchievedVisible(false);
       keystrokesRef.current = 0;
       keystrokesCounter.innerText = "0";
       keystrokesText.style.visibility = "hidden";
@@ -163,6 +161,7 @@ function App() {
       setLevelIndex(0);
       setIsLevelOver(false);
       keystrokesRef.current = 0;
+      nextBtn.style.display = "block";
       resetBtn.style.display = "none";
       setAcceptableKeys(["Arrow", "Shift", "Option", "Escape", "Meta", "Tab"]);
       textarea.focus();
@@ -185,13 +184,13 @@ function App() {
       if (isOnFinalLevel()) {
         if (isOnFinalGame()) {
           setGameIndex(0); // not sure if should be done here or later
-          nextBtn.disabled = true;
+          setIsNextBtnDisabled(true);
           return;
         }
         setGameIndex((i) => i + 1);
         if (gameIndex == 1) {
           // gameIndex will be 1 when on final level
-          setAcceptableKeys([...acceptableKeys, "Backspace", "KeyK"]);
+          setAcceptableKeys((k) => [...k, "Backspace", "KeyK"]);
         }
         setLevelIndex(0);
       } else {
@@ -238,7 +237,7 @@ function App() {
     const handleLevelWin = () => {
       achieved.innerText = `Achieved level ${levelIndex + 1}!`;
       setIsLevelOver(true);
-      achieved.style.display = "block";
+      setIsAchievedVisible(true);
       if (keystrokesRef.current == levelData.minKeystrokes) {
         keystrokesText.style.visibility = "visible";
       }
@@ -246,7 +245,7 @@ function App() {
         resetBtn.style.display = "block";
         nextBtn.style.display = "none";
       } else {
-        nextBtn.disabled = false;
+        setIsNextBtnDisabled(false);
       }
     };
 
@@ -340,7 +339,7 @@ function App() {
           </div>
           <div className="stats">
             <div className="btn-container">
-              <button id="next">
+              <button id="next" disabled={isNextBtnDisabled}>
                 <ButtonSvg></ButtonSvg>
                 <span>Next</span>
               </button>
@@ -354,7 +353,10 @@ function App() {
             </div>
             <div className="achieved-container">
               <div className="keystrokes">Minimum keystrokes!</div>
-              <div className="achieved"></div>
+              <div
+                className="achieved"
+                style={{ display: isAchievedVisible ? "block" : "none" }}
+              ></div>
             </div>
           </div>
           <div className="sidebar"></div>
