@@ -27,15 +27,11 @@ function App() {
     "Meta",
     "Tab",
   ]);
-  const [levelData, setLevelData] = useState(levelsData[gameIndex][levelIndex]);
+  // const [levelData, setLevelData] = useState(levelsData[gameIndex][levelIndex]);
   const [areRequirementsMet, setAreRequirementsMet] = useState(false);
   const [isLevelOver, setIsLevelOver] = useState(false);
 
   const keystrokesRef = useRef(0);
-
-  useEffect(() => {
-    setLevelData(levelsData[gameIndex][levelIndex]);
-  }, [levelIndex, gameIndex]);
 
   window.onblur = () => {
     setIsModalVisible(true);
@@ -49,6 +45,51 @@ function App() {
     "Lorem ipsum dolor sit amet consectetur adipisicing elit.\nSuscipit nemo odit optio architecto aperiam incidunt pariatur reiciendis ea!\nUt, id.";
 
   useEffect(() => {
+    console.log("running textarea useEffect");
+    const textarea = document.getElementById("textarea") as HTMLTextAreaElement;
+    const label = document.getElementsByTagName("label")[0] as HTMLElement;
+    const achieved = document.getElementsByClassName(
+      "achieved",
+    )[0] as HTMLElement;
+    const nextBtn = document.getElementById("next") as HTMLButtonElement;
+    const innerContainer = document.getElementsByClassName(
+      "inner",
+    )[0] as HTMLElement;
+    const keystrokesCounter = document.getElementsByClassName(
+      "counter",
+    )[0] as HTMLElement;
+    const keystrokesText = document.getElementsByClassName(
+      "keystrokes",
+    )[0] as HTMLElement;
+
+    if (textarea && label) {
+      const levelData = levelsData[gameIndex][levelIndex];
+
+      // Update UI for new level
+      innerContainer.style.display = "flex";
+      label.innerHTML = populateLabel(levelData, gameIndex, levelIndex);
+      textarea.style.display = "block";
+      textarea.value = text;
+      textarea.focus();
+      textarea.setSelectionRange(
+        levelData.startingCursorPosition
+          ? levelData.startingCursorPosition[0]
+          : 0,
+        levelData.startingCursorPosition
+          ? levelData.startingCursorPosition[1]
+          : 0,
+      );
+
+      nextBtn.disabled = true;
+      achieved.style.display = "none";
+      keystrokesRef.current = 0;
+      keystrokesCounter.innerText = "0";
+      keystrokesText.style.visibility = "hidden";
+    }
+  }, [gameIndex, levelIndex]);
+
+  useEffect(() => {
+    const levelData = levelsData[gameIndex][levelIndex];
     const textarea = document.getElementById("textarea") as HTMLTextAreaElement;
     const achieved = document.getElementsByClassName(
       "achieved",
@@ -108,28 +149,10 @@ function App() {
       safari.style.display = "block";
     }
 
-    const prepareTextarea = () => {
-      textarea.style.display = "block";
-      textarea.value = text;
-      textarea.focus();
-      textarea.setSelectionRange(
-        levelData.startingCursorPosition
-          ? levelData.startingCursorPosition[0]
-          : 0,
-        levelData.startingCursorPosition
-          ? levelData.startingCursorPosition[1]
-          : 0,
-      );
-    };
-
     const isOnFinalLevel = () => levelIndex == levelsData[gameIndex].length - 1;
     const isOnFinalGame = () => gameIndex == levelsData.length - 1;
 
     label.innerHTML = populateLabel(levelData, gameIndex, levelIndex);
-    const updateLevel = () => {
-      label.innerHTML = populateLabel(levelData, gameIndex, levelIndex);
-      prepareTextarea();
-    };
 
     keystrokesCounter.innerText = keystrokesRef.current + "";
 
@@ -137,23 +160,11 @@ function App() {
       keystrokesText.style.visibility = "hidden";
       setGameIndex(0);
       setLevelIndex(0);
-      resetTextarea();
       setIsLevelOver(false);
       keystrokesRef.current = 0;
       resetBtn.style.display = "none";
       setAcceptableKeys(["Arrow", "Shift", "Option", "Escape", "Meta", "Tab"]);
-    };
-
-    const resetTextarea = () => {
-      innerContainer.style.display = "flex";
-      updateLevel();
-      setAreRequirementsMet(false);
-      nextBtn.style.display = "inline";
-      nextBtn.disabled = true;
-      achieved.style.display = "none";
-      keystrokesRef.current = 0;
-      keystrokesCounter.innerText = "0";
-      keystrokesText.style.visibility = "hidden";
+      textarea.focus();
     };
 
     partOneButton.addEventListener("focus", () => {
@@ -176,16 +187,15 @@ function App() {
           nextBtn.disabled = true;
           return;
         }
-        setGameIndex(gameIndex + 1);
+        setGameIndex((i) => i + 1);
         if (gameIndex == 1) {
           // gameIndex will be 1 when on final level
           setAcceptableKeys([...acceptableKeys, "Backspace", "KeyK"]);
         }
         setLevelIndex(0);
       } else {
-        setLevelIndex(levelIndex + 1);
+        setLevelIndex((i) => i + 1);
       }
-      resetTextarea();
       setIsLevelOver(false);
     };
 
@@ -267,14 +277,7 @@ function App() {
       textarea.removeEventListener("keyup", handleKeyup);
       textarea.removeEventListener("keydown", handleKeydown);
     };
-  }, [
-    levelIndex,
-    gameIndex,
-    acceptableKeys,
-    levelData,
-    areRequirementsMet,
-    isLevelOver,
-  ]);
+  }, [levelIndex, gameIndex, acceptableKeys, areRequirementsMet, isLevelOver]);
   return (
     <>
       <Modal visibility={isModalVisible}></Modal>
