@@ -1,5 +1,5 @@
 import "./App.css";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { games as levelsData } from "./data";
 import Modal from "./components/Modal";
 import Header from "./components/Header";
@@ -16,6 +16,8 @@ const isMobile =
   );
 
 function App() {
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [levelIndex, setLevelIndex] = useState(0);
   const [gameIndex, setGameIndex] = useState(0);
@@ -48,7 +50,7 @@ function App() {
     "Lorem ipsum dolor sit amet consectetur adipisicing elit.\nSuscipit nemo odit optio architecto aperiam incidunt pariatur reiciendis ea!\nUt, id.";
 
   useEffect(() => {
-    const textarea = document.getElementById("textarea") as HTMLTextAreaElement;
+    const textarea = textareaRef.current;
     const label = document.getElementsByTagName("label")[0] as HTMLElement;
     const innerContainer = document.getElementsByClassName(
       "inner",
@@ -82,7 +84,7 @@ function App() {
 
   useEffect(() => {
     const levelData = levelsData[gameIndex][levelIndex];
-    const textarea = document.getElementById("textarea") as HTMLTextAreaElement;
+    const textarea = textareaRef.current;
     const achieved = document.getElementsByClassName(
       "achieved",
     )[0] as HTMLElement;
@@ -149,7 +151,7 @@ function App() {
       setIsNextBtnVisible(true);
       setIsResetBtnVisible(false);
       setAcceptableKeys(["Arrow", "Shift", "Option", "Escape", "Meta", "Tab"]);
-      textarea.focus();
+      textarea?.focus();
     };
 
     partOneButton.addEventListener("focus", () => {
@@ -242,8 +244,8 @@ function App() {
         : [0, 0];
 
       const isCursorInPlace =
-        textarea.selectionStart == finalCursorLocation[0] &&
-        textarea.selectionEnd == finalCursorLocation[1];
+        textarea?.selectionStart == finalCursorLocation[0] &&
+        textarea?.selectionEnd == finalCursorLocation[1];
 
       if (isCursorInPlace) {
         handleLevelWin();
@@ -252,14 +254,14 @@ function App() {
 
     nextBtn.addEventListener("click", handleNextClick);
     resetBtn.addEventListener("click", handleReset);
-    textarea.addEventListener("keydown", handleKeydown);
-    textarea.addEventListener("keyup", handleKeyup);
+    textarea?.addEventListener("keydown", handleKeydown);
+    textarea?.addEventListener("keyup", handleKeyup);
 
     return () => {
       nextBtn.removeEventListener("click", handleNextClick);
       resetBtn.removeEventListener("click", handleReset);
-      textarea.removeEventListener("keyup", handleKeyup);
-      textarea.removeEventListener("keydown", handleKeydown);
+      textarea?.removeEventListener("keyup", handleKeyup);
+      textarea?.removeEventListener("keydown", handleKeydown);
     };
   }, [
     levelIndex,
@@ -321,6 +323,7 @@ function App() {
           </div>
           <div className="relative">
             <textarea
+              ref={textareaRef}
               name="text"
               id="textarea"
               rows={5}
