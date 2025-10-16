@@ -32,6 +32,8 @@ function App() {
   const [isLevelOver, setIsLevelOver] = useState(false);
   const [isAchievedVisible, setIsAchievedVisible] = useState(false);
   const [isNextBtnDisabled, setIsNextBtnDisabled] = useState(true);
+  const [isNextBtnVisible, setIsNextBtnVisible] = useState(true);
+  const [isResetBtnVisible, setIsResetBtnVisible] = useState(true);
 
   const keystrokesRef = useRef(0);
 
@@ -161,8 +163,9 @@ function App() {
       setLevelIndex(0);
       setIsLevelOver(false);
       keystrokesRef.current = 0;
-      nextBtn.style.display = "block";
-      resetBtn.style.display = "none";
+      setIsNextBtnVisible(true);
+      // resetBtn.style.display = "none";
+      setIsResetBtnVisible(false);
       setAcceptableKeys(["Arrow", "Shift", "Option", "Escape", "Meta", "Tab"]);
       textarea.focus();
     };
@@ -242,8 +245,8 @@ function App() {
         keystrokesText.style.visibility = "visible";
       }
       if (isOnFinalGame() && isOnFinalLevel()) {
-        resetBtn.style.display = "block";
-        nextBtn.style.display = "none";
+        setIsResetBtnVisible(true);
+        setIsNextBtnVisible(false);
       } else {
         setIsNextBtnDisabled(false);
       }
@@ -339,11 +342,18 @@ function App() {
           </div>
           <div className="stats">
             <div className="btn-container">
-              <button id="next" disabled={isNextBtnDisabled}>
+              <button
+                id="next"
+                disabled={isNextBtnDisabled}
+                style={{ display: isNextBtnVisible ? "block" : "none" }}
+              >
                 <ButtonSvg></ButtonSvg>
                 <span>Next</span>
               </button>
-              <button className="reset">
+              <button
+                className="reset"
+                style={{ display: isResetBtnVisible ? "block" : "none" }}
+              >
                 <ButtonSvg></ButtonSvg>
                 <span>Play again</span>
               </button>
