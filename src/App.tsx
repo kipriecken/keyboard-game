@@ -1,6 +1,5 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import "./App.css";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { games as levelsData } from "./data";
 import Modal from "./components/Modal";
 import Header from "./components/Header";
@@ -30,6 +29,9 @@ function App() {
   ]);
   const [levelData, setLevelData] = useState(levelsData[gameIndex][levelIndex]);
   const [areRequirementsMet, setAreRequirementsMet] = useState(false);
+  const [isLevelOver, setIsLevelOver] = useState(false);
+
+  const keystrokesRef = useRef(0);
 
   useEffect(() => {
     setLevelData(levelsData[gameIndex][levelIndex]);
@@ -93,10 +95,6 @@ function App() {
     )[0] as HTMLElement;
     const label = document.getElementsByTagName("label")[0] as HTMLElement;
 
-    // State
-    let keystrokes = 0;
-    let isLevelOver = false;
-
     label.innerHTML = "";
 
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
@@ -127,21 +125,21 @@ function App() {
     const isOnFinalLevel = () => levelIndex == levelsData[gameIndex].length - 1;
     const isOnFinalGame = () => gameIndex == levelsData.length - 1;
 
+    label.innerHTML = populateLabel(levelData, gameIndex, levelIndex);
     const updateLevel = () => {
       label.innerHTML = populateLabel(levelData, gameIndex, levelIndex);
       prepareTextarea();
     };
 
-    keystrokesCounter.innerText = keystrokes + "";
-    updateLevel();
+    keystrokesCounter.innerText = keystrokesRef.current + "";
 
     const handleReset = () => {
       keystrokesText.style.visibility = "hidden";
       setGameIndex(0);
       setLevelIndex(0);
       resetTextarea();
-      isLevelOver = false;
-      keystrokes = 0;
+      setIsLevelOver(false);
+      keystrokesRef.current = 0;
       resetBtn.style.display = "none";
       setAcceptableKeys(["Arrow", "Shift", "Option", "Escape", "Meta", "Tab"]);
     };
@@ -153,8 +151,8 @@ function App() {
       nextBtn.style.display = "inline";
       nextBtn.disabled = true;
       achieved.style.display = "none";
+      keystrokesRef.current = 0;
       keystrokesCounter.innerText = "0";
-      keystrokes = 0;
       keystrokesText.style.visibility = "hidden";
     };
 
@@ -170,8 +168,6 @@ function App() {
       gamePlay.style.display = "flex";
       handleReset();
     });
-
-    resetBtn.addEventListener("click", handleReset);
 
     const handleNextClick = () => {
       if (isOnFinalLevel()) {
@@ -190,10 +186,8 @@ function App() {
         setLevelIndex(levelIndex + 1);
       }
       resetTextarea();
-      isLevelOver = false;
+      setIsLevelOver(false);
     };
-
-    nextBtn.addEventListener("click", handleNextClick);
 
     const handleKeydown = (e: KeyboardEvent) => {
       if (!acceptableKeys.some((key) => e.code.includes(key))) {
@@ -205,7 +199,8 @@ function App() {
       }
 
       if (!e.code.includes("Tab") && !e.code.includes("Escape")) {
-        keystrokesCounter.innerText = ++keystrokes + "";
+        keystrokesRef.current++;
+        keystrokesCounter.innerText = keystrokesRef.current + "";
       }
       if (
         !e.code.includes("Arrow") &&
@@ -229,13 +224,11 @@ function App() {
       }
     };
 
-    textarea.addEventListener("keydown", handleKeydown);
-
     const handleLevelWin = () => {
       achieved.innerText = `Achieved level ${levelIndex + 1}!`;
-      isLevelOver = true;
+      setIsLevelOver(true);
       achieved.style.display = "block";
-      if (keystrokes == levelData.minKeystrokes) {
+      if (keystrokesRef.current == levelData.minKeystrokes) {
         keystrokesText.style.visibility = "visible";
       }
       if (isOnFinalGame() && isOnFinalLevel()) {
@@ -263,6 +256,9 @@ function App() {
       }
     };
 
+    nextBtn.addEventListener("click", handleNextClick);
+    resetBtn.addEventListener("click", handleReset);
+    textarea.addEventListener("keydown", handleKeydown);
     textarea.addEventListener("keyup", handleKeyup);
 
     return () => {
@@ -271,7 +267,14 @@ function App() {
       textarea.removeEventListener("keyup", handleKeyup);
       textarea.removeEventListener("keydown", handleKeydown);
     };
-  }, [levelIndex, gameIndex, acceptableKeys, levelData, areRequirementsMet]);
+  }, [
+    levelIndex,
+    gameIndex,
+    acceptableKeys,
+    levelData,
+    areRequirementsMet,
+    isLevelOver,
+  ]);
   return (
     <>
       <Modal visibility={isModalVisible}></Modal>
