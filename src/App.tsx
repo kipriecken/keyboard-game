@@ -24,10 +24,11 @@ function App() {
   const [acceptableKeys, setAcceptableKeys] = useState([
     "Arrow",
     "Shift",
-    "Option",
+    "Alt",
     "Escape",
     "Meta",
     "Tab",
+    "Control",
   ]);
   const [areRequirementsMet, setAreRequirementsMet] = useState(false);
   const [isLevelOver, setIsLevelOver] = useState(false);
@@ -59,7 +60,15 @@ function App() {
     setKeystrokes(0);
     setIsNextBtnVisible(true);
     setIsResetBtnVisible(false);
-    setAcceptableKeys(["Arrow", "Shift", "Option", "Escape", "Meta", "Tab"]);
+    setAcceptableKeys([
+      "Arrow",
+      "Shift",
+      "Alt",
+      "Escape",
+      "Meta",
+      "Tab",
+      "Control",
+    ]);
     textareaRef.current?.focus();
   };
 
