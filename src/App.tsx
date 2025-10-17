@@ -333,6 +333,7 @@ function App() {
               <button
                 className="reset"
                 style={{ display: isResetBtnVisible ? "block" : "none" }}
+                onClick={handleReset}
               >
                 <ButtonSvg></ButtonSvg>
                 <span>Play again</span>
