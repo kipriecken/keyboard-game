@@ -162,6 +162,7 @@ function App() {
 
   useEffect(() => {
     const textarea = textareaRef.current;
+
     const label = document.getElementsByTagName("label")[0] as HTMLElement;
     const innerContainer = document.getElementsByClassName(
       "inner",
@@ -185,7 +186,6 @@ function App() {
           : 0,
       );
 
-      label.innerHTML = populateLabel(levelData, gameIndex, levelIndex);
       setIsNextBtnDisabled(true);
       setIsAchievedVisible(false);
       setKeystrokes(0);
