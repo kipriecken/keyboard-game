@@ -185,6 +185,7 @@ function App() {
           : 0,
       );
 
+      label.innerHTML = populateLabel(levelData, gameIndex, levelIndex);
       setIsNextBtnDisabled(true);
       setIsAchievedVisible(false);
       setKeystrokes(0);
@@ -194,7 +195,6 @@ function App() {
   }, [gameIndex, levelIndex]);
 
   useEffect(() => {
-    const levelData = levelsData[gameIndex][levelIndex];
     const intro = document.getElementsByClassName("intro")[0] as HTMLElement;
     const partTwo = document.getElementsByClassName(
       "part-two",
@@ -227,9 +227,6 @@ function App() {
     const mobileDiv = document.getElementsByClassName(
       "is-mobile",
     )[0] as HTMLElement;
-    const label = document.getElementsByTagName("label")[0] as HTMLElement;
-
-    label.innerHTML = "";
 
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     isMobile
@@ -241,8 +238,6 @@ function App() {
     if (isSafari) {
       safari.style.display = "block";
     }
-
-    label.innerHTML = populateLabel(levelData, gameIndex, levelIndex);
 
     partOneButton.addEventListener("focus", () => {
       partTwo.style.display = "flex";
@@ -256,7 +251,7 @@ function App() {
       gamePlay.style.display = "flex";
       handleReset();
     });
-  }, [levelIndex, gameIndex]);
+  }, []);
   return (
     <>
       <Modal visibility={isModalVisible}></Modal>
