@@ -38,6 +38,8 @@ function App() {
   const [isKeystrokesTextVisible, setIsKeystrokesTextVisible] = useState(false);
   const [keystrokes, setKeystrokes] = useState(0);
 
+  const levelData = levelsData[gameIndex][levelIndex];
+
   window.onblur = () => {
     setIsModalVisible(true);
   };
@@ -48,6 +50,106 @@ function App() {
   // Constants
   const text =
     "Lorem ipsum dolor sit amet consectetur adipisicing elit.\nSuscipit nemo odit optio architecto aperiam incidunt pariatur reiciendis ea!\nUt, id.";
+
+  const handleReset = () => {
+    setIsKeystrokesTextVisible(false);
+    setGameIndex(0);
+    setLevelIndex(0);
+    setIsLevelOver(false);
+    setKeystrokes(0);
+    setIsNextBtnVisible(true);
+    setIsResetBtnVisible(false);
+    setAcceptableKeys(["Arrow", "Shift", "Option", "Escape", "Meta", "Tab"]);
+    textareaRef.current?.focus();
+  };
+
+  const isOnFinalLevel = () => levelIndex == levelsData[gameIndex].length - 1;
+  const isOnFinalGame = () => gameIndex == levelsData.length - 1;
+
+  const handleNextClick = () => {
+    setIsAchievedVisible(false);
+    if (isOnFinalLevel()) {
+      if (isOnFinalGame()) {
+        setGameIndex(0); // not sure if should be done here or later
+        setIsNextBtnDisabled(true);
+        return;
+      }
+      setGameIndex((i) => i + 1);
+      if (gameIndex == 1) {
+        // gameIndex will be 1 when on final level
+        setAcceptableKeys((k) => [...k, "Backspace", "KeyK"]);
+      }
+      setLevelIndex(0);
+    } else {
+      setLevelIndex((i) => i + 1);
+    }
+    setIsLevelOver(false);
+  };
+
+  const handleLevelWin = () => {
+    setIsLevelOver(true);
+    setIsAchievedVisible(true);
+    if (keystrokes == levelData.minKeystrokes) {
+      setIsKeystrokesTextVisible(true);
+    }
+    if (isOnFinalGame() && isOnFinalLevel()) {
+      setIsResetBtnVisible(true);
+      setIsNextBtnVisible(false);
+    } else {
+      setIsNextBtnDisabled(false);
+    }
+  };
+
+  const handleKeyup = () => {
+    if (!areRequirementsMet) {
+      return;
+    }
+    const finalCursorLocation = levelData.finalCursorLocation
+      ? levelData.finalCursorLocation
+      : [0, 0];
+
+    const isCursorInPlace =
+      textareaRef.current?.selectionStart == finalCursorLocation[0] &&
+      textareaRef.current?.selectionEnd == finalCursorLocation[1];
+
+    if (isCursorInPlace) {
+      handleLevelWin();
+    }
+  };
+
+  const handleKeydown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (!acceptableKeys.some((key) => e.code.includes(key))) {
+      e.preventDefault();
+      return;
+    }
+    if (e.repeat || isLevelOver) {
+      return;
+    }
+
+    if (!e.code.includes("Tab") && !e.code.includes("Escape")) {
+      setKeystrokes((s) => s + 1);
+    }
+    if (
+      !e.code.includes("Arrow") &&
+      !e.code.includes("Backspace") &&
+      !e.code.includes("KeyK")
+    ) {
+      return;
+    }
+
+    const areActiveKeysPressed = () => {
+      return (
+        levelData.activeKeys.includes("alt") == e.altKey &&
+        levelData.activeKeys.includes("shift") == e.shiftKey &&
+        levelData.activeKeys.includes("control") == e.ctrlKey &&
+        levelData.activeKeys.includes("meta") == e.metaKey
+      );
+    };
+
+    if (e.code.includes(levelData.keyword) && areActiveKeysPressed()) {
+      setAreRequirementsMet(true);
+    }
+  };
 
   useEffect(() => {
     const textarea = textareaRef.current;
@@ -84,10 +186,6 @@ function App() {
 
   useEffect(() => {
     const levelData = levelsData[gameIndex][levelIndex];
-    const textarea = textareaRef.current;
-    const achieved = document.getElementsByClassName(
-      "achieved",
-    )[0] as HTMLElement;
     const intro = document.getElementsByClassName("intro")[0] as HTMLElement;
     const partTwo = document.getElementsByClassName(
       "part-two",
@@ -114,11 +212,9 @@ function App() {
     const gamePlay = document.getElementsByClassName(
       "game-play",
     )[0] as HTMLElement;
-    const resetBtn = document.getElementsByClassName("reset")[0] as HTMLElement;
     const innerContainer = document.getElementsByClassName(
       "inner",
     )[0] as HTMLElement;
-    const nextBtn = document.getElementById("next") as HTMLButtonElement;
     const mobileDiv = document.getElementsByClassName(
       "is-mobile",
     )[0] as HTMLElement;
@@ -137,22 +233,7 @@ function App() {
       safari.style.display = "block";
     }
 
-    const isOnFinalLevel = () => levelIndex == levelsData[gameIndex].length - 1;
-    const isOnFinalGame = () => gameIndex == levelsData.length - 1;
-
     label.innerHTML = populateLabel(levelData, gameIndex, levelIndex);
-
-    const handleReset = () => {
-      setIsKeystrokesTextVisible(false);
-      setGameIndex(0);
-      setLevelIndex(0);
-      setIsLevelOver(false);
-      setKeystrokes(0);
-      setIsNextBtnVisible(true);
-      setIsResetBtnVisible(false);
-      setAcceptableKeys(["Arrow", "Shift", "Option", "Escape", "Meta", "Tab"]);
-      textarea?.focus();
-    };
 
     partOneButton.addEventListener("focus", () => {
       partTwo.style.display = "flex";
@@ -166,111 +247,7 @@ function App() {
       gamePlay.style.display = "flex";
       handleReset();
     });
-
-    const handleNextClick = () => {
-      if (isOnFinalLevel()) {
-        if (isOnFinalGame()) {
-          setGameIndex(0); // not sure if should be done here or later
-          setIsNextBtnDisabled(true);
-          return;
-        }
-        setGameIndex((i) => i + 1);
-        if (gameIndex == 1) {
-          // gameIndex will be 1 when on final level
-          setAcceptableKeys((k) => [...k, "Backspace", "KeyK"]);
-        }
-        setLevelIndex(0);
-      } else {
-        setLevelIndex((i) => i + 1);
-      }
-      setIsLevelOver(false);
-    };
-
-    const handleKeydown = (e: KeyboardEvent) => {
-      if (!acceptableKeys.some((key) => e.code.includes(key))) {
-        e.preventDefault();
-        return;
-      }
-      if (e.repeat || isLevelOver) {
-        return;
-      }
-
-      if (!e.code.includes("Tab") && !e.code.includes("Escape")) {
-        setKeystrokes((s) => s + 1);
-      }
-      if (
-        !e.code.includes("Arrow") &&
-        !e.code.includes("Backspace") &&
-        !e.code.includes("KeyK")
-      ) {
-        return;
-      }
-
-      const areActiveKeysPressed = () => {
-        return (
-          levelData.activeKeys.includes("alt") == e.altKey &&
-          levelData.activeKeys.includes("shift") == e.shiftKey &&
-          levelData.activeKeys.includes("control") == e.ctrlKey &&
-          levelData.activeKeys.includes("meta") == e.metaKey
-        );
-      };
-
-      if (e.code.includes(levelData.keyword) && areActiveKeysPressed()) {
-        setAreRequirementsMet(true);
-      }
-    };
-
-    const handleLevelWin = () => {
-      achieved.innerText = `Achieved level ${levelIndex + 1}!`;
-      setIsLevelOver(true);
-      setIsAchievedVisible(true);
-      if (keystrokes == levelData.minKeystrokes) {
-        setIsKeystrokesTextVisible(true);
-      }
-      if (isOnFinalGame() && isOnFinalLevel()) {
-        setIsResetBtnVisible(true);
-        setIsNextBtnVisible(false);
-      } else {
-        setIsNextBtnDisabled(false);
-      }
-    };
-
-    const handleKeyup = () => {
-      if (!areRequirementsMet) {
-        return;
-      }
-      const finalCursorLocation = levelData.finalCursorLocation
-        ? levelData.finalCursorLocation
-        : [0, 0];
-
-      const isCursorInPlace =
-        textarea?.selectionStart == finalCursorLocation[0] &&
-        textarea?.selectionEnd == finalCursorLocation[1];
-
-      if (isCursorInPlace) {
-        handleLevelWin();
-      }
-    };
-
-    nextBtn.addEventListener("click", handleNextClick);
-    resetBtn.addEventListener("click", handleReset);
-    textarea?.addEventListener("keydown", handleKeydown);
-    textarea?.addEventListener("keyup", handleKeyup);
-
-    return () => {
-      nextBtn.removeEventListener("click", handleNextClick);
-      resetBtn.removeEventListener("click", handleReset);
-      textarea?.removeEventListener("keyup", handleKeyup);
-      textarea?.removeEventListener("keydown", handleKeydown);
-    };
-  }, [
-    levelIndex,
-    gameIndex,
-    acceptableKeys,
-    areRequirementsMet,
-    isLevelOver,
-    keystrokes,
-  ]);
+  }, [levelIndex, gameIndex]);
   return (
     <>
       <Modal visibility={isModalVisible}></Modal>
@@ -329,11 +306,14 @@ function App() {
               rows={5}
               cols={75}
               spellCheck="false"
+              onKeyUp={handleKeyup}
+              onKeyDown={handleKeydown}
             ></textarea>
           </div>
           <div className="stats">
             <div className="btn-container">
               <button
+                onClick={handleNextClick}
                 id="next"
                 disabled={isNextBtnDisabled}
                 style={{ display: isNextBtnVisible ? "block" : "none" }}
@@ -364,7 +344,9 @@ function App() {
               <div
                 className="achieved"
                 style={{ display: isAchievedVisible ? "block" : "none" }}
-              ></div>
+              >
+                Achieved level {levelIndex + 1}
+              </div>
             </div>
           </div>
           <div className="sidebar"></div>
