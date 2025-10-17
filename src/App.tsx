@@ -6,6 +6,7 @@ import Header from "./components/Header";
 import ButtonSvg from "./components/ButtonSvg";
 import { populateLabel } from "./utils/helpers";
 import Button from "./components/Button";
+import Spinner from "./components/Spinner";
 
 const userAgent = window.navigator.userAgent;
 const isMac = userAgent.includes("Macintosh");
@@ -43,6 +44,7 @@ function App() {
   const [isResetBtnVisible, setIsResetBtnVisible] = useState(true);
   const [isKeystrokesTextVisible, setIsKeystrokesTextVisible] = useState(false);
   const [keystrokes, setKeystrokes] = useState(0);
+  const [isLoadingLevel, setIsLoadingLevel] = useState(true);
 
   const levelData = levelsData[gameIndex][levelIndex];
 
@@ -58,25 +60,29 @@ function App() {
     "Lorem ipsum dolor sit amet consectetur adipisicing elit.\nSuscipit nemo odit optio architecto aperiam incidunt pariatur reiciendis ea!\nUt, id.";
 
   const handleReset = () => {
-    setIsKeystrokesTextVisible(false);
-    setGameIndex(0);
-    setLevelIndex(0);
-    setIsLevelOver(false);
-    setKeystrokes(0);
-    setIsNextBtnVisible(true);
-    setIsResetBtnVisible(false);
-    setAcceptableKeys([
-      "Arrow",
-      "Shift",
-      "Alt",
-      "Escape",
-      "Meta",
-      "Tab",
-      "Control",
-    ]);
+    setIsLoadingLevel(true);
     window.setTimeout(() => {
-      textareaRef.current?.focus();
-    }, 0);
+      setIsKeystrokesTextVisible(false);
+      setGameIndex(0);
+      setLevelIndex(0);
+      setIsLevelOver(false);
+      setKeystrokes(0);
+      setIsNextBtnVisible(true);
+      setIsResetBtnVisible(false);
+      setAcceptableKeys([
+        "Arrow",
+        "Shift",
+        "Alt",
+        "Escape",
+        "Meta",
+        "Tab",
+        "Control",
+      ]);
+      setIsLoadingLevel(false);
+      window.setTimeout(() => {
+        textareaRef.current?.focus();
+      }, 1);
+    }, 1000);
   };
 
   const isOnFinalLevel = () => levelIndex == levelsData[gameIndex].length - 1;
@@ -96,6 +102,7 @@ function App() {
   };
 
   const handleNextClick = () => {
+    setIsLoadingLevel(true);
     setIsAchievedVisible(false);
     if (isOnFinalLevel()) {
       if (isOnFinalGame()) {
@@ -113,6 +120,12 @@ function App() {
       setLevelIndex((i) => i + 1);
     }
     setIsLevelOver(false);
+    window.setTimeout(() => {
+      setIsLoadingLevel(false);
+      window.setTimeout(() => {
+        textareaRef.current?.focus();
+      }, 1);
+    }, 1000);
   };
 
   const handleLevelWin = () => {
@@ -295,62 +308,71 @@ function App() {
           className="game-play container"
           style={{ display: isGamePlayVisible ? "flex" : "none" }}
         >
-          <div className="label">
-            <label htmlFor="text"></label>
-          </div>
-          <div className="relative">
-            <textarea
-              ref={textareaRef}
-              name="text"
-              id="textarea"
-              rows={5}
-              cols={75}
-              spellCheck="false"
-              onKeyUp={handleKeyup}
-              onKeyDown={handleKeydown}
-            ></textarea>
-          </div>
-          <div className="stats">
-            <div className="btn-container">
-              <button
-                onClick={handleNextClick}
-                id="next"
-                disabled={isNextBtnDisabled}
-                style={{ display: isNextBtnVisible ? "block" : "none" }}
-              >
-                <ButtonSvg></ButtonSvg>
-                <span>Next</span>
-              </button>
-              <button
-                className="reset"
-                style={{ display: isResetBtnVisible ? "block" : "none" }}
-                onClick={handleReset}
-              >
-                <ButtonSvg></ButtonSvg>
-                <span>Play again</span>
-              </button>
+          <Spinner isDisplayed={isLoadingLevel}></Spinner>
+          <div
+            style={{
+              display: !isLoadingLevel ? "flex" : "none",
+              flexDirection: "column",
+            }}
+            className="container"
+          >
+            <div className="label">
+              <label htmlFor="text"></label>
             </div>
-            <div className="counter-container">
-              Keystrokes: <span className="counter">{keystrokes}</span>
+            <div className="relative">
+              <textarea
+                ref={textareaRef}
+                name="text"
+                id="textarea"
+                rows={5}
+                cols={75}
+                spellCheck="false"
+                onKeyUp={handleKeyup}
+                onKeyDown={handleKeydown}
+              ></textarea>
             </div>
-            <div className="achieved-container">
-              <div
-                className="keystrokes"
-                style={{
-                  visibility: isKeystrokesTextVisible ? "visible" : "hidden",
-                }}
-              >
-                Minimum keystrokes!
+            <div className="stats">
+              <div className="btn-container">
+                <button
+                  onClick={handleNextClick}
+                  id="next"
+                  disabled={isNextBtnDisabled}
+                  style={{ display: isNextBtnVisible ? "block" : "none" }}
+                >
+                  <ButtonSvg></ButtonSvg>
+                  <span>Next</span>
+                </button>
+                <button
+                  className="reset"
+                  style={{ display: isResetBtnVisible ? "block" : "none" }}
+                  onClick={handleReset}
+                >
+                  <ButtonSvg></ButtonSvg>
+                  <span>Play again</span>
+                </button>
               </div>
-              <div
-                className="achieved"
-                style={{ display: isAchievedVisible ? "block" : "none" }}
-              >
-                Achieved level {levelIndex + 1}
+              <div>
+                Keystrokes: {keystrokes}
+                <div
+                  className="keystrokes"
+                  style={{
+                    visibility: isKeystrokesTextVisible ? "visible" : "hidden",
+                  }}
+                >
+                  Minimum keystrokes!
+                </div>
+              </div>
+              <div className="achieved-container">
+                <div
+                  className="achieved"
+                  style={{ display: isAchievedVisible ? "block" : "none" }}
+                >
+                  Achieved level {levelIndex + 1}!
+                </div>
               </div>
             </div>
+            <div className="sidebar"></div>
           </div>
-          <div className="sidebar"></div>
         </div>
       </div>
     </>

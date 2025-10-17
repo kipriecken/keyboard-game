@@ -139,19 +139,11 @@ body:focus {
   display: flex;
 }
 
-.main > .intro {
-  visibility: hidden;
-}
-
 .container {
   margin: auto;
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.windows {
-  display: none;
 }
 
 .part-two,
@@ -182,7 +174,7 @@ body:focus {
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 200px;
+  height: 180px;
 }
 
 .is-mobile {
@@ -191,8 +183,8 @@ body:focus {
 }
 
 .game-play {
-  display: none;
-  justify-content: flex-start;
+  min-height: 65vh;
+  justify-content: center;
   flex-direction: column;
   width: 700px;
   position: relative;
@@ -244,7 +236,6 @@ label > h4 {
 
 .achieved {
   margin: 0.25em;
-  display: none;
   background: lightblue;
   border-radius: 4px;
   padding: 2px 6px;
@@ -290,29 +281,4 @@ button span {
   left: 0;
   top: 6px;
   height: 32px;
-}
-
-.help {
-  margin: 1em;
-}
-
-#editable {
-  padding: 0.4em;
-  border: 1px solid blue;
-}
-
-.remove {
-  color: yellow;
-}
-
-.keystrokes {
-  visibility: hidden;
-}
-
-.safari {
-  display: none;
-}
-
-.reset {
-  display: none;
 }
