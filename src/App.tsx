@@ -33,6 +33,11 @@ function App() {
   const [areRequirementsMet, setAreRequirementsMet] = useState(false);
   const [isLevelOver, setIsLevelOver] = useState(false);
   const [isAchievedVisible, setIsAchievedVisible] = useState(false);
+  const [isTwoVisible, setIsTwoVisible] = useState(false);
+  const [isThreeVisible, setIsThreeVisible] = useState(false);
+  const [isIntroVisible, setIsIntroVisible] = useState(true);
+  const [isPreGameVisible, setIsPreGameVisible] = useState(!isMobile);
+  const [isGamePlayVisible, setIsGamePlayVisible] = useState(false);
   const [isNextBtnDisabled, setIsNextBtnDisabled] = useState(true);
   const [isNextBtnVisible, setIsNextBtnVisible] = useState(true);
   const [isResetBtnVisible, setIsResetBtnVisible] = useState(true);
@@ -69,11 +74,26 @@ function App() {
       "Tab",
       "Control",
     ]);
-    textareaRef.current?.focus();
+    window.setTimeout(() => {
+      textareaRef.current?.focus();
+    }, 0);
   };
 
   const isOnFinalLevel = () => levelIndex == levelsData[gameIndex].length - 1;
   const isOnFinalGame = () => gameIndex == levelsData.length - 1;
+
+  const partOneFocusHandler = () => {
+    setIsTwoVisible(true);
+  };
+  const partTwoFocusHandler = () => {
+    setIsThreeVisible(true);
+  };
+  const partThreeFocusHandler = () => {
+    setIsIntroVisible(true);
+    setIsPreGameVisible(false);
+    setIsGamePlayVisible(true);
+    handleReset();
+  };
 
   const handleNextClick = () => {
     setIsAchievedVisible(false);
@@ -194,88 +214,56 @@ function App() {
     }
   }, [gameIndex, levelIndex]);
 
-  useEffect(() => {
-    const intro = document.getElementsByClassName("intro")[0] as HTMLElement;
-    const partTwo = document.getElementsByClassName(
-      "part-two",
-    )[0] as HTMLElement;
-    const partThree = document.getElementsByClassName(
-      "part-three",
-    )[0] as HTMLElement;
-    const safari = document.getElementsByClassName("safari")[0] as HTMLElement;
-    const preGame = document.getElementsByClassName(
-      "pre-game",
-    )[0] as HTMLElement;
-    const windows = document.getElementsByClassName(
-      "windows",
-    )[0] as HTMLElement;
-    const partOneButton = document.getElementsByClassName(
-      "one",
-    )[0] as HTMLElement;
-    const partTwoButton = document.getElementsByClassName(
-      "two",
-    )[0] as HTMLElement;
-    const partThreeButton = document.getElementsByClassName(
-      "three",
-    )[0] as HTMLElement;
-    const gamePlay = document.getElementsByClassName(
-      "game-play",
-    )[0] as HTMLElement;
-    const innerContainer = document.getElementsByClassName(
-      "inner",
-    )[0] as HTMLElement;
-    const mobileDiv = document.getElementsByClassName(
-      "is-mobile",
-    )[0] as HTMLElement;
-
-    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-    isMobile
-      ? (innerContainer.style.display = "none")
-      : (mobileDiv.style.display = "none");
-
-    if (!isMac) windows.style.display = "block";
-
-    if (isSafari) {
-      safari.style.display = "block";
-    }
-
-    partOneButton.addEventListener("focus", () => {
-      partTwo.style.display = "flex";
-    });
-    partTwoButton.addEventListener("focus", () => {
-      partThree.style.display = "flex";
-    });
-    partThreeButton.addEventListener("click", () => {
-      intro.style.visibility = "visible";
-      preGame.style.display = "none";
-      gamePlay.style.display = "flex";
-      handleReset();
-    });
-  }, []);
   return (
     <>
       <Modal visibility={isModalVisible}></Modal>
       <Header></Header>
-      <div className="is-mobile container">
+      <div
+        className="is-mobile container"
+        style={{ display: isMobile ? "block" : "none" }}
+      >
         This game has no current applications for mobile devices. Please visit
         on a computer.
       </div>
-      <div className="inner container">
+      <div
+        className="inner container"
+        style={{ display: !isMobile ? "block" : "none" }}
+      >
         <div className="drawer"></div>
-        <div className="pre-game container">
-          <div className="intro">
-            <p className="safari">
+        <div
+          className="pre-game container"
+          style={{ display: isPreGameVisible ? "flex" : "none" }}
+        >
+          <div
+            className="intro"
+            style={{ visibility: isIntroVisible ? "visible" : "hidden" }}
+          >
+            <p
+              className="safari"
+              style={{ display: isSafari ? "block" : "none" }}
+            >
               To play on Safari, check the box at Safari &gt; Preferences &gt;
               Press Tab to highlight each item on a web page. If using an iPad,
               go to Settings &gt; Accessibility &gt; Keyboards & Typing, select
               Full Keyboard Access and switch on.
             </p>
-            <p className="windows">
+            <p
+              className="windows"
+              style={{ display: !isMac ? "block" : "none" }}
+            >
               Note: this game is not configured for Windows.
             </p>
             <div>Locate the tab button and press it.</div>
-            <Button focus="Selected" blur="Select me" className="one"></Button>
-            <div className="part-two">
+            <Button
+              focus="Selected"
+              blur="Select me"
+              className="one"
+              onFocus={partOneFocusHandler}
+            ></Button>
+            <div
+              className="part-two"
+              style={{ display: isTwoVisible ? "flex" : "none" }}
+            >
               <div>tab moves you to the next button on a page.</div>
               <div>shift + tab moves you backward.</div>
               <div>
@@ -285,12 +273,17 @@ function App() {
                 focus="Selected"
                 blur="Select me"
                 className="two"
+                onFocus={partTwoFocusHandler}
               ></Button>
             </div>
-            <div className="part-three">
+            <div
+              className="part-three"
+              style={{ display: isThreeVisible ? "flex" : "none" }}
+            >
               <div>Got it?</div>
               <div>Select this final button and hit return to "click".</div>
               <Button
+                onClick={partThreeFocusHandler}
                 focus="Hit return"
                 blur="Select me"
                 className="three"
@@ -298,7 +291,10 @@ function App() {
             </div>
           </div>
         </div>
-        <div className="game-play container">
+        <div
+          className="game-play container"
+          style={{ display: isGamePlayVisible ? "flex" : "none" }}
+        >
           <div className="label">
             <label htmlFor="text"></label>
           </div>
