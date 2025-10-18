@@ -8,11 +8,16 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "format": "prettier --write \"src/**/*.{js,jsx,css,html}\""
+    "format": "prettier --write \"src/**/*.{js,jsx,css,html}\"",
+    "test": "vitest"
   },
   "dependencies": {
+    "@testing-library/react": "^16.3.0",
+    "happy-dom": "^20.0.5",
+    "html-react-parser": "^5.2.6",
     "react": "^19.1.1",
-    "react-dom": "^19.1.1"
+    "react-dom": "^19.1.1",
+    "vitest": "^3.2.4"
   },
   "devDependencies": {
     "@eslint/js": "^9.33.0",

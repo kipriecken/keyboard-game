@@ -3,7 +3,7 @@ import "./header.css";
 export default function Header() {
   return (
     <div className="header">
-      <div>Keyboard Shortcuts game</div>
+      <h3>Keyboard Shortcuts Game</h3>
     </div>
   );
 }
