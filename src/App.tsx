@@ -314,7 +314,7 @@ function App() {
               display: !isLoadingLevel ? "flex" : "none",
               flexDirection: "column",
             }}
-            className="container"
+            className="container game"
           >
             <div className="label">
               <label htmlFor="text"></label>
@@ -332,25 +332,23 @@ function App() {
               ></textarea>
             </div>
             <div className="stats">
-              <div className="btn-container">
-                <button
-                  onClick={handleNextClick}
-                  id="next"
-                  disabled={isNextBtnDisabled}
-                  style={{ display: isNextBtnVisible ? "block" : "none" }}
-                >
-                  <ButtonSvg></ButtonSvg>
-                  <span>Next</span>
-                </button>
-                <button
-                  className="reset"
-                  style={{ display: isResetBtnVisible ? "block" : "none" }}
-                  onClick={handleReset}
-                >
-                  <ButtonSvg></ButtonSvg>
-                  <span>Play again</span>
-                </button>
-              </div>
+              <button
+                onClick={handleNextClick}
+                id="next"
+                disabled={isNextBtnDisabled}
+                style={{ display: isNextBtnVisible ? "block" : "none" }}
+              >
+                <ButtonSvg></ButtonSvg>
+                <span>Next</span>
+              </button>
+              <button
+                className="reset"
+                style={{ display: isResetBtnVisible ? "block" : "none" }}
+                onClick={handleReset}
+              >
+                <ButtonSvg></ButtonSvg>
+                <span>Play again</span>
+              </button>
               <div>
                 Keystrokes: {keystrokes}
                 <div

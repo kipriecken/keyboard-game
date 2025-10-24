@@ -118,6 +118,10 @@ body {
   box-shadow: 0px 1px 10px darkgray;
 }
 
+.game {
+  animation: fadeInOpacity 0.3s ease-in;
+}
+
 body:focus {
   background-color: black;
 }
