@@ -1,0 +1,146 @@
+body {
+  display: flex;
+  align-items: center;
+  font-family: sans-serif;
+  letter-spacing: 1.5px;
+}
+
+.keyboard {
+  height: 600px;
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+  align-items: center;
+}
+
+.keyboard-row {
+  display: flex;
+  gap: 10px;
+  height: 80px;
+}
+
+.keyboard-row-top {
+  height: 50px;
+}
+
+@keyframes flash {
+  from {
+    background: lightgreen;
+  }
+  to {
+    background: black;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow:
+      0 0 0 0px rgba(255, 255, 255, 0.8),
+      0 0 0 6px rgba(255, 255, 255, 0.2);
+  }
+  100% {
+    box-shadow:
+      0 0 0 6px rgba(255, 255, 255, 0.6),
+      0 0 0 0px rgba(255, 255, 255, 0.9);
+  }
+}
+
+.key {
+  height: 100%;
+  background: black;
+  width: 88px;
+  border-radius: 8px;
+  padding: 15px;
+  box-sizing: border-box;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: end;
+  font-size: 1.5rem;
+  font-weight: 100;
+  box-shadow: 2px 1px 2px black;
+  svg {
+    position: relative;
+  }
+}
+
+.key-pressed {
+  box-shadow: 0 0 0 black;
+}
+
+.key-group {
+  flex-direction: column;
+}
+
+.key-group > .key {
+  height: 40px;
+  transform: translateX(15px);
+}
+
+.key-up {
+  border-radius: 6px 6px 0 0;
+}
+
+.key-down {
+  border-radius: 0 0 6px 6px;
+}
+
+.key-bottom {
+  align-self: end;
+}
+
+.key-text {
+  font-size: 1rem;
+}
+
+.key-left {
+  justify-content: start;
+}
+
+.key-right {
+  justify-content: end;
+}
+
+.touch-bar {
+  width: 1250px;
+}
+
+.power {
+  width: 50px;
+}
+
+.delete {
+  width: 136px;
+}
+
+.return {
+  width: 161px;
+}
+
+.shift {
+  width: 210px;
+}
+
+.command {
+  width: 110px;
+}
+
+.spacebar {
+  width: 485px;
+}
+
+.key-arrow {
+  height: 40px;
+}
+
+.arrow-left {
+  transform: rotate(90deg);
+}
+
+.arrow-up {
+  transform: rotate(180deg);
+}
+
+.arrow-right {
+  transform: rotate(-90deg);
+}

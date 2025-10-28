@@ -9,12 +9,12 @@ export default function Button(props: {
   onFocus?: () => void;
   onClick?: () => void;
 }) {
-  const [name, setName] = useState(props.blur);
+  const [text, setText] = useState(props.blur);
   return (
     <button
       className={props.className}
       onFocus={() => {
-        setName(props.focus);
+        setText(props.focus);
         if (props.onFocus) {
           props.onFocus();
         }
@@ -24,10 +24,10 @@ export default function Button(props: {
           props.onClick();
         }
       }}
-      onBlur={() => setName(props.blur)}
+      onBlur={() => setText(props.blur)}
     >
       <ButtonSvg></ButtonSvg>
-      <span className={`${props.className}-span`}>{name}</span>
+      <span className={`${props.className}-span`}>{text}</span>
     </button>
   );
 }

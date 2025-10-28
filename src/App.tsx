@@ -7,6 +7,7 @@ import ButtonSvg from "./components/ButtonSvg";
 import { populateLabel } from "./utils/helpers";
 import Button from "./components/Button";
 import Spinner from "./components/Spinner";
+import Keyboard from "./components/Keyboard";
 
 const userAgent = window.navigator.userAgent;
 const isMac = userAgent.includes("Macintosh");
@@ -20,6 +21,7 @@ function App() {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [newKey, setNewKey] = useState("Tab");
   const [levelIndex, setLevelIndex] = useState(0);
   const [gameIndex, setGameIndex] = useState(0);
   const [acceptableKeys, setAcceptableKeys] = useState([
@@ -58,6 +60,43 @@ function App() {
   // Constants
   const text =
     "Lorem ipsum dolor sit amet consectetur adipisicing elit.\nSuscipit nemo odit optio architecto aperiam incidunt pariatur reiciendis ea!\nUt, id.";
+
+  const handleNewKeydown = (e: KeyboardEvent) => {
+    if (e.code == newKey) {
+      setNewKey("");
+      return;
+    }
+    if (e.repeat) {
+      return;
+    }
+    const keyElement = document.getElementById(e.code)!;
+    keyElement.style.boxShadow = "0 0 0 black";
+    if (e.code.includes("ArrowUp") || e.code.includes("ArrowDown")) {
+      keyElement.style.transform = "translate(15.7px, 0.7px)";
+    } else {
+      keyElement.style.transform = "translate(0.7px, 0.7px)";
+    }
+    keyElement.style.background = "lightgreen";
+  };
+
+  const handleNewKeyup = (e: KeyboardEvent) => {
+    const keyElement = document.getElementById(e.code)!;
+    keyElement.style.boxShadow = "2px 1px 2px black";
+    keyElement.style.transform = "";
+    keyElement.style.background = "black";
+    keyElement.style.animation = "flash 0.75s";
+    window.setTimeout(() => (keyElement.style.animation = ""), 750);
+  };
+
+  useEffect(() => {
+    document.addEventListener("keydown", handleNewKeydown);
+    document.addEventListener("keyup", handleNewKeyup);
+
+    return () => {
+      document.removeEventListener("keydown", handleNewKeydown);
+      document.addEventListener("keyup", handleNewKeyup);
+    };
+  });
 
   const handleReset = () => {
     setIsLoadingLevel(true);
@@ -205,7 +244,7 @@ function App() {
       const levelData = levelsData[gameIndex][levelIndex];
 
       // Update UI for new level
-      innerContainer.style.display = "flex";
+      innerContainer.style.display = !isMobile && !newKey ? "flex" : "none";
       label.innerHTML = populateLabel(levelData, gameIndex, levelIndex);
       textarea.style.display = "block";
       textarea.value = text;
@@ -225,12 +264,13 @@ function App() {
       setIsKeystrokesTextVisible(false);
       setAreRequirementsMet(false);
     }
-  }, [gameIndex, levelIndex]);
+  }, [gameIndex, levelIndex, newKey]);
 
   return (
     <>
       <Modal visibility={isModalVisible}></Modal>
-      <Header></Header>
+      <Header visibility={newKey}></Header>
+      <Keyboard newKey={newKey}></Keyboard>
       <div
         className="is-mobile container"
         style={{ display: isMobile ? "block" : "none" }}
@@ -240,7 +280,7 @@ function App() {
       </div>
       <div
         className="inner container"
-        style={{ display: !isMobile ? "block" : "none" }}
+        style={{ display: !isMobile && !newKey ? "flex" : "none" }}
       >
         <div className="drawer"></div>
         <div
@@ -266,7 +306,7 @@ function App() {
             >
               Note: this game is not configured for Windows.
             </p>
-            <div>Locate the tab button and press it.</div>
+            <div>Great!</div>
             <Button
               focus="Selected"
               blur="Select me"
@@ -277,11 +317,7 @@ function App() {
               className="part-two"
               style={{ display: isTwoVisible ? "flex" : "none" }}
             >
-              <div>tab moves you to the next button on a page.</div>
-              <div>shift + tab moves you backward.</div>
-              <div>
-                If you move backward off the page, press tab to move back on.
-              </div>
+              <div>Press tab again?</div>
               <Button
                 focus="Selected"
                 blur="Select me"
@@ -293,14 +329,14 @@ function App() {
               className="part-three"
               style={{ display: isThreeVisible ? "flex" : "none" }}
             >
-              <div>Got it?</div>
-              <div>Select this final button and hit return to "click".</div>
+              <div>One more time.</div>
               <Button
                 onClick={partThreeFocusHandler}
                 focus="Hit return"
                 blur="Select me"
                 className="three"
               ></Button>
+              <div>Then hit return or spacebar to "click".</div>
             </div>
           </div>
         </div>
