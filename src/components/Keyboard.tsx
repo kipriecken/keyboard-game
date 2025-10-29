@@ -1,7 +1,10 @@
 import { useEffect, useRef } from "react";
 import "./keyboard.css";
 
-export default function Keyboard(props: { newKey: string }) {
+export default function Keyboard(props: {
+  newKey: string;
+  isDisplayed: boolean;
+}) {
   const keyboardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -15,7 +18,9 @@ export default function Keyboard(props: { newKey: string }) {
     <div
       className="container"
       id="keyboard"
-      style={{ display: props.newKey ? "block" : "none" }}
+      style={{
+        display: props.newKey && props.isDisplayed ? "block" : "none",
+      }}
       ref={keyboardRef}
     >
       <div className="keyboard">

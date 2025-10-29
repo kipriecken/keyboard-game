@@ -5,6 +5,10 @@ body {
   letter-spacing: 1.5px;
 }
 
+#keyboard {
+  opacity: 1;
+}
+
 .keyboard {
   height: 600px;
   display: flex;

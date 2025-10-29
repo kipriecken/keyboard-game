@@ -21,7 +21,7 @@ function App() {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [newKey, setNewKey] = useState("Tab");
+  const [newKey, setNewKey] = useState("Tab"); // if truthy, keyboard is displayed
   const [levelIndex, setLevelIndex] = useState(0);
   const [gameIndex, setGameIndex] = useState(0);
   const [acceptableKeys, setAcceptableKeys] = useState([
@@ -62,8 +62,19 @@ function App() {
     "Lorem ipsum dolor sit amet consectetur adipisicing elit.\nSuscipit nemo odit optio architecto aperiam incidunt pariatur reiciendis ea!\nUt, id.";
 
   const handleNewKeydown = (e: KeyboardEvent) => {
+    const keyboard = document.getElementById("keyboard");
     if (e.code == newKey) {
-      setNewKey("");
+      e.preventDefault();
+      if (keyboard) {
+        keyboard.style.opacity = "0";
+        keyboard.style.transition = "opacity 0.5s ease-out";
+      }
+      window.setTimeout(() => {
+        setNewKey("");
+        if (keyboard) {
+          keyboard.style.opacity = "1";
+        }
+      }, 500);
       return;
     }
     if (e.repeat) {
@@ -264,13 +275,19 @@ function App() {
       setIsKeystrokesTextVisible(false);
       setAreRequirementsMet(false);
     }
-  }, [gameIndex, levelIndex, newKey]);
+  }, [gameIndex, levelIndex, newKey, isGamePlayVisible]);
+
+  useEffect(() => {
+    if (levelData.newKey && isGamePlayVisible) {
+      setNewKey(levelData.newKey);
+    }
+  }, [levelData.newKey, isGamePlayVisible]);
 
   return (
     <>
       <Modal visibility={isModalVisible}></Modal>
       <Header visibility={newKey}></Header>
-      <Keyboard newKey={newKey}></Keyboard>
+      <Keyboard newKey={newKey} isDisplayed={!isMobile}></Keyboard>
       <div
         className="is-mobile container"
         style={{ display: isMobile ? "block" : "none" }}
@@ -306,7 +323,7 @@ function App() {
             >
               Note: this game is not configured for Windows.
             </p>
-            <div>Great!</div>
+            <div>Great! Press tab.</div>
             <Button
               focus="Selected"
               blur="Select me"

@@ -3,6 +3,7 @@ export type GameLevel = {
   action?: string;
   cursorPlacement: string;
   newCursorPlacement?: string;
+  newKey?: string;
   keyword: string;
   activeKeys: string[];
   minKeystrokes: number;
@@ -17,8 +18,9 @@ export const games = [
       actionKeys: ["right arrow"],
       cursorPlacement: "the beginning",
       newCursorPlacement: "after the first character",
+      newKey: "ArrowRight",
       keyword: "Right",
-      activeKeys: [],
+      activeKeys: [] as string[],
       minKeystrokes: 1,
       startingCursorPosition: [0, 0],
       finalCursorLocation: [1, 1],
@@ -73,6 +75,7 @@ export const games = [
       actionKeys: ["right arrow"],
       cursorPlacement: "the beginning",
       newCursorPlacement: "the end of the first word",
+      newKey: "AltLeft",
       keyword: "Right",
       activeKeys: ["alt"],
       minKeystrokes: 2,
@@ -113,6 +116,7 @@ export const games = [
       actionKeys: ["right arrow"],
       cursorPlacement: "the beginning",
       newCursorPlacement: "the end of the line",
+      newKey: "MetaLeft",
       keyword: "Right",
       activeKeys: ["meta"],
       minKeystrokes: 2,
@@ -152,6 +156,7 @@ export const games = [
       actionKeys: ["right arrow"],
       action: "highlight the first word",
       cursorPlacement: "the beginning of the text",
+      newKey: "ShiftLeft",
       keyword: "Right",
       activeKeys: ["alt", "shift"],
       minKeystrokes: 3,
@@ -212,6 +217,7 @@ export const games = [
       actionKeys: ["K"],
       action: "delete the last word of the first line",
       cursorPlacement: "before the last word of the first line",
+      newKey: "ControlLeft",
       keyword: "K",
       activeKeys: ["control"],
       minKeystrokes: 2,
