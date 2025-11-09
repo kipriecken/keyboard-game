@@ -245,11 +245,17 @@ function App() {
 
   useEffect(() => {
     const textarea = textareaRef.current;
-
     const label = document.getElementsByTagName("label")[0] as HTMLElement;
     const innerContainer = document.getElementsByClassName(
       "inner",
     )[0] as HTMLElement;
+
+    const keys = document.getElementsByClassName("key");
+    for (const key of keys) {
+      if (key.id != newKey) {
+        key.style.background = "black";
+      }
+    }
 
     if (textarea && label) {
       const levelData = levelsData[gameIndex][levelIndex];
