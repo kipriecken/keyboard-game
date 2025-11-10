@@ -329,7 +329,7 @@ function App() {
             >
               Note: this game is not configured for Windows.
             </p>
-            <div>Great! Press tab.</div>
+            <div>Great! Press tab again.</div>
             <Button
               focus="Selected"
               blur="Select me"
@@ -340,7 +340,7 @@ function App() {
               className="part-two"
               style={{ display: isTwoVisible ? "flex" : "none" }}
             >
-              <div>Press tab again?</div>
+              <div>And another time</div>
               <Button
                 focus="Selected"
                 blur="Select me"
@@ -352,14 +352,14 @@ function App() {
               className="part-three"
               style={{ display: isThreeVisible ? "flex" : "none" }}
             >
-              <div>One more time.</div>
+              <div>Ok, one more time.</div>
               <Button
                 onClick={partThreeFocusHandler}
                 focus="Hit return"
                 blur="Select me"
                 className="three"
               ></Button>
-              <div>Then hit return or spacebar to "click".</div>
+              <div>And hit return or spacebar to "click".</div>
             </div>
           </div>
         </div>
