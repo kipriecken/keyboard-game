@@ -8,6 +8,7 @@ import { populateLabel } from "./utils/helpers";
 import Button from "./components/Button";
 import Spinner from "./components/Spinner";
 import Keyboard from "./components/Keyboard";
+import Textarea from "./components/Textarea";
 
 const userAgent = window.navigator.userAgent;
 const isMac = userAgent.includes("Macintosh");
@@ -379,16 +380,11 @@ function App() {
               <label htmlFor="text"></label>
             </div>
             <div className="relative">
-              <textarea
-                ref={textareaRef}
-                name="text"
-                id="textarea"
-                rows={5}
-                cols={75}
-                spellCheck="false"
-                onKeyUp={handleKeyup}
-                onKeyDown={handleKeydown}
-              ></textarea>
+              <Textarea
+                textareaRef={textareaRef}
+                handleKeyup={handleKeyup}
+                handleKeydown={handleKeydown}
+              ></Textarea>
             </div>
             <div className="stats">
               <button
