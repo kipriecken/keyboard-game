@@ -57,6 +57,9 @@ function App() {
   window.onfocus = () => {
     setIsModalVisible(false);
   };
+  window.addEventListener("beforeunload", (e) => {
+    e.preventDefault();
+  });
 
   // Constants
   const text =
