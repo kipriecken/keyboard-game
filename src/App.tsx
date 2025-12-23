@@ -87,7 +87,7 @@ function App() {
     const keyElement = document.getElementById(e.code)!;
     keyElement.style.boxShadow = "0 0 0 black";
     if (e.code.includes("ArrowUp") || e.code.includes("ArrowDown")) {
-      keyElement.style.transform = "translate(15.7px, 0.7px)";
+      keyElement.style.transform = "translate(9px, 0.7px)";
     } else {
       keyElement.style.transform = "translate(0.7px, 0.7px)";
     }
