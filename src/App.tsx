@@ -47,6 +47,7 @@ function App() {
   const [isKeystrokesTextVisible, setIsKeystrokesTextVisible] = useState(false);
   const [keystrokes, setKeystrokes] = useState(0);
   const [isLoadingLevel, setIsLoadingLevel] = useState(true);
+  const [isOnFirstLevel, setIsOnFirstLevel] = useState(true);
 
   const levelData = levelsData[gameIndex][levelIndex];
 
@@ -155,6 +156,7 @@ function App() {
   };
 
   const handleNextClick = () => {
+    setIsOnFirstLevel(false);
     setIsLoadingLevel(true);
     setIsAchievedVisible(false);
     if (isOnFinalLevel()) {
@@ -262,6 +264,9 @@ function App() {
 
     if (textarea && label) {
       const levelData = levelsData[gameIndex][levelIndex];
+      if (levelIndex == 1) {
+        setIsOnFirstLevel(false);
+      }
 
       // Update UI for new level
       innerContainer.style.display = !isMobile && !newKey ? "flex" : "none";
@@ -393,11 +398,10 @@ function App() {
             </div>
             <div className="stats">
               <Button
-                focus="Next level"
-                blur="Next level"
+                focus={isOnFirstLevel ? "Use Enter" : "Next level"}
+                blur={isOnFirstLevel ? "Tab here" : "Next level"}
                 className="next"
                 onClick={handleNextClick}
-                id="next"
                 disabled={isNextBtnDisabled}
                 isVisible={isNextBtnVisible}
               />

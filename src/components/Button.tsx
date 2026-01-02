@@ -9,7 +9,6 @@ export default function Button(props: {
   onFocus?: () => void;
   onClick?: () => void;
   disabled?: boolean;
-  id?: string;
   isVisible?: boolean;
 }) {
   const [text, setText] = useState(props.blur);
@@ -19,7 +18,6 @@ export default function Button(props: {
     <button
       className={`${props.className} ${displayClass}`}
       disabled={props.disabled}
-      id={props.id}
       onFocus={() => {
         setText(props.focus);
         if (props.onFocus) {
@@ -30,6 +28,7 @@ export default function Button(props: {
         if (props.onClick) {
           props.onClick();
         }
+        setText(props.blur); // reset text on click
       }}
       onBlur={() => setText(props.blur)}
     >
