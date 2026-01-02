@@ -4,7 +4,7 @@ import { type GameLevel } from "../data";
 export const populateLabel = (
   level: GameLevel,
   gameIndex: number,
-  levelIndex: number
+  levelIndex: number,
 ): string => {
   const indexToGameTitle: any = {
     0: "Navigation",
@@ -20,18 +20,16 @@ export const populateLabel = (
   };
   let chord = "";
   level.activeKeys.map(
-    (keyName) => (chord += `${modifierToKeyName[keyName]} + `)
+    (keyName) => (chord += `${modifierToKeyName[keyName]} + `),
   );
   level.actionKeys.map((key) => (chord += `${key}, `));
   chord = chord.slice(0, -2);
   return `
         <h3>${indexToGameTitle[gameIndex]}: Level ${levelIndex + 1}</h3>
         <h4><strong>${chord}</strong></h4>
-        <div>Use the above key${
-          level.actionKeys.length + level.activeKeys.length > 1 ? "s" : ""
-        } to ${
-    level.action
-      ? `${level.action}.`
-      : `move the blinking cursor from ${level.cursorPlacement} to ${level.newCursorPlacement}.`
-  }</div>`;
+        <div>${
+          level.action
+            ? `${level.action}.`
+            : `Using only the keyboard, move the blinking cursor from ${level.cursorPlacement} to ${level.newCursorPlacement}.`
+        }</div>`;
 };

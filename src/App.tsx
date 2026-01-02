@@ -333,7 +333,7 @@ function App() {
             >
               Note: this game is not configured for Windows.
             </p>
-            <div>Great! Press tab again.</div>
+            <div>And...press tab again</div>
             <Button
               focus="Selected"
               blur="Select me"
@@ -356,14 +356,14 @@ function App() {
               className="part-three"
               style={{ display: isThreeVisible ? "flex" : "none" }}
             >
-              <div>Ok, one more time.</div>
+              <div>Ok, one more time</div>
               <Button
                 onClick={partThreeFocusHandler}
                 focus="Hit return"
                 blur="Select me"
                 className="three"
               ></Button>
-              <div>And hit return or spacebar to "click".</div>
+              <div>Use return or spacebar to "click"</div>
             </div>
           </div>
         </div>
@@ -407,8 +407,9 @@ function App() {
                 <ButtonSvg></ButtonSvg>
                 <span>Play again</span>
               </button>
-              <div>
-                Keystrokes: {keystrokes}
+              <div style={{ visibility: "hidden" }}>
+                {" "}
+                // hiding this for now Keystrokes: {keystrokes}
                 <div
                   className="keystrokes"
                   style={{

@@ -218,11 +218,6 @@ textarea {
   height: 100%;
 }
 
-label {
-  text-align: center;
-  margin: 2em 0;
-}
-
 label > h3 {
   font-weight: 500;
   margin: 0;
@@ -233,9 +228,11 @@ label > h4 {
 }
 
 .label {
-  height: 200px;
+  min-height: 200px;
   max-width: 500px;
   padding: 1rem;
+    text-align: center;
+  margin: 2em 0;
 }
 
 .achieved {
