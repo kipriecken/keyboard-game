@@ -258,7 +258,7 @@ function App() {
     const keys = document.getElementsByClassName("key");
     for (const key of keys) {
       if (key.id != newKey) {
-        (key as HTMLDivElement).style.background = "black";
+        (key as HTMLDivElement).classList.remove("new-key");
       }
     }
 

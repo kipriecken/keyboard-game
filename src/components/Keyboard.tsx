@@ -10,8 +10,7 @@ export default function Keyboard(props: {
   useEffect(() => {
     const newKey = document.getElementById(props.newKey);
     if (newKey) {
-      newKey.style.background = "#bac244";
-      newKey.style.animation = "pulse 1s ease-in-out infinite";
+      newKey.classList.add("new-key");
     }
   }, [props.newKey]);
   return (

@@ -101,6 +101,18 @@ body {
   text-transform: lowercase;
 }
 
+.new-key {
+  background: #bac244;
+  animation: pulse 1s ease-in-out infinite;
+  background: linear-gradient(
+    120deg,
+    #bac244,
+    rgba(255, 255, 255, 0.7),
+    #bac244
+  );
+  color: black;
+}
+
 /* arrow key height */
 .h-05 {
   height: calc(var(--u) * 0.5);
