@@ -197,6 +197,7 @@ export const games = [
       actionKeys: ["delete"],
       action: "delete the first word",
       cursorPlacement: "after the first word",
+      newKey: "Backspace",
       keyword: "Backspace",
       activeKeys: ["alt"],
       minKeystrokes: 2,
