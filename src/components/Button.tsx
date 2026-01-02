@@ -8,11 +8,18 @@ export default function Button(props: {
   className: string;
   onFocus?: () => void;
   onClick?: () => void;
+  disabled?: boolean;
+  id?: string;
+  isVisible?: boolean;
 }) {
   const [text, setText] = useState(props.blur);
+  const displayClass =
+    props.isVisible === false ? "display-none" : "display-block";
   return (
     <button
-      className={props.className}
+      className={`${props.className} ${displayClass}`}
+      disabled={props.disabled}
+      id={props.id}
       onFocus={() => {
         setText(props.focus);
         if (props.onFocus) {

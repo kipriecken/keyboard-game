@@ -3,7 +3,6 @@ import { useEffect, useState, useRef } from "react";
 import { games as levelsData } from "./data";
 import Modal from "./components/Modal";
 import Header from "./components/Header";
-import ButtonSvg from "./components/ButtonSvg";
 import { populateLabel } from "./utils/helpers";
 import Button from "./components/Button";
 import Spinner from "./components/Spinner";
@@ -390,23 +389,22 @@ function App() {
               ></Textarea>
             </div>
             <div className="stats">
-              <button
+              <Button
+                focus="Next level"
+                blur="Next level"
+                className="next"
                 onClick={handleNextClick}
                 id="next"
                 disabled={isNextBtnDisabled}
-                style={{ display: isNextBtnVisible ? "block" : "none" }}
-              >
-                <ButtonSvg></ButtonSvg>
-                <span>Next</span>
-              </button>
-              <button
+                isVisible={isNextBtnVisible}
+              />
+              <Button
+                focus="Play again"
+                blur="Play again"
                 className="reset"
-                style={{ display: isResetBtnVisible ? "block" : "none" }}
                 onClick={handleReset}
-              >
-                <ButtonSvg></ButtonSvg>
-                <span>Play again</span>
-              </button>
+                isVisible={isResetBtnVisible}
+              />
               <div style={{ visibility: "hidden" }}>
                 {" "}
                 // hiding this for now Keystrokes: {keystrokes}

@@ -283,3 +283,11 @@ button span {
   top: 6px;
   height: 32px;
 }
+
+.display-none {
+  display: none;
+}
+
+.display-block {
+  display: block;
+}
