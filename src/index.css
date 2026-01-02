@@ -231,7 +231,7 @@ label > h4 {
   min-height: 200px;
   max-width: 500px;
   padding: 1rem;
-    text-align: center;
+  text-align: center;
   margin: 2em 0;
 }
 
@@ -290,4 +290,10 @@ button span {
 
 .display-block {
   display: block;
+}
+
+.safari {
+  max-width: 500px;
+  border-bottom: #28536b55 2px solid;
+  padding-bottom: 1rem;
 }

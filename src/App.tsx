@@ -321,10 +321,13 @@ function App() {
               className="safari"
               style={{ display: isSafari ? "block" : "none" }}
             >
-              To play on Safari, check the box at Safari &gt; Preferences &gt;
-              Press Tab to highlight each item on a web page. If using an iPad,
-              go to Settings &gt; Accessibility &gt; Keyboards & Typing, select
-              Full Keyboard Access and switch on.
+              To play on Safari, click on Safari at the top, then &gt;
+              Preferences &gt;. Check the box at Press Tab to highlight each
+              item on a web page.
+              <br></br>
+              <br></br>
+              If using an iPad, go to Settings &gt; Accessibility &gt; Keyboards
+              & Typing, select Full Keyboard Access and switch on.
             </p>
             <p
               className="windows"
