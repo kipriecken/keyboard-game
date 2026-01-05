@@ -102,13 +102,13 @@ body {
 }
 
 .new-key {
-  background: #bac244;
+  background: rgb(219, 224, 0);
   animation: pulse 1s ease-in-out infinite;
   background: linear-gradient(
     120deg,
-    #bac244,
+    rgb(219, 224, 0),
     rgba(255, 255, 255, 0.7),
-    #bac244
+    rgb(219, 224, 0)
   );
   color: black;
 }
@@ -116,6 +116,13 @@ body {
 /* arrow key height */
 .h-05 {
   height: calc(var(--u) * 0.5);
+}
+.h-05-min {
+  min-height: calc(var(--u) * 0.5);
+}
+/* arrow key height */
+.h-10 {
+  height: calc(var(--u) * 0.1);
 }
 /* power bar row height */
 .h-068 {
@@ -161,7 +168,6 @@ body {
 
 .key-group > .key {
   transform: translateX(9px);
-  /* height: 40px; */
 }
 
 .key-up {

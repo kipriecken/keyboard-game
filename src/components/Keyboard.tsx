@@ -159,12 +159,12 @@ export default function Keyboard(props: {
             </svg>
           </div>
           <div className="key key-group">
-            <div className="key key-up h-05" id="ArrowUp">
+            <div className="key key-up h-05-min" id="ArrowUp">
               <svg className="arrow-up" width="10" height="13">
                 <polygon points="0,0 10,0 5,13" fill="white" />
               </svg>
             </div>
-            <div className="key key-down key-bottom h-05" id="ArrowDown">
+            <div className="key key-down key-bottom h-05-min" id="ArrowDown">
               <svg width="10" height="13">
                 <polygon points="0,0 10,0 5,13" fill="white" />
               </svg>
