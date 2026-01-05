@@ -190,6 +190,7 @@ function App() {
       setIsKeystrokesTextVisible(true);
     }
     if (isOnFinalGame() && isOnFinalLevel()) {
+      alert("Congratulations! You have completed all tutorial levels!");
       setIsResetBtnVisible(true);
       setIsNextBtnVisible(false);
     } else {
@@ -340,10 +341,10 @@ function App() {
             >
               Note: this game is not configured for Windows.
             </p>
-            <div>And...press tab again</div>
+            <div>With tab you can navigate a page</div>
             <Button
               focus="Selected"
-              blur="Select me"
+              blur="Tab to me"
               className="one"
               onFocus={partOneFocusHandler}
             ></Button>
@@ -351,10 +352,10 @@ function App() {
               className="part-two"
               style={{ display: isTwoVisible ? "flex" : "none" }}
             >
-              <div>And another time</div>
+              {/* <div>And another time</div> */}
               <Button
                 focus="Selected"
-                blur="Select me"
+                blur="Tab to me"
                 className="two"
                 onFocus={partTwoFocusHandler}
               ></Button>
@@ -363,14 +364,16 @@ function App() {
               className="part-three"
               style={{ display: isThreeVisible ? "flex" : "none" }}
             >
-              <div>Ok, one more time</div>
+              {/* <div>Ok, one more time</div> */}
               <Button
                 onClick={partThreeFocusHandler}
                 focus="Hit return"
-                blur="Select me"
+                blur="Tab to me"
                 className="three"
               ></Button>
-              <div>Use return or spacebar to "click"</div>
+              <div>
+                "Click" with return or spacebar for a brief shortcut tutorial
+              </div>
             </div>
           </div>
         </div>
@@ -406,8 +409,8 @@ function App() {
                 isVisible={isNextBtnVisible}
               />
               <Button
-                focus="Play again"
-                blur="Play again"
+                focus="Redo tutorial"
+                blur="Redo tutorial"
                 className="reset"
                 onClick={handleReset}
                 isVisible={isResetBtnVisible}
