@@ -91,6 +91,11 @@ body {
   }
 }
 
+.key-pressed {
+  box-shadow: 0 0 0 black;
+  background: lightgreen;
+}
+
 .key[data-type="char"] {
   font-size: calc(var(--u) * 0.3);
   align-items: center;

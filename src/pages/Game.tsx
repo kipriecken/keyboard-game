@@ -84,20 +84,18 @@ function Game() {
       return;
     }
     const keyElement = document.getElementById(e.code)!;
-    keyElement.style.boxShadow = "0 0 0 black";
+    keyElement.classList.add("key-pressed");
     if (e.code.includes("ArrowUp") || e.code.includes("ArrowDown")) {
       keyElement.style.transform = "translate(9px, 0.7px)";
     } else {
       keyElement.style.transform = "translate(0.7px, 0.7px)";
     }
-    keyElement.style.background = "lightgreen";
   };
 
   const handleNewKeyup = (e: KeyboardEvent) => {
     const keyElement = document.getElementById(e.code)!;
-    keyElement.style.boxShadow = "2px 1px 2px black";
+    keyElement.classList.remove("key-pressed");
     keyElement.style.transform = "";
-    keyElement.style.background = "black";
     keyElement.style.animation = "flash 0.75s";
     window.setTimeout(() => (keyElement.style.animation = ""), 750);
   };
