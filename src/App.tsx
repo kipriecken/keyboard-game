@@ -1,6 +1,6 @@
 import "./App.css";
 import { Routes, Route, Link } from "react-router-dom";
-import Game from "./pages/Game";
+import Game from "./pages/Tutorial";
 import About from "./pages/About";
 
 function App() {
