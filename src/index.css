@@ -106,6 +106,24 @@ body {
   font-variation-settings: "wdth" 400;
 }
 
+nav {
+  display: flex;
+  gap: 12;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+}
+
+a {
+  text-decoration: none;
+  color: var(--charcoal);
+}
+
+a:focus-visible {
+  outline: 3px solid #cc2d00;
+  outline-offset: 2px;
+}
+
 .warning {
   background-color: var(--charcoal);
   height: 30%;
@@ -213,6 +231,11 @@ textarea {
   padding: 4px;
   height: 100%;
   font-size: 2vh;
+}
+
+textarea:focus-visible {
+  outline: 5px solid #cc2d00;
+  outline-offset: 2px;
 }
 
 .text-game {
