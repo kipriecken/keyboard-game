@@ -27,9 +27,9 @@ export const populateLabel = (
   return `
         <h3>${indexToGameTitle[gameIndex]}: Level ${levelIndex + 1}</h3>
         <h4><strong>${chord}</strong></h4>
-        <div>${
+        <div>Using only the keyboard, ${
           level.action
             ? `${level.action}.`
-            : `Using only the keyboard, move the blinking cursor from ${level.cursorPlacement} to ${level.newCursorPlacement}.`
+            : `move the blinking cursor from ${level.cursorPlacement} to ${level.newCursorPlacement}.`
         }</div>`;
 };

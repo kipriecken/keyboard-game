@@ -3,9 +3,9 @@ import "../App.css";
 export default function About() {
   return (
     <div className="container" style={{ padding: 16 }}>
-      <h1>About</h1>
+      <h1 style={{ padding: "2rem" }}>About</h1>
       <div style={{ maxWidth: 800, lineHeight: 1.6, textAlign: "left" }}>
-        <h3>Why you need keyboard shortcuts.</h3>
+        <h3>Why you need keyboard shortcuts</h3>
 
         <p>
           What you see on a computer screen is just visually represented code.
@@ -41,8 +41,8 @@ export default function About() {
 
         <p>— Kip Riecken, Creator</p>
 
-        <p>P.S. - If you need to navigate out, use tab :)</p>
-      </div>{" "}
+        <p>P.S. - If you need to navigate out, use tab</p>
+      </div>
     </div>
   );
 }
