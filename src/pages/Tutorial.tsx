@@ -144,9 +144,12 @@ function Game() {
     setIsTwoVisible(true);
   };
   const partTwoFocusHandler = () => {
+    if (!isThreeVisible) {
+      setNewKey("Enter");
+    }
     setIsThreeVisible(true);
   };
-  const partThreeFocusHandler = () => {
+  const partThreeClickHandler = () => {
     setIsIntroVisible(true);
     setIsPreGameVisible(false);
     setIsGamePlayVisible(true);
@@ -363,7 +366,7 @@ function Game() {
             >
               {/* <div>Ok, one more time</div> */}
               <Button
-                onClick={partThreeFocusHandler}
+                onClick={partThreeClickHandler}
                 focus="Hit return"
                 blur="Tab to me"
                 className="three"
