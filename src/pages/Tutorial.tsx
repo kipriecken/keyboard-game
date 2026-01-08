@@ -51,15 +51,26 @@ function Game() {
 
   const levelData = levelsData[gameIndex][levelIndex];
 
-  window.onblur = () => {
-    setIsModalVisible(true);
-  };
-  window.onfocus = () => {
-    setIsModalVisible(false);
-  };
-  window.addEventListener("beforeunload", (e) => {
-    e.preventDefault();
-  });
+  useEffect(() => {
+    const setModalVisible = () => {
+      setIsModalVisible(true);
+    };
+    const setModalInvisible = () => {
+      setIsModalVisible(false);
+    };
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      e.preventDefault();
+    };
+    window.addEventListener("blur", setModalVisible);
+    window.addEventListener("focus", setModalInvisible);
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("blur", setModalVisible);
+      window.removeEventListener("focus", setModalInvisible);
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, []);
 
   // Constants
   const text =
@@ -107,7 +118,7 @@ function Game() {
 
     return () => {
       document.removeEventListener("keydown", handleNewKeydown);
-      document.addEventListener("keyup", handleNewKeyup);
+      document.removeEventListener("keyup", handleNewKeyup);
     };
   });
 
@@ -144,9 +155,6 @@ function Game() {
     setIsTwoVisible(true);
   };
   const partTwoFocusHandler = () => {
-    if (!isThreeVisible) {
-      setNewKey("Enter");
-    }
     setIsThreeVisible(true);
   };
   const partThreeClickHandler = () => {
