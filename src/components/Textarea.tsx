@@ -4,12 +4,14 @@ interface TextareaProps {
   textareaRef: React.RefObject<HTMLTextAreaElement | null>;
   handleKeyup: () => void;
   handleKeydown: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void;
+  value: string;
 }
 
 const Textarea: React.FC<TextareaProps> = ({
   textareaRef,
   handleKeyup,
   handleKeydown,
+  value,
 }) => (
   <textarea
     ref={textareaRef}
@@ -20,6 +22,7 @@ const Textarea: React.FC<TextareaProps> = ({
     spellCheck="false"
     onKeyUp={handleKeyup}
     onKeyDown={handleKeydown}
+    defaultValue={value}
   ></textarea>
 );
 

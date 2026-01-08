@@ -31,6 +31,7 @@ function Game() {
     "Meta",
     "Tab",
     "Control",
+    "KeyL",
   ]);
   const [areRequirementsMet, setAreRequirementsMet] = useState(false);
   const [isLevelOver, setIsLevelOver] = useState(false);
@@ -165,7 +166,7 @@ function Game() {
       setGameIndex((i) => i + 1);
       if (gameIndex == 1) {
         // gameIndex will be 1 when on final level
-        setAcceptableKeys((k) => [...k, "Backspace", "KeyK"]);
+        setAcceptableKeys((k) => [...k, "Backspace", "KeyK", "KeyZ"]);
       }
       setLevelIndex(0);
     } else {
@@ -393,6 +394,7 @@ function Game() {
                 textareaRef={textareaRef}
                 handleKeyup={handleKeyup}
                 handleKeydown={handleKeydown}
+                value={text}
               ></Textarea>
             </div>
             <div className="stats">
