@@ -8,9 +8,10 @@
 
 :root {
   /* CSS HEX */
-  --charcoal: #28536bff;
+  --charcoal: #2b2b2b;
   --rosy-brown: #c2948aff;
   --air-superiority-blue: rgb(92, 158, 194);
+  --contrast: #cc2d00;
   --isabelline: #f6f0edff;
   --khaki: #bbb193ff;
 
@@ -95,7 +96,7 @@ body {
   background-repeat: no-repeat;
   object-fit: cover;
   /* background-color: var(--air-superiority-blue); */
-  background-color: rgb(0, 159, 204);
+  background-color: #009fcc;
   pointer-events: none;
   font-size: 2.3vh;
   line-height: 1.4;
@@ -234,7 +235,7 @@ textarea {
 }
 
 textarea:focus-visible {
-  outline: 5px solid #cc2d00;
+  outline: 5px solid var(--contrast);
   outline-offset: 2px;
 }
 
@@ -264,7 +265,7 @@ label > h4 {
   background: lightblue;
   border-radius: 4px;
   padding: 2px 6px;
-  color: green;
+  color: var(--contrast);
   font-weight: 600;
   text-align: center;
 }
