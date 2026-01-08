@@ -1,5 +1,5 @@
 import "../App.css";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useMemo } from "react";
 import { games as levelsData } from "../data";
 import Modal from "../components/Modal";
 import { populateLabel } from "../utils/helpers";
@@ -148,8 +148,14 @@ function Game() {
     }, 1000);
   };
 
-  const isOnFinalLevel = () => levelIndex == levelsData[gameIndex].length - 1;
-  const isOnFinalGame = () => gameIndex == levelsData.length - 1;
+  const isOnFinalLevel = useMemo(
+    () => levelIndex == levelsData[gameIndex].length - 1,
+    [levelIndex, gameIndex],
+  );
+  const isOnFinalGame = useMemo(
+    () => gameIndex == levelsData.length - 1,
+    [gameIndex],
+  );
 
   const partOneFocusHandler = () => {
     setIsTwoVisible(true);
@@ -168,8 +174,8 @@ function Game() {
     setIsOnFirstLevel(false);
     setIsLoadingLevel(true);
     setIsAchievedVisible(false);
-    if (isOnFinalLevel()) {
-      if (isOnFinalGame()) {
+    if (isOnFinalLevel) {
+      if (isOnFinalGame) {
         setGameIndex(0); // not sure if should be done here or later
         setIsNextBtnDisabled(true);
         return;
@@ -198,7 +204,7 @@ function Game() {
     if (keystrokes == levelData.minKeystrokes) {
       setIsKeystrokesTextVisible(true);
     }
-    if (isOnFinalGame() && isOnFinalLevel()) {
+    if (isOnFinalGame && isOnFinalLevel) {
       alert("Congratulations! You have completed all tutorial levels!");
       setIsResetBtnVisible(true);
       setIsNextBtnVisible(false);
