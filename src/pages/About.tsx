@@ -3,41 +3,38 @@ import "../App.css";
 export default function About() {
   return (
     <div className="container" style={{ padding: 16 }}>
-      <h1 style={{ padding: "2rem" }}>About</h1>
+      <div>
+        <h1 style={{ padding: "2rem" }}>About</h1>
+      </div>
       <div style={{ maxWidth: 800, lineHeight: 1.6, textAlign: "left" }}>
-        <h3>Why you need keyboard shortcuts</h3>
-
+        <p>A computer screen displays visually represented code.</p>
         <p>
-          What you see on a computer screen is just visually represented code.
-          To make these imaginary visuals accessible, computer designers from
-          decades ago gave us the mouse.
+          To allow you to interact without being a developer, computer designers
+          made the mouse.
         </p>
         <p>
-          Using the mouse, though, is inexact. You move your hand (mouse) or
-          fingertip (trackpad) towards your goal. You click, triple click,
-          possibly click the wrong thing, click back, etc. A very clumsy way to
-          operate.
+          But the mouse is inexact. You move your hand (mouse) or fingertip
+          (trackpad) towards your goal, often requiring more than one try to get
+          there. You click, triple click, possibly clicking the wrong thing and
+          having to click back. Clumsy.
         </p>
         <p>
-          These awkward and unnatural adjustments we make when we use a mouse
-          could lead to discomfort, irritability, shoulder/neck/back tension.
-          It’s guesswork, like walking on a rope bridge instead of an arch
-          bridge. It requires effort, and builds up especially over long periods
-          of computer use.
+          Awkward and unnatural adjustments make for discomfort, irritability,
+          shoulder/neck/back tension. The strain and effort takes their toll
+          over long periods.
         </p>
-
+        <h3>Keyboard shortcuts to the rescue</h3>
         <p>
-          With keyboard shortcuts you’re telling the computer precisely what you
-          want. Each keyboard key press corresponds to unique code the computer
-          runs.
+          With keyboard shortcuts you tell the computer precisely what you want.
+          Each keyboard key press corresponds to precise code.
         </p>
         <p>
-          This game will familiarize you with several of the most useful
-          keyboard shortcuts, and show you how to use them in your daily work
-          Possible benefits include: smoother workflow, better hand and wrist
-          health, increased peace of mind.
+          This game teaches several of the most useful keyboard shortcuts and
+          shows you how to use them in your daily work. Possible benefits
+          include: smoother workflow, better hand and wrist health, and
+          increased peace of mind.
         </p>
-        <p>Good luck and have fun!</p>
+        <p>Good luck and have fun.</p>
 
         <p>— Kip Riecken, Creator</p>
 
