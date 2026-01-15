@@ -205,7 +205,6 @@ function Game() {
       setIsKeystrokesTextVisible(true);
     }
     if (isOnFinalGame && isOnFinalLevel) {
-      alert("Congratulations! You have completed all tutorial levels!");
       setIsResetBtnVisible(true);
       setIsNextBtnVisible(false);
     } else {
