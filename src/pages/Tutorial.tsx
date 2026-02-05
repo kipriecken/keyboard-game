@@ -106,10 +106,6 @@ function Game() {
     }
   };
 
-  const handlePlayGame = () => {
-    navigate("/game");
-  };
-
   const handleNewKeyup = (e: KeyboardEvent) => {
     const keyElement = document.getElementById(e.code)!;
     keyElement.classList.remove("key-pressed");
