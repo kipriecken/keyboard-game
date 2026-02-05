@@ -1,9 +1,9 @@
-import "./button.css";
-import ButtonSvg from "./ButtonSvg";
+import "./Button.css";
+import ButtonSvg from "../ButtonSvg/ButtonSvg";
 import { useState } from "react";
 
 export default function Button(props: {
-  focus: string;
+  focus?: string;
   blur: string;
   className: string;
   onFocus?: () => void;
@@ -19,15 +19,11 @@ export default function Button(props: {
       className={`${props.className} ${displayClass}`}
       disabled={props.disabled}
       onFocus={() => {
-        setText(props.focus);
-        if (props.onFocus) {
-          props.onFocus();
-        }
+        if (props.focus) setText(props.focus);
+        if (props.onFocus) props.onFocus();
       }}
       onClick={() => {
-        if (props.onClick) {
-          props.onClick();
-        }
+        if (props.onClick) props.onClick();
         setText(props.blur); // reset text on click
       }}
       onBlur={() => setText(props.blur)}

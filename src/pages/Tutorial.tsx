@@ -1,12 +1,13 @@
 import "../App.css";
 import { useEffect, useState, useRef, useMemo } from "react";
 import { games as levelsData } from "../data";
-import Modal from "../components/Modal";
+import Modal from "../components/Modal/Modal";
 import { populateLabel } from "../utils/helpers";
-import Button from "../components/Button";
-import Spinner from "../components/Spinner";
-import Keyboard from "../components/Keyboard";
+import Button from "../components/Button/Button";
+import Spinner from "../components/Spinner/Spinner";
+import Keyboard from "../components/Keyboard/Keyboard";
 import Textarea from "../components/Textarea";
+import { useNavigate } from "react-router-dom";
 
 const userAgent = window.navigator.userAgent;
 const isMac = userAgent.includes("Macintosh");
@@ -18,6 +19,7 @@ const isMobile =
 
 function Game() {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const navigate = useNavigate();
 
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [newKey, setNewKey] = useState("Tab"); // if truthy, keyboard is displayed
@@ -102,6 +104,10 @@ function Game() {
     } else {
       keyElement.style.transform = "translate(0.7px, 0.7px)";
     }
+  };
+
+  const handlePlayGame = () => {
+    navigate("/game");
   };
 
   const handleNewKeyup = (e: KeyboardEvent) => {
@@ -427,6 +433,12 @@ function Game() {
                 blur="Redo tutorial"
                 className="reset"
                 onClick={handleReset}
+                isVisible={isResetBtnVisible}
+              />
+              <Button
+                blur="Play game"
+                className="game-btn"
+                onClick={() => navigate("/game")}
                 isVisible={isResetBtnVisible}
               />
               <div style={{ visibility: "hidden" }}>

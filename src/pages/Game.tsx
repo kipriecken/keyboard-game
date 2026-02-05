@@ -8,7 +8,7 @@ export default function Game() {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
   const successMessage =
-    "Level complete using the fewest keystrokes! Excellent work!";
+    "Level completed using the fewest keystrokes! Excellent work!";
   const failureMessage =
     "Level complete! You used ${keystrokes} keystrokes. You only need ${minKeystrokes}. Try to do better next time!";
   const championMessage =
@@ -56,12 +56,9 @@ export default function Game() {
         setFinalMessage(championMessage);
       } else {
         setFinalMessage(
-          failureMessage.replace(
-            "${keystrokes}",
-            keystrokes
-              .toString()
-              .replace("${minKeystrokes}", minKeystrokes.toString()),
-          ),
+          failureMessage
+            .replace("${keystrokes}", keystrokes.toString())
+            .replace("${minKeystrokes}", minKeystrokes.toString()),
         );
       }
     }
@@ -108,11 +105,20 @@ export default function Game() {
         />
         <div
           className="container"
-          style={{ background: "lightblue", padding: 8 }}
+          style={{ background: "lightblue", padding: 8, marginTop: 16 }}
         >
           Keystrokes used: {keystrokes}
         </div>
-        <div className="container" style={{ background: "lightblue" }}>
+        <div
+          className="container"
+          style={{
+            maxWidth: 550,
+            background: "lightgray",
+            marginTop: 16,
+            textAlign: "center",
+            color: "#cc2d00",
+          }}
+        >
           {finalMessage}
         </div>
       </div>

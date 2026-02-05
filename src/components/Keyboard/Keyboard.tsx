@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import "./keyboard.css";
+import "./Keyboard.css";
 
 export default function Keyboard(props: {
   newKey: string;

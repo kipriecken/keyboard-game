@@ -1,4 +1,4 @@
-import "./button-svg.css";
+import "./ButtonSvg.css";
 
 export default function ButtonSvg() {
   return (

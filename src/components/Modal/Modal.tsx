@@ -1,4 +1,4 @@
-import "./modal.css";
+import "./Modal.css";
 
 export default function Modal(props: { visibility: boolean }) {
   return (

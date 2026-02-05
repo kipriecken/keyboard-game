@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Tutorial from "./pages/Tutorial";
 import About from "./pages/About";
 import Game from "./pages/Game";
-import Modal from "./components/Modal";
+import Modal from "./components/Modal/Modal";
 
 function App() {
   const [isModalVisible, setIsModalVisible] = useState(false);

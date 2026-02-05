@@ -1,4 +1,4 @@
-import "./header.css";
+import "./Header.css";
 
 export default function Header(props: { visibility: string }) {
   return (
