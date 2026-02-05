@@ -1,4 +1,4 @@
-import "./spinner.css";
+import "./Spinner.css";
 
 export default function Spinner(props: { isDisplayed: boolean }) {
   return (
