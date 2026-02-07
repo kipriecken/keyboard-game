@@ -34,6 +34,5 @@
     "typescript-eslint": "^8.39.1",
     "vite": "^7.1.2"
   },
-  "packageManager": "pnpm@9.15.4",
-  "homepage": "https://kipriecken.github.io/keyboard-game"
+  "packageManager": "pnpm@9.15.4"
 }
