@@ -1,12 +1,19 @@
-# Keyboard Shortcuts Game
+# Keyboard Shortcuts Game (Mac only)
 
-Keyboard Shortcuts Game makes adopting keyboard shortcuts simple.
+Keyboard Shortcuts Game makes adopting keyboard shortcuts simple. <br/><br/>
 
-KSG is a one stop shop for learning and remembering keyboard shortcuts through an interactive process.
+<img width="1435" height="676" alt="Screenshot landing page" src="https://github.com/user-attachments/assets/e827cc86-29b6-48d0-911a-7b59933377d3" /><br/>
 
-The implemented tutorial is for navigating, highlighting, and deleting within a text area. Coming features include a game to edit text in the most efficient way possible, without the mouse or trackpad.
+This interactive tutorial teaches navigating, highlighting, and deleting within a text area, which can be generalized to editing text anywhere on a computer.<br/>
 
-The game is currently only designed for Apple devices.
+<img width="1435" height="676" alt="Screenshot tutorial page" src="https://github.com/user-attachments/assets/3b0d191d-e68d-418e-8feb-39742c20721a" /><br/>
+
+Coming features include a game applying these shortcuts, as well as a game teaching users to navigate the browser and between apps.<br/>
+
+> NOTE: The game is currently only designed for Apple devices.
+
+
+---
 
 # React + TypeScript + Vite
 
