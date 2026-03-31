@@ -17,7 +17,7 @@ const isMobile =
     userAgent,
   );
 
-function Game() {
+function Tutorial() {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const navigate = useNavigate();
 
@@ -466,4 +466,4 @@ function Game() {
   );
 }
 
-export default Game;
+export default Tutorial;
