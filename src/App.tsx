@@ -1,6 +1,7 @@
 import "./App.css";
 import { Routes, Route, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
+import Intro from "./pages/Intro";
 import Tutorial from "./pages/Tutorial";
 import About from "./pages/About";
 import Game from "./pages/Game";
@@ -40,7 +41,8 @@ function App() {
         </nav>
       </header>
       <Routes>
-        <Route path="/" element={<Tutorial />} />
+        <Route path="/" element={<Intro />} />
+        <Route path="/tutorial" element={<Tutorial />} />
         <Route path="/about" element={<About />} />
         <Route path="/game" element={<Game />} />
       </Routes>

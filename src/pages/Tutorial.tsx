@@ -8,6 +8,7 @@ import Spinner from "../components/Spinner/Spinner";
 import Keyboard from "../components/Keyboard/Keyboard";
 import Textarea from "../components/Textarea";
 import { useNavigate } from "react-router-dom";
+import { useGameState } from "../hooks/useGameState";
 
 const userAgent = window.navigator.userAgent;
 const isMac = userAgent.includes("Macintosh");
@@ -21,10 +22,10 @@ function Tutorial() {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const navigate = useNavigate();
 
+  const gameState = useGameState();
+
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [newKey, setNewKey] = useState("Tab"); // if truthy, keyboard is displayed
-  const [levelIndex, setLevelIndex] = useState(0);
-  const [gameIndex, setGameIndex] = useState(0);
   const [acceptableKeys, setAcceptableKeys] = useState([
     "Arrow",
     "Shift",
@@ -49,9 +50,8 @@ function Tutorial() {
   const [isKeystrokesTextVisible, setIsKeystrokesTextVisible] = useState(false);
   const [keystrokes, setKeystrokes] = useState(0);
   const [isLoadingLevel, setIsLoadingLevel] = useState(true);
-  const [isOnFirstLevel, setIsOnFirstLevel] = useState(true);
 
-  const levelData = levelsData[gameIndex][levelIndex];
+  const levelData = levelsData[gameState.gameIndex][gameState.levelIndex];
 
   useEffect(() => {
     const setModalVisible = () => {
@@ -128,8 +128,7 @@ function Tutorial() {
     setIsLoadingLevel(true);
     window.setTimeout(() => {
       setIsKeystrokesTextVisible(false);
-      setGameIndex(0);
-      setLevelIndex(0);
+      gameState.resetGameState();
       setIsLevelOver(false);
       setKeystrokes(0);
       setIsNextBtnVisible(true);
@@ -151,12 +150,12 @@ function Tutorial() {
   };
 
   const isOnFinalLevel = useMemo(
-    () => levelIndex == levelsData[gameIndex].length - 1,
-    [levelIndex, gameIndex],
+    () => gameState.levelIndex == levelsData[gameState.gameIndex].length - 1,
+    [gameState.levelIndex, gameState.gameIndex],
   );
   const isOnFinalGame = useMemo(
-    () => gameIndex == levelsData.length - 1,
-    [gameIndex],
+    () => gameState.gameIndex == levelsData.length - 1,
+    [gameState.gameIndex],
   );
 
   const partOneFocusHandler = () => {
@@ -173,23 +172,22 @@ function Tutorial() {
   };
 
   const handleNextClick = () => {
-    setIsOnFirstLevel(false);
     setIsLoadingLevel(true);
     setIsAchievedVisible(false);
     if (isOnFinalLevel) {
       if (isOnFinalGame) {
-        setGameIndex(0); // not sure if should be done here or later
+        gameState.setGameIndex(0); // not sure if should be done here or later
         setIsNextBtnDisabled(true);
         return;
       }
-      setGameIndex((i) => i + 1);
-      if (gameIndex == 1) {
+      gameState.setGameIndex((i) => i + 1);
+      if (gameState.gameIndex == 1) {
         // gameIndex will be 1 when on final level
         setAcceptableKeys((k) => [...k, "Backspace", "KeyK", "KeyZ"]);
       }
-      setLevelIndex(0);
+      gameState.setLevelIndex(0);
     } else {
-      setLevelIndex((i) => i + 1);
+      gameState.setLevelIndex((i) => i + 1);
     }
     setIsLevelOver(false);
     window.setTimeout(() => {
@@ -280,14 +278,15 @@ function Tutorial() {
     }
 
     if (textarea && label) {
-      const levelData = levelsData[gameIndex][levelIndex];
-      if (levelIndex == 1) {
-        setIsOnFirstLevel(false);
-      }
+      const levelData = levelsData[gameState.gameIndex][gameState.levelIndex];
 
       // Update UI for new level
       innerContainer.style.display = !isMobile && !newKey ? "flex" : "none";
-      label.innerHTML = populateLabel(levelData, gameIndex, levelIndex);
+      label.innerHTML = populateLabel(
+        levelData,
+        gameState.gameIndex,
+        gameState.levelIndex,
+      );
       textarea.style.display = "block";
       textarea.value = text;
       textarea.focus();
@@ -306,7 +305,7 @@ function Tutorial() {
       setIsKeystrokesTextVisible(false);
       setAreRequirementsMet(false);
     }
-  }, [gameIndex, levelIndex, newKey, isGamePlayVisible]);
+  }, [gameState.gameIndex, gameState.levelIndex, newKey, isGamePlayVisible]);
 
   useEffect(() => {
     if (levelData.newKey && isGamePlayVisible) {
@@ -417,8 +416,7 @@ function Tutorial() {
             </div>
             <div className="stats">
               <Button
-                focus={isOnFirstLevel ? "Use Enter" : "Next level"}
-                blur={isOnFirstLevel ? "Tab here" : "Next level"}
+                blur="Next level"
                 className="next"
                 onClick={handleNextClick}
                 disabled={isNextBtnDisabled}
@@ -454,7 +452,7 @@ function Tutorial() {
                   className="achieved"
                   style={{ display: isAchievedVisible ? "block" : "none" }}
                 >
-                  Achieved level {levelIndex + 1}!
+                  Achieved level {gameState.levelIndex + 1}!
                 </div>
               </div>
             </div>
