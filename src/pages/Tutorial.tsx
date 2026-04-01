@@ -11,8 +11,6 @@ import { useNavigate } from "react-router-dom";
 import { useGameState } from "../hooks/useGameState";
 
 const userAgent = window.navigator.userAgent;
-const isMac = userAgent.includes("Macintosh");
-const isSafari = userAgent.includes("Safari") && !userAgent.includes("Chrome");
 const isMobile =
   /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
     userAgent,
@@ -39,11 +37,6 @@ function Tutorial() {
   const [areRequirementsMet, setAreRequirementsMet] = useState(false);
   const [isLevelOver, setIsLevelOver] = useState(false);
   const [isAchievedVisible, setIsAchievedVisible] = useState(false);
-  const [isTwoVisible, setIsTwoVisible] = useState(false);
-  const [isThreeVisible, setIsThreeVisible] = useState(false);
-  const [isIntroVisible, setIsIntroVisible] = useState(true);
-  const [isPreGameVisible, setIsPreGameVisible] = useState(!isMobile);
-  const [isGamePlayVisible, setIsGamePlayVisible] = useState(false);
   const [isNextBtnDisabled, setIsNextBtnDisabled] = useState(true);
   const [isNextBtnVisible, setIsNextBtnVisible] = useState(true);
   const [isResetBtnVisible, setIsResetBtnVisible] = useState(true);
@@ -54,6 +47,7 @@ function Tutorial() {
   const levelData = levelsData[gameState.gameIndex][gameState.levelIndex];
 
   useEffect(() => {
+    handleReset();
     const setModalVisible = () => {
       setIsModalVisible(true);
     };
@@ -157,19 +151,6 @@ function Tutorial() {
     () => gameState.gameIndex == levelsData.length - 1,
     [gameState.gameIndex],
   );
-
-  const partOneFocusHandler = () => {
-    setIsTwoVisible(true);
-  };
-  const partTwoFocusHandler = () => {
-    setIsThreeVisible(true);
-  };
-  const partThreeClickHandler = () => {
-    setIsIntroVisible(true);
-    setIsPreGameVisible(false);
-    setIsGamePlayVisible(true);
-    handleReset();
-  };
 
   const handleNextClick = () => {
     setIsLoadingLevel(true);
@@ -305,13 +286,13 @@ function Tutorial() {
       setIsKeystrokesTextVisible(false);
       setAreRequirementsMet(false);
     }
-  }, [gameState.gameIndex, gameState.levelIndex, newKey, isGamePlayVisible]);
+  }, [gameState.gameIndex, gameState.levelIndex, newKey]);
 
   useEffect(() => {
-    if (levelData.newKey && isGamePlayVisible) {
+    if (levelData.newKey) {
       setNewKey(levelData.newKey);
     }
-  }, [levelData.newKey, isGamePlayVisible]);
+  }, [levelData.newKey]);
 
   return (
     <>
@@ -329,72 +310,7 @@ function Tutorial() {
         style={{ display: !isMobile && !newKey ? "flex" : "none" }}
       >
         <div className="drawer"></div>
-        <div
-          className="pre-game container"
-          style={{ display: isPreGameVisible ? "flex" : "none" }}
-        >
-          <div
-            className="intro"
-            style={{ visibility: isIntroVisible ? "visible" : "hidden" }}
-          >
-            <p
-              className="safari"
-              style={{ display: isSafari ? "block" : "none" }}
-            >
-              To play on Safari, click on Safari at the top, then &gt;
-              Preferences &gt;. Check the box at Press Tab to highlight each
-              item on a web page.
-              <br></br>
-              <br></br>
-              If using an iPad, go to Settings &gt; Accessibility &gt; Keyboards
-              & Typing, select Full Keyboard Access and switch on.
-            </p>
-            <p
-              className="windows"
-              style={{ display: !isMac ? "block" : "none" }}
-            >
-              Note: this game is not configured for Windows.
-            </p>
-            <div>With tab you can navigate a page</div>
-            <Button
-              focus="Selected"
-              blur="Tab to me"
-              className="one"
-              onFocus={partOneFocusHandler}
-            ></Button>
-            <div
-              className="part-two"
-              style={{ display: isTwoVisible ? "flex" : "none" }}
-            >
-              {/* <div>And another time</div> */}
-              <Button
-                focus="Selected"
-                blur="Tab to me"
-                className="two"
-                onFocus={partTwoFocusHandler}
-              ></Button>
-            </div>
-            <div
-              className="part-three"
-              style={{ display: isThreeVisible ? "flex" : "none" }}
-            >
-              {/* <div>Ok, one more time</div> */}
-              <Button
-                onClick={partThreeClickHandler}
-                focus="Hit return"
-                blur="Tab to me"
-                className="three"
-              ></Button>
-              <div>
-                "Click" with return or spacebar for a brief shortcut tutorial
-              </div>
-            </div>
-          </div>
-        </div>
-        <div
-          className="game-play container"
-          style={{ display: isGamePlayVisible ? "flex" : "none" }}
-        >
+        <div className="game-play container" style={{ display: "flex" }}>
           <Spinner isDisplayed={isLoadingLevel}></Spinner>
           <div
             style={{
