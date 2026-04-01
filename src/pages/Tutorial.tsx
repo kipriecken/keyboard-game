@@ -1,7 +1,6 @@
 import "../App.css";
 import { useEffect, useState, useRef, useMemo } from "react";
 import { games as levelsData } from "../data";
-import Modal from "../components/Modal/Modal";
 import { populateLabel } from "../utils/helpers";
 import Button from "../components/Button/Button";
 import Spinner from "../components/Spinner/Spinner";
@@ -22,7 +21,6 @@ function Tutorial() {
 
   const gameState = useGameState();
 
-  const [isModalVisible, setIsModalVisible] = useState(false);
   const [newKey, setNewKey] = useState("Tab"); // if truthy, keyboard is displayed
   const [acceptableKeys, setAcceptableKeys] = useState([
     "Arrow",
@@ -48,24 +46,6 @@ function Tutorial() {
 
   useEffect(() => {
     handleReset();
-    const setModalVisible = () => {
-      setIsModalVisible(true);
-    };
-    const setModalInvisible = () => {
-      setIsModalVisible(false);
-    };
-    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
-      e.preventDefault();
-    };
-    window.addEventListener("blur", setModalVisible);
-    window.addEventListener("focus", setModalInvisible);
-    window.addEventListener("beforeunload", handleBeforeUnload);
-
-    return () => {
-      window.removeEventListener("blur", setModalVisible);
-      window.removeEventListener("focus", setModalInvisible);
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    };
   }, []);
 
   // Constants
@@ -296,7 +276,6 @@ function Tutorial() {
 
   return (
     <>
-      <Modal visibility={isModalVisible}></Modal>
       <Keyboard newKey={newKey} isDisplayed={!isMobile}></Keyboard>
       <div
         className="is-mobile container"
