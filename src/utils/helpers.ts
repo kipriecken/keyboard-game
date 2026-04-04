@@ -33,3 +33,12 @@ export const populateLabel = (
             : `move the blinking cursor from ${level.cursorPlacement} to ${level.newCursorPlacement}.`
         }</div>`;
 };
+
+export const areActiveKeysPressed = (e: React.KeyboardEvent<HTMLTextAreaElement>, activeKeys: string[]) => {
+  return (
+    activeKeys.includes("alt") == e.altKey &&
+    activeKeys.includes("shift") == e.shiftKey &&
+    activeKeys.includes("control") == e.ctrlKey &&
+    activeKeys.includes("meta") == e.metaKey
+  );
+};

@@ -1,13 +1,13 @@
 import "../App.css";
-import { useEffect, useState, useRef, useMemo } from "react";
+import { useEffect, useState, useRef, useReducer } from "react";
+import { reducer, initialState } from "../hooks/useGameState";
 import { games as levelsData } from "../data";
-import { populateLabel } from "../utils/helpers";
+import { populateLabel, areActiveKeysPressed } from "../utils/helpers";
 import Button from "../components/Button/Button";
 import Spinner from "../components/Spinner/Spinner";
 import Keyboard from "../components/Keyboard/Keyboard";
 import Textarea from "../components/Textarea";
 import { useNavigate } from "react-router-dom";
-import { useGameState } from "../hooks/useGameState";
 
 const userAgent = window.navigator.userAgent;
 const isMobile =
@@ -16,33 +16,23 @@ const isMobile =
   );
 
 function Tutorial() {
+  const [state, dispatch] = useReducer(reducer, initialState);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const navigate = useNavigate();
 
-  const gameState = useGameState();
-
   const [newKey, setNewKey] = useState("Tab"); // if truthy, keyboard is displayed
-  const [acceptableKeys, setAcceptableKeys] = useState([
-    "Arrow",
-    "Shift",
-    "Alt",
-    "Escape",
-    "Meta",
-    "Tab",
-    "Control",
-    "KeyL",
-  ]);
-  const [areRequirementsMet, setAreRequirementsMet] = useState(false);
-  const [isLevelOver, setIsLevelOver] = useState(false);
-  const [isAchievedVisible, setIsAchievedVisible] = useState(false);
-  const [isNextBtnDisabled, setIsNextBtnDisabled] = useState(true);
-  const [isNextBtnVisible, setIsNextBtnVisible] = useState(true);
-  const [isResetBtnVisible, setIsResetBtnVisible] = useState(true);
-  const [isKeystrokesTextVisible, setIsKeystrokesTextVisible] = useState(false);
-  const [keystrokes, setKeystrokes] = useState(0);
-  const [isLoadingLevel, setIsLoadingLevel] = useState(true);
-
-  const levelData = levelsData[gameState.gameIndex][gameState.levelIndex];
+  const areRequirementsMet = state.areRequirementsMet;
+  const isAchievedVisible = state.phase === "exercise-complete";
+  const isNextBtnDisabled = state.phase !== "exercise-complete";
+  const isNextBtnVisible = state.phase !== "tutorial-complete";
+  const isResetBtnVisible = state.phase === "tutorial-complete";
+  const isKeystrokesTextVisible =
+    state.phase === "exercise-complete" &&
+    state.keystrokes ==
+      levelsData[state.trackIndex][state.exerciseIndex].minKeystrokes;
+  const keystrokes = state.keystrokes;
+  const isLoadingLevel = state.phase === "loading";
+  const levelData = levelsData[state.trackIndex][state.exerciseIndex];
 
   useEffect(() => {
     handleReset();
@@ -55,6 +45,7 @@ function Tutorial() {
   const handleNewKeydown = (e: KeyboardEvent) => {
     const keyboard = document.getElementById("keyboard");
     if (e.code == newKey) {
+      dispatch({ type: "KEY_INTRODUCED" });
       e.preventDefault();
       if (keyboard) {
         keyboard.style.opacity = "0";
@@ -99,78 +90,22 @@ function Tutorial() {
   });
 
   const handleReset = () => {
-    setIsLoadingLevel(true);
+    dispatch({ type: "RESET" });
     window.setTimeout(() => {
-      setIsKeystrokesTextVisible(false);
-      gameState.resetGameState();
-      setIsLevelOver(false);
-      setKeystrokes(0);
-      setIsNextBtnVisible(true);
-      setIsResetBtnVisible(false);
-      setAcceptableKeys([
-        "Arrow",
-        "Shift",
-        "Alt",
-        "Escape",
-        "Meta",
-        "Tab",
-        "Control",
-      ]);
-      setIsLoadingLevel(false);
       window.setTimeout(() => {
         textareaRef.current?.focus();
       }, 1);
     }, 1000);
   };
-
-  const isOnFinalLevel = useMemo(
-    () => gameState.levelIndex == levelsData[gameState.gameIndex].length - 1,
-    [gameState.levelIndex, gameState.gameIndex],
-  );
-  const isOnFinalGame = useMemo(
-    () => gameState.gameIndex == levelsData.length - 1,
-    [gameState.gameIndex],
-  );
 
   const handleNextClick = () => {
-    setIsLoadingLevel(true);
-    setIsAchievedVisible(false);
-    if (isOnFinalLevel) {
-      if (isOnFinalGame) {
-        gameState.setGameIndex(0); // not sure if should be done here or later
-        setIsNextBtnDisabled(true);
-        return;
-      }
-      gameState.setGameIndex((i) => i + 1);
-      if (gameState.gameIndex == 1) {
-        // gameIndex will be 1 when on final level
-        setAcceptableKeys((k) => [...k, "Backspace", "KeyK", "KeyZ"]);
-      }
-      gameState.setLevelIndex(0);
-    } else {
-      gameState.setLevelIndex((i) => i + 1);
-    }
-    setIsLevelOver(false);
+    dispatch({ type: "NEXT_CLICKED" });
     window.setTimeout(() => {
-      setIsLoadingLevel(false);
+      dispatch({ type: "LOADED" });
       window.setTimeout(() => {
         textareaRef.current?.focus();
       }, 1);
     }, 1000);
-  };
-
-  const handleLevelWin = () => {
-    setIsLevelOver(true);
-    setIsAchievedVisible(true);
-    if (keystrokes == levelData.minKeystrokes) {
-      setIsKeystrokesTextVisible(true);
-    }
-    if (isOnFinalGame && isOnFinalLevel) {
-      setIsResetBtnVisible(true);
-      setIsNextBtnVisible(false);
-    } else {
-      setIsNextBtnDisabled(false);
-    }
   };
 
   const handleKeyup = () => {
@@ -186,21 +121,21 @@ function Tutorial() {
       textareaRef.current?.selectionEnd == finalCursorLocation[1];
 
     if (isCursorInPlace) {
-      handleLevelWin();
+      dispatch({ type: "EXERCISE_WON" });
     }
   };
 
   const handleKeydown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (!acceptableKeys.some((key) => e.code.includes(key))) {
+    if (!state.acceptableKeys.some((key) => e.code.includes(key))) {
       e.preventDefault();
       return;
     }
-    if (e.repeat || isLevelOver) {
+    if (e.repeat || state.phase === "exercise-complete") {
       return;
     }
 
     if (!e.code.includes("Tab") && !e.code.includes("Escape")) {
-      setKeystrokes((s) => s + 1);
+      dispatch({ type: "KEY_PRESSED" });
     }
     if (
       !e.code.includes("Arrow") &&
@@ -210,17 +145,11 @@ function Tutorial() {
       return;
     }
 
-    const areActiveKeysPressed = () => {
-      return (
-        levelData.activeKeys.includes("alt") == e.altKey &&
-        levelData.activeKeys.includes("shift") == e.shiftKey &&
-        levelData.activeKeys.includes("control") == e.ctrlKey &&
-        levelData.activeKeys.includes("meta") == e.metaKey
-      );
-    };
-
-    if (e.code.includes(levelData.keyword) && areActiveKeysPressed()) {
-      setAreRequirementsMet(true);
+    if (
+      e.code.includes(levelData.keyword) &&
+      areActiveKeysPressed(e, levelData.activeKeys)
+    ) {
+      dispatch({ type: "REQUIREMENTS_MET" });
     }
   };
 
@@ -239,14 +168,14 @@ function Tutorial() {
     }
 
     if (textarea && label) {
-      const levelData = levelsData[gameState.gameIndex][gameState.levelIndex];
+      const levelData = levelsData[state.trackIndex][state.exerciseIndex];
 
       // Update UI for new level
       innerContainer.style.display = !isMobile && !newKey ? "flex" : "none";
       label.innerHTML = populateLabel(
         levelData,
-        gameState.gameIndex,
-        gameState.levelIndex,
+        state.trackIndex,
+        state.exerciseIndex,
       );
       textarea.style.display = "block";
       textarea.value = text;
@@ -259,14 +188,8 @@ function Tutorial() {
           ? levelData.startingCursorPosition[1]
           : 0,
       );
-
-      setIsNextBtnDisabled(true);
-      setIsAchievedVisible(false);
-      setKeystrokes(0);
-      setIsKeystrokesTextVisible(false);
-      setAreRequirementsMet(false);
     }
-  }, [gameState.gameIndex, gameState.levelIndex, newKey]);
+  }, [state.trackIndex, state.exerciseIndex, newKey]);
 
   useEffect(() => {
     if (levelData.newKey) {
@@ -347,7 +270,7 @@ function Tutorial() {
                   className="achieved"
                   style={{ display: isAchievedVisible ? "block" : "none" }}
                 >
-                  Achieved level {gameState.levelIndex + 1}!
+                  Achieved level {state.exerciseIndex + 1}!
                 </div>
               </div>
             </div>
