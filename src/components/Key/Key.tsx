@@ -6,7 +6,6 @@ interface KeyProps {
   label?: string;
   className?: string;
   dataType?: "char" | "word";
-  isPressed?: boolean;
   children?: ReactNode;
 }
 
@@ -15,15 +14,10 @@ export default function Key({
   label,
   className = "",
   dataType,
-  isPressed = false,
   children,
 }: KeyProps) {
   return (
-    <div
-      className={`key ${className} ${isPressed ? "pressed" : ""}`.trim()}
-      id={id}
-      data-type={dataType}
-    >
+    <div className={`key ${className}`.trim()} id={id} data-type={dataType}>
       {children || label}
     </div>
   );

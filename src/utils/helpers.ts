@@ -1,37 +1,60 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { type GameLevel } from "../data";
+import type { ReactNode } from "react";
+import React from "react";
+
+export interface LabelData {
+  gameTitle: string;
+  levelNumber: number;
+  chord: string;
+  instruction: ReactNode;
+}
+
+const indexToGameTitle: Record<number, string> = {
+  0: "Navigation",
+  1: "Highlighting",
+  2: "Deletion",
+};
+
+const modifierToKeyName: Record<string, string> = {
+  alt: "option",
+  meta: "command",
+  shift: "shift",
+  control: "control",
+};
 
 export const populateLabel = (
   level: GameLevel,
   gameIndex: number,
   levelIndex: number,
-): string => {
-  const indexToGameTitle: any = {
-    0: "Navigation",
-    1: "Highlighting",
-    2: "Deletion",
-  };
-
-  const modifierToKeyName: any = {
-    alt: "option",
-    meta: "command",
-    shift: "shift",
-    control: "control",
-  };
+): LabelData => {
+  // Build the chord string
   let chord = "";
-  level.activeKeys.map(
+  level.activeKeys.forEach(
     (keyName) => (chord += `${modifierToKeyName[keyName]} + `),
   );
-  level.actionKeys.map((key) => (chord += `${key}, `));
+  level.actionKeys.forEach((key) => (chord += `${key}, `));
   chord = chord.slice(0, -2);
-  return `
-        <h3>${indexToGameTitle[gameIndex]}: Level ${levelIndex + 1}</h3>
-        <h4><strong>${chord}</strong></h4>
-        <div>Using only the keyboard, ${
-          level.action
-            ? `${level.action}.`
-            : `move the blinking cursor from ${level.cursorPlacement} to ${level.newCursorPlacement}.`
-        }</div>`;
+
+  // Build the instruction
+  const instruction = level.action
+    ? `${level.action}.`
+    : React.createElement(
+        React.Fragment,
+        null,
+        "move the blinking cursor from ",
+        React.createElement("strong", null, level.cursorPlacement),
+        " to ",
+        React.createElement("strong", null, level.newCursorPlacement),
+        "."
+      );
+
+  return {
+    gameTitle: indexToGameTitle[gameIndex],
+    levelNumber: levelIndex + 1,
+    chord,
+    instruction,
+  };
 };
 
 export const areActiveKeysPressed = (

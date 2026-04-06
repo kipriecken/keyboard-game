@@ -7,6 +7,7 @@ import Button from "../components/Button/Button";
 import Spinner from "../components/Spinner/Spinner";
 import Keyboard from "../components/Keyboard/Keyboard";
 import Textarea from "../components/Textarea";
+import Label from "../components/Label/Label";
 import { useNavigate } from "react-router-dom";
 
 const userAgent = window.navigator.userAgent;
@@ -41,6 +42,12 @@ function Tutorial() {
   // Constants
   const text =
     "Lorem ipsum dolor sit amet consectetur adipisicing elit.\nSuscipit nemo odit optio architecto aperiam incidunt pariatur reiciendis ea!\nUt, id.";
+
+  const labelData = populateLabel(
+    levelData,
+    state.trackIndex,
+    state.exerciseIndex,
+  );
 
   const handleNewKeydown = (e: KeyboardEvent) => {
     const keyboard = document.getElementById("keyboard");
@@ -172,11 +179,6 @@ function Tutorial() {
 
       // Update UI for new level
       innerContainer.style.display = !isMobile && !newKey ? "flex" : "none";
-      label.innerHTML = populateLabel(
-        levelData,
-        state.trackIndex,
-        state.exerciseIndex,
-      );
       textarea.style.display = "block";
       textarea.value = text;
       textarea.focus();
@@ -222,7 +224,7 @@ function Tutorial() {
             className="container game"
           >
             <div className="label">
-              <label htmlFor="text"></label>
+              <Label {...labelData} />
             </div>
             <div className="relative">
               <Textarea
