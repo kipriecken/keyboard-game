@@ -162,7 +162,6 @@ function Tutorial() {
 
   useEffect(() => {
     const textarea = textareaRef.current;
-    const label = document.getElementsByTagName("label")[0] as HTMLElement;
     const innerContainer = document.getElementsByClassName(
       "inner",
     )[0] as HTMLElement;
@@ -174,7 +173,7 @@ function Tutorial() {
       }
     }
 
-    if (textarea && label) {
+    if (textarea) {
       const levelData = levelsData[state.trackIndex][state.exerciseIndex];
 
       // Update UI for new level
