@@ -1,5 +1,5 @@
 import "./App.css";
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route, Link, Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Intro from "./pages/Intro";
 import Tutorial from "./pages/Tutorial";
@@ -45,6 +45,7 @@ function App() {
         <Route path="/tutorial" element={<Tutorial />} />
         <Route path="/about" element={<About />} />
         <Route path="/game" element={<Game />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </>
   );
