@@ -1,180 +1,183 @@
 import { useEffect, useRef } from "react";
+import Key from "../Key/Key";
 import "./Keyboard.css";
 
-export default function Keyboard(props: {
+interface KeyboardProps {
   newKey: string;
   isDisplayed: boolean;
-}) {
+}
+
+export default function Keyboard({ newKey, isDisplayed }: KeyboardProps) {
   const keyboardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const newKey = document.getElementById(props.newKey);
-    if (newKey) {
-      newKey.classList.add("new-key");
+    const element = document.getElementById(newKey);
+    if (element) {
+      element.classList.add("new-key");
     }
-  }, [props.newKey]);
+  }, [newKey]);
+
   return (
     <div
       className="container"
       id="keyboard"
       style={{
-        display: props.newKey && props.isDisplayed ? "flex" : "none",
+        display: newKey && isDisplayed ? "flex" : "none",
       }}
       ref={keyboardRef}
     >
       <div className="keyboard">
+        {/* Row 1 */}
         <div className="keyboard-row keyboard-row-top h-068">
-          <div className="key key-left" id="Escape" data-type="word">
-            esc
-          </div>
-          <div className="key touch-bar w-1418"></div>
-          <div className="key power w-068"></div>
+          <Key id="Escape" label="esc" className="key-left" dataType="word" />
+          <Key className="touch-bar w-1418" />
+          <Key id="power" className="power w-068" />
         </div>
+
+        {/* Row 2 */}
         <div className="keyboard-row">
-          <div className="key" id="Backquote" data-type="char">
-            `
-          </div>
+          <Key id="Backquote" label="`" dataType="char" />
           {[1, 2, 3, 4, 5, 6, 7, 8, 9, 0].map((n) => (
-            <div
-              className="key"
-              id={`Digit${n}`}
+            <Key
               key={`Digit${n}`}
-              data-type="char"
-            >
-              {n}
-            </div>
+              id={`Digit${n}`}
+              label={n.toString()}
+              dataType="char"
+            />
           ))}
-          <div className="key" id="Minus" data-type="char">
-            -
-          </div>
-          <div className="key" id="Equal" data-type="char">
-            =
-          </div>
-          <div
-            className="key delete key-right w-156"
+          <Key id="Minus" label="-" dataType="char" />
+          <Key id="Equal" label="=" dataType="char" />
+          <Key
             id="Backspace"
-            data-type="word"
-          >
-            delete
-          </div>
+            label="delete"
+            className="delete key-right w-156"
+            dataType="word"
+          />
         </div>
+
+        {/* Row 3 */}
         <div className="keyboard-row">
-          <div className="key delete key-left w-156" id="Tab" data-type="word">
-            tab
-          </div>
+          <Key
+            id="Tab"
+            label="tab"
+            className="delete key-left w-156"
+            dataType="word"
+          />
           {["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"].map((char) => (
-            <div
-              className="key"
-              id={`Key${char}`}
+            <Key
               key={`Key${char}`}
-              data-type="char"
-            >
-              {char}
-            </div>
+              id={`Key${char}`}
+              label={char}
+              dataType="char"
+            />
           ))}
-          <div className="key" id="BracketLeft" data-type="char">
-            [
-          </div>
-          <div className="key" id="BracketRight" data-type="char">
-            ]
-          </div>
-          <div className="key" id="Backslash" data-type="char">
-            \
-          </div>
+          <Key id="BracketLeft" label="[" dataType="char" />
+          <Key id="BracketRight" label="]" dataType="char" />
+          <Key id="Backslash" label="\" dataType="char" />
         </div>
+
+        {/* Row 4 */}
         <div className="keyboard-row">
-          <div className="key key-left w-185" id="Escape" data-type="word">
-            caps lock
-          </div>
+          <Key
+            id="CapsLock"
+            label="caps lock"
+            className="key-left w-185"
+            dataType="word"
+          />
           {["A", "S", "D", "F", "G", "H", "J", "K", "L"].map((char) => (
-            <div
-              className="key"
-              id={`Key${char}`}
+            <Key
               key={`Key${char}`}
-              data-type="char"
-            >
-              {char}
-            </div>
+              id={`Key${char}`}
+              label={char}
+              dataType="char"
+            />
           ))}
-          <div className="key" id="Semicolon" data-type="char">
-            ;
-          </div>
-          <div className="key" id="Quote" data-type="char">
-            '
-          </div>
-          <div className="key key-right w-185" id="Enter" data-type="word">
-            return
-          </div>
+          <Key id="Semicolon" label=";" dataType="char" />
+          <Key id="Quote" label="'" dataType="char" />
+          <Key
+            id="Enter"
+            label="return"
+            className="key-right w-185"
+            dataType="word"
+          />
         </div>
+
+        {/* Row 5 */}
         <div className="keyboard-row">
-          <div className="key key-left w-242" id="ShiftLeft" data-type="word">
-            shift
-          </div>
+          <Key
+            id="ShiftLeft"
+            label="shift"
+            className="key-left w-242"
+            dataType="word"
+          />
           {["Z", "X", "C", "V", "B", "N", "M"].map((char) => (
-            <div
-              className="key"
-              id={`Key${char}`}
+            <Key
               key={`Key${char}`}
-              data-type="char"
-            >
-              {char}
-            </div>
+              id={`Key${char}`}
+              label={char}
+              dataType="char"
+            />
           ))}
-          <div className="key" id="Comma" data-type="char">
-            ,
-          </div>
-          <div className="key" id="Period" data-type="char">
-            .
-          </div>
-          <div className="key" id="Slash" data-type="char">
-            /
-          </div>
-          <div className="key key-right w-242" id="ShiftRight" data-type="word">
-            shift
-          </div>
+          <Key id="Comma" label="," dataType="char" />
+          <Key id="Period" label="." dataType="char" />
+          <Key id="Slash" label="/" dataType="char" />
+          <Key
+            id="ShiftRight"
+            label="shift"
+            className="key-right w-242"
+            dataType="word"
+          />
         </div>
+
+        {/* Row 6 */}
         <div className="keyboard-row">
-          <div className="key key-right" data-type="word">
-            fn
-          </div>
-          <div className="key" id="ControlLeft" data-type="word">
-            control
-          </div>
-          <div className="key" id="AltLeft" data-type="word">
-            option
-          </div>
-          <div className="key w-129" id="MetaLeft" data-type="word">
-            command
-          </div>
-          <div className="key w-551" id="Space"></div>
-          <div className="key w-129" id="MetaRight" data-type="word">
-            command
-          </div>
-          <div className="key" id="AltRight" data-type="word">
-            option
-          </div>
-          <div className="key key-bottom h-05" id="ArrowLeft">
+          <Key className="key-right" label="fn" dataType="word" />
+          <Key id="ControlLeft" label="control" dataType="word" />
+          <Key id="AltLeft" label="option" dataType="word" />
+          <Key
+            id="MetaLeft"
+            label="command"
+            className="w-129"
+            dataType="word"
+          />
+          <Key id="Space" className="w-551" />
+          <Key
+            id="MetaRight"
+            label="command"
+            className="w-129"
+            dataType="word"
+          />
+          <Key id="AltRight" label="option" dataType="word" />
+
+          {/* Arrow keys */}
+          <Key id="ArrowLeft" className="key-bottom h-05" dataType="word">
             <svg className="arrow-left" width="10" height="13">
               <polygon points="0,0 10,0 5,13" fill="white" />
             </svg>
-          </div>
+          </Key>
+
           <div className="key key-group">
-            <div className="key key-up h-05-min" id="ArrowUp">
+            <Key id="ArrowUp" className="key-up h-05-min" dataType="word">
               <svg className="arrow-up" width="10" height="13">
                 <polygon points="0,0 10,0 5,13" fill="white" />
               </svg>
-            </div>
-            <div className="key key-down key-bottom h-05-min" id="ArrowDown">
+            </Key>
+            <Key
+              id="ArrowDown"
+              className="key-down key-bottom h-05-min"
+              dataType="word"
+            >
               <svg width="10" height="13">
                 <polygon points="0,0 10,0 5,13" fill="white" />
               </svg>
-            </div>
+            </Key>
           </div>
-          <div className="key key-bottom h-05" id="ArrowRight">
+
+          <Key id="ArrowRight" className="key-bottom h-05" dataType="word">
             <svg className="arrow-right" width="10" height="13">
               <polygon points="0,0 10,0 5,13" fill="white" />
             </svg>
-          </div>
+          </Key>
         </div>
       </div>
     </div>

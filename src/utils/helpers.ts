@@ -34,7 +34,10 @@ export const populateLabel = (
         }</div>`;
 };
 
-export const areActiveKeysPressed = (e: React.KeyboardEvent<HTMLTextAreaElement>, activeKeys: string[]) => {
+export const areActiveKeysPressed = (
+  e: React.KeyboardEvent<HTMLTextAreaElement>,
+  activeKeys: string[],
+) => {
   return (
     activeKeys.includes("alt") == e.altKey &&
     activeKeys.includes("shift") == e.shiftKey &&
