@@ -2,7 +2,7 @@ import "../App.css";
 import { useEffect, useState, useRef, useReducer } from "react";
 import { reducer, initialState } from "../hooks/useGameState";
 import { tracks } from "../data";
-import { populateLabel, areActiveKeysPressed } from "../utils/helpers";
+import { getLabelInstruction, areActiveKeysPressed } from "../utils/helpers";
 import Button from "../components/Button/Button";
 import Spinner from "../components/Spinner/Spinner";
 import Keyboard from "../components/Keyboard/Keyboard";
@@ -41,11 +41,7 @@ function Tutorial() {
   const text =
     "Lorem ipsum dolor sit amet consectetur adipisicing elit.\nSuscipit nemo odit optio architecto aperiam incidunt pariatur reiciendis ea!\nUt, id.";
 
-  const labelData = populateLabel(
-    currentExercise,
-    state.trackIndex,
-    state.exerciseIndex,
-  );
+  const instruction = getLabelInstruction(currentExercise);
 
   const handleNewKeydown = (e: KeyboardEvent) => {
     const keyboard = document.getElementById("keyboard");
@@ -104,6 +100,10 @@ function Tutorial() {
   };
 
   const handleExerciseCompletion = () => {
+    // TODO: Why is this necessary? Unexpected behavior that inaccurately increments the exercise index starting with the second track (index 1). This is a bandaid fix, but I haven't been able to track down the root cause.
+    if (state.phase === "exercise-complete") {
+      return;
+    }
     dispatch({ type: "NEXT_CLICKED" });
     window.setTimeout(() => {
       dispatch({ type: "LOADED" });
@@ -114,6 +114,10 @@ function Tutorial() {
   };
 
   const handleKeyup = () => {
+    // TODO: Related to the bandaid fix above. This seems to be getting triggered too many times.
+    if (state.phase === "exercise-complete") {
+      return;
+    }
     if (!areRequirementsMet) {
       return;
     }
@@ -230,7 +234,11 @@ function Tutorial() {
             className="container game"
           >
             <div className="label">
-              <Label {...labelData} />
+              <Label
+                level={currentExercise}
+                gameIndex={state.trackIndex}
+                levelIndex={state.exerciseIndex}
+              />
             </div>
             <div className="relative">
               <Textarea
@@ -240,6 +248,7 @@ function Tutorial() {
                 value={text}
               ></Textarea>
             </div>
+            <div className="instruction">{instruction}</div>
             <div className="stats">
               <Button
                 focus="Redo tutorial"

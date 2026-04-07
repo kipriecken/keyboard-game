@@ -1,13 +1,18 @@
-import type { LabelData } from "../../utils/helpers";
+import { getLabelTitle, getLabelChord } from "../../utils/helpers";
 import { renderKeyForChordPart } from "../../utils/helpers.tsx";
 import "./Label.css";
+import type { GameLevel } from "../../data.ts";
 
-export default function Label({
-  gameTitle,
-  levelNumber,
-  chord,
-  instruction,
-}: LabelData) {
+interface LabelProps {
+  level: GameLevel;
+  gameIndex: number;
+  levelIndex: number;
+}
+
+export default function Label({ level, gameIndex, levelIndex }: LabelProps) {
+  const title = getLabelTitle(gameIndex, levelIndex);
+  const chord = getLabelChord(level);
+
   const chordParts = Array.from(
     new Set(
       chord
@@ -19,15 +24,12 @@ export default function Label({
 
   return (
     <div className="label">
-      <h3>
-        {gameTitle}: Level {levelNumber}
-      </h3>
+      <h3>{title}</h3>
       <div className="chord-container">
         {chordParts.map((part) => (
           <span key={part}>{renderKeyForChordPart(part)}</span>
         ))}
       </div>
-      <div>Using only the keyboard, {instruction}</div>
     </div>
   );
 }

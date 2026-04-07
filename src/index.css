@@ -257,11 +257,17 @@ label > h4 {
 }
 
 .label {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
   min-height: 200px;
   max-width: 500px;
-  padding: 1rem;
+  padding: 1em;
   text-align: center;
-  margin: 2em 0;
+}
+
+.instruction {
+  margin: 2em;
 }
 
 .achieved {

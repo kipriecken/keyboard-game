@@ -154,7 +154,7 @@ export const tracks = [
   [
     {
       actionKeys: ["ArrowRight"],
-      action: "highlight the first word",
+      action: "Highlight the first word",
       cursorPlacement: "the beginning of the text",
       newKey: "ShiftLeft",
       keyword: "Right",
@@ -164,7 +164,7 @@ export const tracks = [
     },
     {
       actionKeys: ["ArrowLeft"],
-      action: "highlight the first word",
+      action: "Highlight the first word",
       cursorPlacement: "after the first word",
       keyword: "Left",
       activeKeys: ["alt", "shift"],
@@ -174,7 +174,7 @@ export const tracks = [
     },
     {
       actionKeys: ["ArrowDown"],
-      action: "highlight the first line",
+      action: "Highlight the first line",
       cursorPlacement: "the beginning of the text",
       keyword: "Down",
       activeKeys: ["shift"],
@@ -183,7 +183,7 @@ export const tracks = [
     },
     {
       actionKeys: ["ArrowUp"],
-      action: "highlight the first line",
+      action: "Highlight the first line",
       cursorPlacement: "at the end of the first line",
       keyword: "Up",
       activeKeys: ["shift"],
@@ -195,7 +195,7 @@ export const tracks = [
   [
     {
       actionKeys: ["Backspace"],
-      action: "delete the first word",
+      action: "Delete the first word",
       cursorPlacement: "after the first word",
       newKey: "Backspace",
       keyword: "Backspace",
@@ -206,7 +206,7 @@ export const tracks = [
     },
     {
       actionKeys: ["Backspace"],
-      action: "delete the first line",
+      action: "Delete the first line",
       cursorPlacement: "at the end of the first line",
       keyword: "Backspace",
       activeKeys: ["meta"],
@@ -216,7 +216,7 @@ export const tracks = [
     },
     {
       actionKeys: ["K"],
-      action: "delete the last word of the first line",
+      action: "Delete the last word of the first line",
       cursorPlacement: "before the last word of the first line",
       newKey: "ControlLeft",
       keyword: "K",

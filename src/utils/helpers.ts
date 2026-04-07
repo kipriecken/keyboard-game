@@ -23,38 +23,35 @@ const modifierToKeyName: Record<string, string> = {
   control: "control",
 };
 
-export const populateLabel = (
-  level: GameLevel,
+export const getLabelTitle = (
   gameIndex: number,
   levelIndex: number,
-): LabelData => {
-  // Build the chord string
+): string => {
+  return `${indexToGameTitle[gameIndex]}: Level ${levelIndex + 1}`;
+};
+
+export const getLabelChord = (level: GameLevel): string => {
   let chord = "";
   level.activeKeys.forEach(
     (keyName) => (chord += `${modifierToKeyName[keyName]} + `),
   );
   level.actionKeys.forEach((key) => (chord += `${key}, `));
   chord = chord.slice(0, -2);
+  return chord;
+};
 
-  // Build the instruction
-  const instruction = level.action
+export const getLabelInstruction = (level: GameLevel): ReactNode => {
+  return level.action
     ? `${level.action}.`
     : React.createElement(
         React.Fragment,
         null,
-        "move the blinking cursor from ",
+        "Move the blinking cursor from ",
         React.createElement("strong", null, level.cursorPlacement),
         " to ",
         React.createElement("strong", null, level.newCursorPlacement),
-        "."
+        ".",
       );
-
-  return {
-    gameTitle: indexToGameTitle[gameIndex],
-    levelNumber: levelIndex + 1,
-    chord,
-    instruction,
-  };
 };
 
 export const areActiveKeysPressed = (
