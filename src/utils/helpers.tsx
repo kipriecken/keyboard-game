@@ -6,12 +6,7 @@ export const renderKeyForChordPart = (part: string) => {
       return <Key id="AltLeft" label="option" dataType="word" />;
     case "command":
       return (
-        <Key
-          id="MetaLeft"
-          label="command"
-          className="w-129"
-          dataType="word"
-        />
+        <Key id="MetaLeft" label="command" className="w-129" dataType="word" />
       );
     case "shift":
       return (
@@ -69,6 +64,8 @@ export const renderKeyForChordPart = (part: string) => {
           dataType="word"
         />
       );
+    case "k":
+      return <Key key={`KeyK`} id={`KeyK`} label="K" dataType="char" />;
     default:
       return <Key id={`Key${part}`} label={part} dataType="char" />;
   }

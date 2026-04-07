@@ -1,4 +1,4 @@
-import { games } from "../data";
+import { tracks } from "../data";
 import type { GameState, GameAction } from "../types/";
 
 export const initialState: GameState = {
@@ -28,7 +28,18 @@ export function reducer(state: GameState, action: GameAction): GameState {
         phase: "loading",
       };
     case "LOADED": {
-      const exercise = games[state.trackIndex][state.exerciseIndex];
+      const isFinalExercise =
+        state.exerciseIndex === tracks[state.trackIndex].length - 1 &&
+        state.trackIndex === tracks.length - 1;
+
+      if (isFinalExercise) {
+        return {
+          ...state,
+          phase: "tutorial-complete",
+        };
+      }
+
+      const exercise = tracks[state.trackIndex][state.exerciseIndex];
       const newKey = !!exercise.newKey;
       return {
         ...state,
@@ -54,11 +65,11 @@ export function reducer(state: GameState, action: GameAction): GameState {
       };
     case "NEXT_CLICKED": {
       const isLastExercise =
-        state.exerciseIndex === games[state.trackIndex].length - 1;
+        state.exerciseIndex === tracks[state.trackIndex].length - 1;
 
       if (isLastExercise) {
         const nextTrackIndex = state.trackIndex + 1;
-        const enteringLastTrack = nextTrackIndex === games.length - 1;
+        const enteringLastTrack = nextTrackIndex === tracks.length - 1;
         return {
           ...state,
           trackIndex: nextTrackIndex,
@@ -78,8 +89,8 @@ export function reducer(state: GameState, action: GameAction): GameState {
     }
     case "EXERCISE_WON":
       if (
-        state.trackIndex === games.length - 1 &&
-        state.exerciseIndex === games[state.trackIndex].length - 1
+        state.trackIndex === tracks.length - 1 &&
+        state.exerciseIndex === tracks[state.trackIndex].length - 1
       ) {
         return {
           ...state,

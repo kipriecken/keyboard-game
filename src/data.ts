@@ -12,7 +12,7 @@ export type GameLevel = {
 };
 
 // Data
-export const games = [
+export const tracks = [
   [
     {
       actionKeys: ["ArrowRight"],

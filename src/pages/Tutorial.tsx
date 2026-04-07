@@ -1,7 +1,7 @@
 import "../App.css";
 import { useEffect, useState, useRef, useReducer } from "react";
 import { reducer, initialState } from "../hooks/useGameState";
-import { games as levelsData } from "../data";
+import { tracks } from "../data";
 import { populateLabel, areActiveKeysPressed } from "../utils/helpers";
 import Button from "../components/Button/Button";
 import Spinner from "../components/Spinner/Spinner";
@@ -24,16 +24,14 @@ function Tutorial() {
   const [newKey, setNewKey] = useState("Tab"); // if truthy, keyboard is displayed
   const areRequirementsMet = state.areRequirementsMet;
   const isAchievedVisible = state.phase === "exercise-complete";
-  const isNextBtnDisabled = state.phase !== "exercise-complete";
-  const isNextBtnVisible = state.phase !== "tutorial-complete";
   const isResetBtnVisible = state.phase === "tutorial-complete";
   const isKeystrokesTextVisible =
     state.phase === "exercise-complete" &&
     state.keystrokes ==
-      levelsData[state.trackIndex][state.exerciseIndex].minKeystrokes;
+      tracks[state.trackIndex][state.exerciseIndex].minKeystrokes;
   const keystrokes = state.keystrokes;
-  const isLoadingLevel = state.phase === "loading";
-  const levelData = levelsData[state.trackIndex][state.exerciseIndex];
+  const isLoadingExercise = state.phase === "loading";
+  const currentExercise = tracks[state.trackIndex][state.exerciseIndex];
 
   useEffect(() => {
     handleReset();
@@ -44,7 +42,7 @@ function Tutorial() {
     "Lorem ipsum dolor sit amet consectetur adipisicing elit.\nSuscipit nemo odit optio architecto aperiam incidunt pariatur reiciendis ea!\nUt, id.";
 
   const labelData = populateLabel(
-    levelData,
+    currentExercise,
     state.trackIndex,
     state.exerciseIndex,
   );
@@ -105,7 +103,7 @@ function Tutorial() {
     }, 1000);
   };
 
-  const handleNextClick = () => {
+  const handleExerciseCompletion = () => {
     dispatch({ type: "NEXT_CLICKED" });
     window.setTimeout(() => {
       dispatch({ type: "LOADED" });
@@ -119,8 +117,8 @@ function Tutorial() {
     if (!areRequirementsMet) {
       return;
     }
-    const finalCursorLocation = levelData.finalCursorLocation
-      ? levelData.finalCursorLocation
+    const finalCursorLocation = currentExercise.finalCursorLocation
+      ? currentExercise.finalCursorLocation
       : [0, 0];
 
     const isCursorInPlace =
@@ -129,6 +127,15 @@ function Tutorial() {
 
     if (isCursorInPlace) {
       dispatch({ type: "EXERCISE_WON" });
+      if (
+        state.trackIndex === tracks.length - 1 &&
+        state.exerciseIndex === tracks[state.trackIndex].length - 1
+      ) {
+        return;
+      }
+      window.setTimeout(() => {
+        handleExerciseCompletion();
+      }, 1000);
     }
   };
 
@@ -153,8 +160,8 @@ function Tutorial() {
     }
 
     if (
-      e.code.includes(levelData.keyword) &&
-      areActiveKeysPressed(e, levelData.activeKeys)
+      e.code.includes(currentExercise.keyword) &&
+      areActiveKeysPressed(e, currentExercise.activeKeys)
     ) {
       dispatch({ type: "REQUIREMENTS_MET" });
     }
@@ -174,7 +181,7 @@ function Tutorial() {
     }
 
     if (textarea) {
-      const levelData = levelsData[state.trackIndex][state.exerciseIndex];
+      const levelData = tracks[state.trackIndex][state.exerciseIndex];
 
       // Update UI for new level
       innerContainer.style.display = !isMobile && !newKey ? "flex" : "none";
@@ -193,10 +200,10 @@ function Tutorial() {
   }, [state.trackIndex, state.exerciseIndex, newKey]);
 
   useEffect(() => {
-    if (levelData.newKey) {
-      setNewKey(levelData.newKey);
+    if (currentExercise.newKey) {
+      setNewKey(currentExercise.newKey);
     }
-  }, [levelData.newKey]);
+  }, [currentExercise.newKey]);
 
   return (
     <>
@@ -214,10 +221,10 @@ function Tutorial() {
       >
         <div className="drawer"></div>
         <div className="game-play container" style={{ display: "flex" }}>
-          <Spinner isDisplayed={isLoadingLevel}></Spinner>
+          <Spinner isDisplayed={isLoadingExercise}></Spinner>
           <div
             style={{
-              display: !isLoadingLevel ? "flex" : "none",
+              display: !isLoadingExercise ? "flex" : "none",
               flexDirection: "column",
             }}
             className="container game"
@@ -234,13 +241,6 @@ function Tutorial() {
               ></Textarea>
             </div>
             <div className="stats">
-              <Button
-                blur="Next level"
-                className="next"
-                onClick={handleNextClick}
-                disabled={isNextBtnDisabled}
-                isVisible={isNextBtnVisible}
-              />
               <Button
                 focus="Redo tutorial"
                 blur="Redo tutorial"
@@ -271,7 +271,7 @@ function Tutorial() {
                   className="achieved"
                   style={{ display: isAchievedVisible ? "block" : "none" }}
                 >
-                  Achieved level {state.exerciseIndex + 1}!
+                  Exercise {state.exerciseIndex + 1} complete!
                 </div>
               </div>
             </div>
