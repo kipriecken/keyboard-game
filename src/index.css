@@ -142,21 +142,15 @@ body:focus {
   background-color: black;
 }
 
-.pre-game {
-  align-items: flex-start;
-  height: 100%;
-}
-
-.pre-game div {
-  align-items: center;
-  flex-direction: column;
-}
-
 .intro {
   height: 100%;
+  margin: auto;
+  max-width: 600px;
   margin-top: 1rem;
   text-align: center;
   display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .container {
