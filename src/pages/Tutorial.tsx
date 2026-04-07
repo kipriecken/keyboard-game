@@ -9,6 +9,7 @@ import Spinner from "../components/Spinner/Spinner";
 import Keyboard from "../components/Keyboard/Keyboard";
 import Textarea from "../components/Textarea";
 import Label from "../components/Label/Label";
+import Confetti from "../components/Confetti/Confetti";
 import { useNavigate } from "react-router-dom";
 
 const userAgent = window.navigator.userAgent;
@@ -23,6 +24,7 @@ function Tutorial() {
   const navigate = useNavigate();
 
   const [newKey, setNewKey] = useState("Tab"); // if truthy, keyboard is displayed
+  const [confettiTrigger, setConfettiTrigger] = useState(false);
   const areRequirementsMet = state.areRequirementsMet;
   const isAchievedVisible = state.phase === "exercise-complete";
   const isResetBtnVisible = state.phase === "tutorial-complete";
@@ -37,6 +39,13 @@ function Tutorial() {
   useEffect(() => {
     handleReset();
   }, []);
+
+  useEffect(() => {
+    if (state.phase === "exercise-complete") {
+      setConfettiTrigger((prev) => !prev);
+      return;
+    }
+  }, [state.phase]);
 
   // Constants
   const text =
@@ -214,6 +223,7 @@ function Tutorial() {
     <>
       <Header title="Home" hidden={true} />
       <Keyboard newKey={newKey} isDisplayed={!isMobile}></Keyboard>
+      <Confetti trigger={confettiTrigger} />
       <div
         className="is-mobile container"
         style={{ display: isMobile ? "block" : "none" }}
