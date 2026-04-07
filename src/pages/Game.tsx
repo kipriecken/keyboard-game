@@ -1,5 +1,7 @@
 import Header from "../components/Header/Header";
 import Textarea from "../components/Textarea";
+import Button from "../components/Button/Button";
+import { useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 
 export default function Game() {
@@ -7,6 +9,7 @@ export default function Game() {
   const [isLevelOver, setIsLevelOver] = useState(false);
   const [finalMessage, setFinalMessage] = useState("");
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const navigate = useNavigate();
 
   const successMessage =
     "Level completed using the fewest keystrokes! Excellent work!";
@@ -105,6 +108,12 @@ export default function Game() {
             handleKeyup={handleKeyup}
             handleKeydown={handleKeydown}
             value={startingText}
+          />
+          <Button
+            blur=" Tutorial"
+            disabled={!isLevelOver}
+            className="sd"
+            onClick={() => navigate("/tutorial")}
           />
           <div
             className="container"
