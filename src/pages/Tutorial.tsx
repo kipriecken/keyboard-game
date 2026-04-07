@@ -3,6 +3,7 @@ import { useEffect, useState, useRef, useReducer } from "react";
 import { reducer, initialState } from "../hooks/useGameState";
 import { tracks } from "../data";
 import { getLabelInstruction, areActiveKeysPressed } from "../utils/helpers";
+import Header from "../components/Header/Header";
 import Button from "../components/Button/Button";
 import Spinner from "../components/Spinner/Spinner";
 import Keyboard from "../components/Keyboard/Keyboard";
@@ -211,6 +212,7 @@ function Tutorial() {
 
   return (
     <>
+      <Header title="Home" hidden={true} />
       <Keyboard newKey={newKey} isDisplayed={!isMobile}></Keyboard>
       <div
         className="is-mobile container"

@@ -1,5 +1,6 @@
 import Button from "../components/Button/Button";
 import { useNavigate } from "react-router-dom";
+import Header from "../components/Header/Header";
 
 const Intro = () => {
   const userAgent = window.navigator.userAgent;
@@ -10,6 +11,7 @@ const Intro = () => {
 
   return (
     <>
+      <Header title="Keyboard Shortcuts Tutorial" />
       <div className="pre-game container">
         <div className="intro">
           <p

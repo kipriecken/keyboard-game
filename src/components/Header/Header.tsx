@@ -1,12 +1,18 @@
+import { Link } from "react-router-dom";
 import "./Header.css";
 
-export default function Header(props: { visibility: string }) {
+export default function Header(props: { title: string; hidden?: boolean }) {
   return (
-    <div
-      className="header"
-      style={{ visibility: props.visibility ? "hidden" : "visible" }}
-    >
-      <h3>Keyboard Shortcuts Game</h3>
-    </div>
+    <header style={{ padding: 12 }}>
+      <nav>
+        <Link to="/">{props.title}</Link>
+        <Link
+          to="/about"
+          style={{ visibility: props.hidden ? "hidden" : "visible" }}
+        >
+          About
+        </Link>
+      </nav>
+    </header>
   );
 }

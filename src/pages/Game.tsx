@@ -1,3 +1,4 @@
+import Header from "../components/Header/Header";
 import Textarea from "../components/Textarea";
 import { useEffect, useRef, useState } from "react";
 
@@ -86,42 +87,45 @@ export default function Game() {
   };
 
   return (
-    <div className="container" style={{ padding: 16 }}>
-      <div
-        className="container"
-        style={{
-          flexDirection: "column",
-          maxWidth: 800,
-          lineHeight: 1.6,
-          textAlign: "left",
-          paddingTop: "10rem",
-        }}
-      >
-        <Textarea
-          textareaRef={textareaRef}
-          handleKeyup={handleKeyup}
-          handleKeydown={handleKeydown}
-          value={startingText}
-        />
-        <div
-          className="container"
-          style={{ background: "lightblue", padding: 8, marginTop: 16 }}
-        >
-          Keystrokes used: {keystrokes}
-        </div>
+    <>
+      <Header title="Home" />
+      <div className="container" style={{ padding: 16 }}>
         <div
           className="container"
           style={{
-            maxWidth: 550,
-            background: "lightgray",
-            marginTop: 16,
-            textAlign: "center",
-            color: "#cc2d00",
+            flexDirection: "column",
+            maxWidth: 800,
+            lineHeight: 1.6,
+            textAlign: "left",
+            paddingTop: "10rem",
           }}
         >
-          {finalMessage}
+          <Textarea
+            textareaRef={textareaRef}
+            handleKeyup={handleKeyup}
+            handleKeydown={handleKeydown}
+            value={startingText}
+          />
+          <div
+            className="container"
+            style={{ background: "lightblue", padding: 8, marginTop: 16 }}
+          >
+            Keystrokes used: {keystrokes}
+          </div>
+          <div
+            className="container"
+            style={{
+              maxWidth: 550,
+              background: "lightgray",
+              marginTop: 16,
+              textAlign: "center",
+              color: "#cc2d00",
+            }}
+          >
+            {finalMessage}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
