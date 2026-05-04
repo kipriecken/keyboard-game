@@ -26,9 +26,20 @@ export default function Label({ level, gameIndex, levelIndex }: LabelProps) {
     <div className="label">
       <h3>{title}</h3>
       <div className="chord-container">
-        {chordParts.map((part) => (
-          <span key={part}>{renderKeyForChordPart(part)}</span>
-        ))}
+        {chordParts.flatMap((part, index) => {
+          const elements = [
+            <span key={part}>{renderKeyForChordPart(part)}</span>,
+          ];
+          if (index < chordParts.length - 1) {
+            elements.push(
+              <span key={`sep-${index}`} style={{ fontSize: "36px" }}>
+                {" "}
+                +{" "}
+              </span>,
+            );
+          }
+          return elements;
+        })}
       </div>
     </div>
   );
