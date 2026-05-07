@@ -250,6 +250,7 @@ label > h4 {
 }
 
 .label {
+  color: white;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -257,10 +258,6 @@ label > h4 {
   max-width: 500px;
   padding: 1em;
   text-align: center;
-}
-
-.instruction {
-  margin: 2em;
 }
 
 .achieved {

@@ -46,7 +46,7 @@ export const getLabelInstruction = (level: GameLevel): ReactNode => {
     : React.createElement(
         React.Fragment,
         null,
-        "Move the blinking cursor from ",
+        "move the blinking cursor from ",
         React.createElement("strong", null, level.cursorPlacement),
         " to ",
         React.createElement("strong", null, level.newCursorPlacement),

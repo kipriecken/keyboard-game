@@ -32,21 +32,20 @@ const Intro = () => {
           </p>
           <p>
             <strong>
-              I used to bring so much tension to my instrument as a Classical musician, it was like I was fighting it.
+              I used to bring so much tension to my instrument as a Classical
+              musician, it was like I was fighting it.
             </strong>
           </p>
           <p>
-            <strong>
-              In reality, there was room for ease and flow.
-            </strong>
+            <strong>In reality, there was room for ease and flow.</strong>
           </p>
           <p>
             Becoming a software engineer showed me it was no different with the
             computer.
           </p>
           <p>
-            The keys you use to type you can use to navigate your
-            computer with ease.
+            The keys you use to type you can use to navigate your computer with
+            ease.
           </p>
           <p>
             <strong>You just have to learn how.</strong>

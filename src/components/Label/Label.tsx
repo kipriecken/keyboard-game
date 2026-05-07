@@ -1,4 +1,8 @@
-import { getLabelTitle, getLabelChord } from "../../utils/helpers";
+import {
+  getLabelTitle,
+  getLabelChord,
+  getLabelInstruction,
+} from "../../utils/helpers";
 import { renderKeyForChordPart } from "../../utils/helpers.tsx";
 import "./Label.css";
 import type { GameLevel } from "../../data.ts";
@@ -12,6 +16,7 @@ interface LabelProps {
 export default function Label({ level, gameIndex, levelIndex }: LabelProps) {
   const title = getLabelTitle(gameIndex, levelIndex);
   const chord = getLabelChord(level);
+  const instruction = getLabelInstruction(level);
 
   const chordParts = Array.from(
     new Set(
@@ -25,22 +30,26 @@ export default function Label({ level, gameIndex, levelIndex }: LabelProps) {
   return (
     <div className="label">
       <h3>{title}</h3>
-      <div className="chord-container">
-        {chordParts.flatMap((part, index) => {
-          const elements = [
-            <span key={part}>{renderKeyForChordPart(part)}</span>,
-          ];
-          if (index < chordParts.length - 1) {
-            elements.push(
-              <span key={`sep-${index}`} style={{ fontSize: "36px" }}>
-                {" "}
-                +{" "}
-              </span>,
-            );
-          }
-          return elements;
-        })}
-      </div>
+      <p>
+        Use{" "}
+        <span className="chord-container">
+          {chordParts.flatMap((part, index) => {
+            const elements = [
+              <span key={part}>{renderKeyForChordPart(part)}</span>,
+            ];
+            if (index < chordParts.length - 1) {
+              elements.push(
+                <span key={`sep-${index}`} style={{ fontSize: "36px" }}>
+                  {" "}
+                  +{" "}
+                </span>,
+              );
+            }
+            return elements;
+          })}
+        </span>{" "}
+        to {instruction}
+      </p>
     </div>
   );
 }

@@ -1,8 +1,9 @@
 import "../App.css";
+import "./Tutorial.css";
 import { useEffect, useState, useRef, useReducer } from "react";
 import { reducer, initialState } from "../hooks/useGameState";
 import { tracks } from "../data";
-import { getLabelInstruction, areActiveKeysPressed } from "../utils/helpers";
+import { areActiveKeysPressed } from "../utils/helpers";
 import Header from "../components/Header/Header";
 import Button from "../components/Button/Button";
 import Spinner from "../components/Spinner/Spinner";
@@ -50,8 +51,6 @@ function Tutorial() {
   // Constants
   const text =
     "Lorem ipsum dolor sit amet consectetur adipisicing elit.\nSuscipit nemo odit optio architecto aperiam incidunt pariatur reiciendis ea!\nUt, id.";
-
-  const instruction = getLabelInstruction(currentExercise);
 
   const handleNewKeydown = (e: KeyboardEvent) => {
     const keyboard = document.getElementById("keyboard");
@@ -260,7 +259,6 @@ function Tutorial() {
                 value={text}
               ></Textarea>
             </div>
-            <div className="instruction">{instruction}</div>
             <div className="stats">
               <Button
                 focus="Redo tutorial"
