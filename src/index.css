@@ -96,7 +96,7 @@ body {
   background-repeat: no-repeat;
   object-fit: cover;
   /* background-color: var(--air-superiority-blue); */
-  background-color: #009fcc;
+  background: linear-gradient(135deg, #00b4d8, #0077b6, #023e8a);
   pointer-events: none;
   font-size: 2.3vh;
   line-height: 1.4;
@@ -107,14 +107,20 @@ body {
   font-variation-settings: "wdth" 400;
 }
 
+body.blurred {
+  filter: blur(4px);
+}
+
 a {
   text-decoration: none;
   color: var(--charcoal);
+  border-bottom: 2px solid transparent;
 }
 
 a:focus-visible {
-  outline: 3px solid #cc2d00;
-  outline-offset: 2px;
+  text-decoration: none;
+  border-bottom: 2px solid #00c8e0;
+  outline: none;
 }
 
 a:has(.game-link-button) {
@@ -149,7 +155,9 @@ body:focus {
   margin-top: 1rem;
   text-align: center;
   display: flex;
+  font-size: 2.5vh;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
 }
 
@@ -224,7 +232,7 @@ textarea {
 }
 
 textarea:focus-visible {
-  outline: 5px solid var(--contrast);
+  outline: 5px solid #00c8e0;
   outline-offset: 2px;
 }
 
@@ -271,23 +279,25 @@ label > h4 {
 
 button {
   border: 0;
-  height: 32px;
   position: relative;
   display: block;
-  width: 100px;
-  height: 32px;
-  background: transparent;
+  width: 150px;
+  height: 48px;
+  background: rgb(255, 255, 255, 0.9);
+  background: #00b4d8;
+  color: #011938;
   border: 1px solid rgb(198, 198, 198);
   border-radius: 0;
   box-sizing: border-box;
   margin: 1em;
-  padding: 0.5em 3em;
-  font-size: 2vh;
+  padding: 0.5em 1em;
+  font-size: 3vh;
+  font-family: "Noto Sans Display", sans-serif;
 }
 
 button:focus {
   transition: 1s ease-in-out;
-  background: var(--charcoal);
+  background: #00b4d8;
   color: white;
   outline: none;
 }
@@ -297,11 +307,11 @@ button:focus svg {
 }
 
 button span {
-  width: 100px;
+  width: 150px;
   position: absolute;
   left: 0;
   top: 6px;
-  height: 32px;
+  height: 48px;
 }
 
 .display-none {
