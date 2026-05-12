@@ -3,7 +3,7 @@ import "./Tutorial.css";
 import { useEffect, useState, useRef, useReducer } from "react";
 import { reducer, initialState } from "../hooks/useGameState";
 import { tracks } from "../data";
-import { areActiveKeysPressed } from "../utils/helpers";
+import { areActiveKeysPressed, getLabelTitle } from "../utils/helpers";
 import Header from "../components/Header/Header";
 import Button from "../components/Button/Button";
 import Spinner from "../components/Spinner/Spinner";
@@ -244,14 +244,13 @@ function Tutorial() {
             }}
             className="container game"
           >
-            <div className="label">
-              <Label
-                level={currentExercise}
-                gameIndex={state.trackIndex}
-                levelIndex={state.exerciseIndex}
-              />
-            </div>
-            <div className="relative">
+            <h3 style={{ margin: "0 0 1rem 0", textAlign: "center" }}>
+              {getLabelTitle(state.trackIndex, state.exerciseIndex)}
+            </h3>
+            <div className="card">
+              <div className="label">
+                <Label level={currentExercise} />
+              </div>
               <Textarea
                 textareaRef={textareaRef}
                 handleKeyup={handleKeyup}

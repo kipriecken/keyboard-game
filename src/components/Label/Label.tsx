@@ -1,5 +1,4 @@
 import {
-  getLabelTitle,
   getLabelChord,
   getLabelInstruction,
 } from "../../utils/helpers";
@@ -9,12 +8,9 @@ import type { GameLevel } from "../../data.ts";
 
 interface LabelProps {
   level: GameLevel;
-  gameIndex: number;
-  levelIndex: number;
 }
 
-export default function Label({ level, gameIndex, levelIndex }: LabelProps) {
-  const title = getLabelTitle(gameIndex, levelIndex);
+export default function Label({ level }: LabelProps) {
   const chord = getLabelChord(level);
   const instruction = getLabelInstruction(level);
 
@@ -29,7 +25,6 @@ export default function Label({ level, gameIndex, levelIndex }: LabelProps) {
 
   return (
     <div className="label">
-      <h3>{title}</h3>
       <p>
         Use{" "}
         <span className="chord-container">

@@ -31,27 +31,19 @@ const Intro = () => {
             Note: this game is not configured for Windows.
           </p>
           <p>
-            <strong>
-              I used to bring so much tension to my instrument as a Classical
-              musician, it was like I was fighting it.
-            </strong>
+            Learning to navigate the computer as a software engineer after
+            working on my relationship to the viola as a professional Classical
+            musician showed me the two are strikingly similar.
           </p>
           <p>
-            <strong>In reality, there was room for ease and flow.</strong>
+            A key to navigating your computer with ease is learning how the keys
+            you use to type can prevent tension and promote flow.
           </p>
           <p>
-            Becoming a software engineer showed me it was no different with the
-            computer.
-          </p>
-          <p>
-            The keys you use to type you can use to navigate your computer with
-            ease.
-          </p>
-          <p>
-            <strong>You just have to learn how.</strong>
+            <strong>You just have to learn.</strong>
           </p>
           <Button
-            blur="Start Tutorial"
+            blur="Start Your Journey"
             className="sd"
             onClick={() => navigate("/tutorial")}
           />

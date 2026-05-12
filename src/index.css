@@ -240,26 +240,6 @@ textarea:focus-visible {
   height: 100%;
 }
 
-label > h3 {
-  font-weight: 500;
-  margin: 0;
-}
-
-label > h4 {
-  padding: 1rem;
-}
-
-.label {
-  color: white;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  min-height: 200px;
-  max-width: 500px;
-  padding: 1em;
-  text-align: center;
-}
-
 .achieved {
   margin: 0.25em;
   background: lightblue;
