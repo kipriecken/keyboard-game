@@ -48,7 +48,7 @@ export const tracks = [
     {
       actionKeys: ["ArrowRight", "ArrowRight", "ArrowRight", "ArrowRight"],
       cursorPlacement: "the beginning",
-      newCursorPlacement: "to after the fourth character",
+      newCursorPlacement: "after the fourth character",
       keyword: "Right",
       activeKeys: [],
       minKeystrokes: 4,

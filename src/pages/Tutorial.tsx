@@ -244,7 +244,13 @@ function Tutorial() {
             }}
             className="container game"
           >
-            <h3 style={{ margin: "0 0 1rem 0", textAlign: "center" }}>
+            <h3
+              style={{
+                margin: "0 0 4rem 0",
+                textAlign: "center",
+                color: "white",
+              }}
+            >
               {getLabelTitle(state.trackIndex, state.exerciseIndex)}
             </h3>
             <div className="card">
@@ -287,7 +293,9 @@ function Tutorial() {
               <div className="achieved-container">
                 <div
                   className="achieved"
-                  style={{ display: isAchievedVisible ? "block" : "none" }}
+                  style={{
+                    visibility: isAchievedVisible ? "visible" : "hidden",
+                  }}
                 >
                   Exercise {state.exerciseIndex + 1} complete!
                 </div>
