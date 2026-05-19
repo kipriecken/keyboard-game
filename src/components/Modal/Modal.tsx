@@ -6,7 +6,7 @@ export default function Modal(props: { visibility: boolean }) {
       className="modal"
       style={{ display: props.visibility ? "flex" : "none" }}
     >
-      <div className="warning">Use tab to navigate back to the page</div>
+      <div className="warning">tab</div>
     </div>
   );
 }
