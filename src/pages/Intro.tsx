@@ -12,7 +12,7 @@ const Intro = () => {
 
   return (
     <>
-      <Header title="Keyboard Shortcuts Tutorial" />
+      <Header title="lowkey" />
       <div className="card">
         <div className="intro">
           <p
@@ -31,19 +31,33 @@ const Intro = () => {
             Note: this game is not configured for Windows.
           </p>
           <p>
-            Learning to navigate the computer as a software engineer after
-            working on my relationship to the viola as a professional Classical
-            musician showed me the two are strikingly similar.
+            Using a computer… lowkey{" "}
+            <b>
+              <i>stressful</i>
+            </b>
+            .
           </p>
           <p>
-            A key to navigating your computer with ease is learning how the keys
-            you use to type can prevent tension and promote flow.
+            Reaching for the mouse all day… highkey{" "}
+            <b>
+              <i>tiring</i>.
+            </b>
           </p>
+          {/* <hr
+            style={{ borderColor: "rgba(255,255,255,0.5)", width: "100%" }}
+          ></hr> */}
+          <br />
+          <p>Ditching the mouse for the keyboard?</p>
+          <br></br>
           <p>
-            <strong>You just have to learn.</strong>
+            just…
+            <b>
+              <i> lowkey</i>
+            </b>
+            .
           </p>
           <Button
-            blur="Start Your Journey"
+            blur="go lowkey"
             className="sd"
             onClick={() => navigate("/tutorial")}
           />

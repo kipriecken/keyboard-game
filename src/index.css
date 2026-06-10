@@ -97,6 +97,10 @@ body {
   object-fit: cover;
   /* background-color: var(--air-superiority-blue); */
   background: linear-gradient(135deg, #00b4d8, #0077b6, #023e8a);
+  background: linear-gradient(135deg, #1e1433, #2d1f52);
+  /* background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460); */
+  /* background: linear-gradient(135deg, #1e1433, #2d1f52); */
+  /* background: linear-gradient(135deg, #2d1b69, #11998e); */
   pointer-events: none;
   font-size: 2.3vh;
   line-height: 1.4;
