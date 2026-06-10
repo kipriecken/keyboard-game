@@ -214,7 +214,6 @@ body:focus {
   min-height: 65vh;
   justify-content: center;
   flex-direction: column;
-  width: 700px;
   position: relative;
 }
 
