@@ -7,86 +7,10 @@
 }
 
 :root {
-  /* CSS HEX */
-  --charcoal: #2b2b2b;
-  --rosy-brown: #c2948aff;
-  --air-superiority-blue: rgb(92, 158, 194);
-  --contrast: #cc2d00;
-  --isabelline: #f6f0edff;
-  --khaki: #bbb193ff;
-
-  /* SCSS Gradient */
-  --gradient-top: linear-gradient(
-    0deg,
-    #28536bff,
-    #c2948aff,
-    #7ea8beff,
-    #f6f0edff,
-    #bbb193ff
-  );
-  --gradient-right: linear-gradient(
-    90deg,
-    #28536bff,
-    #c2948aff,
-    #7ea8beff,
-    #f6f0edff,
-    #bbb193ff
-  );
-  --gradient-bottom: linear-gradient(
-    180deg,
-    #28536bff,
-    #c2948aff,
-    #7ea8beff,
-    #f6f0edff,
-    #bbb193ff
-  );
-  --gradient-left: linear-gradient(
-    270deg,
-    #28536bff,
-    #c2948aff,
-    #7ea8beff,
-    #f6f0edff,
-    #bbb193ff
-  );
-  --gradient-top-right: linear-gradient(
-    45deg,
-    #28536bff,
-    #c2948aff,
-    #7ea8beff,
-    #f6f0edff,
-    #bbb193ff
-  );
-  --gradient-bottom-right: linear-gradient(
-    135deg,
-    #28536bff,
-    #c2948aff,
-    #7ea8beff,
-    #f6f0edff,
-    #bbb193ff
-  );
-  --gradient-top-left: linear-gradient(
-    225deg,
-    #28536bff,
-    #c2948aff,
-    #7ea8beff,
-    #f6f0edff,
-    #bbb193ff
-  );
-  --gradient-bottom-left: linear-gradient(
-    315deg,
-    #28536bff,
-    #c2948aff,
-    #7ea8beff,
-    #f6f0edff,
-    #bbb193ff
-  );
-  --gradient-radial: radial-gradient(
-    #28536bff,
-    #c2948aff,
-    #7ea8beff,
-    #f6f0edff,
-    #bbb193ff
-  );
+  --air-superiority-blue: #009fcc;
+  --charcoal: #36454f;
+  --isabelline: #f4f0ec;
+  --contrast: #d97f18;
 }
 
 body {
@@ -95,7 +19,6 @@ body {
   width: 100%;
   background-repeat: no-repeat;
   object-fit: cover;
-  /* background-color: var(--air-superiority-blue); */
   background-color: #009fcc;
   pointer-events: none;
   font-size: 2.3vh;
@@ -121,7 +44,8 @@ a {
 }
 
 a:focus-visible {
-  outline: 3px solid #cc2d00;
+  outline: 3px solid rgb(217, 127, 24);
+  outline: 3px solid var(--isabelline);
   outline-offset: 2px;
 }
 

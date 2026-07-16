@@ -356,7 +356,7 @@ function Game() {
             >
               Note: this game is not configured for Windows.
             </p>
-            <div>With tab you can navigate a page</div>
+            <div>Press tab again</div>
             <Button
               focus="Selected"
               blur="Tab to me"
@@ -367,7 +367,9 @@ function Game() {
               className="part-two"
               style={{ display: isTwoVisible ? "flex" : "none" }}
             >
-              {/* <div>And another time</div> */}
+              <div>
+                Tab allows you to navigate through elements on any webpage
+              </div>
               <Button
                 focus="Selected"
                 blur="Tab to me"
@@ -379,16 +381,14 @@ function Game() {
               className="part-three"
               style={{ display: isThreeVisible ? "flex" : "none" }}
             >
-              {/* <div>Ok, one more time</div> */}
+              <div>Press return or spacebar to "click" on elements</div>
               <Button
                 onClick={partThreeClickHandler}
                 focus="Hit return"
                 blur="Tab to me"
                 className="three"
               ></Button>
-              <div>
-                "Click" with return or spacebar for a brief shortcut tutorial
-              </div>
+              <div>"Click" the final button to continue!</div>
             </div>
           </div>
         </div>
