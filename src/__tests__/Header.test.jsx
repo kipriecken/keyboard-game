@@ -1,15 +1,24 @@
-import {render, cleanup} from "@testing-library/react"
-import {expect, test, afterEach} from "vitest";
-import Header from '../components/Header'
+import {render, screen} from "@testing-library/react"
+import userEvent from "@testing-library/user-event";
+import {MemoryRouter} from "react-router-dom";
+import {describe, it, expect} from "vitest";
+import Header from "../components/Header/Header";
 
-afterEach(cleanup )
+describe("Header", () => {
+    it("renders the header with links", () => {
+        render(
+            <MemoryRouter>
+                <Header />
+            </MemoryRouter>
+        );
 
-test("Header displays correct text", async () => {
-    const screen = render(
-        <Header></Header>
-    );
+        const homeLink = screen.getByText("lowkey");
+        const aboutLink = screen.getByText("About");
 
-const h3 = await screen.findByRole("heading", { level: 3 });    
+        expect(homeLink).to.exist;
+        expect(aboutLink).to.exist;
 
-    expect(h3.innerText).toBe("Keyboard Shortcuts Game")
+        expect(homeLink.getAttribute("href")).to.equal("/");
+        expect(aboutLink.getAttribute("href")).to.equal("/about");
+    })
 })
