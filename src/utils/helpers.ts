@@ -1,35 +1,67 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { type GameLevel } from "../data";
+import type { ReactNode } from "react";
+import React from "react";
 
-export const populateLabel = (
-  level: GameLevel,
+export interface LabelData {
+  gameTitle: string;
+  levelNumber: number;
+  chord: string;
+  instruction: ReactNode;
+}
+
+const indexToGameTitle: Record<number, string> = {
+  0: "Navigation",
+  1: "Highlighting",
+  2: "Deletion",
+};
+
+const modifierToKeyName: Record<string, string> = {
+  alt: "option",
+  meta: "command",
+  shift: "shift",
+  control: "control",
+};
+
+export const getLabelTitle = (
   gameIndex: number,
   levelIndex: number,
 ): string => {
-  const indexToGameTitle: any = {
-    0: "Navigation",
-    1: "Highlighting",
-    2: "Deletion",
-  };
+  return `${indexToGameTitle[gameIndex]}: Level ${levelIndex + 1}`;
+};
 
-  const modifierToKeyName: any = {
-    alt: "option",
-    meta: "command",
-    shift: "shift",
-    control: "control",
-  };
+export const getLabelChord = (level: GameLevel): string => {
   let chord = "";
-  level.activeKeys.map(
+  level.activeKeys.forEach(
     (keyName) => (chord += `${modifierToKeyName[keyName]} + `),
   );
-  level.actionKeys.map((key) => (chord += `${key}, `));
+  level.actionKeys.forEach((key) => (chord += `${key}, `));
   chord = chord.slice(0, -2);
-  return `
-        <h3>${indexToGameTitle[gameIndex]}: Level ${levelIndex + 1}</h3>
-        <h4><strong>${chord}</strong></h4>
-        <div>Using only the keyboard, ${
-          level.action
-            ? `${level.action}.`
-            : `move the blinking cursor from ${level.cursorPlacement} to ${level.newCursorPlacement}.`
-        }</div>`;
+  return chord;
+};
+
+export const getLabelInstruction = (level: GameLevel): ReactNode => {
+  return level.action
+    ? `${level.action}.`
+    : React.createElement(
+        React.Fragment,
+        null,
+        "move the blinking cursor from ",
+        React.createElement("strong", null, level.cursorPlacement),
+        " to ",
+        React.createElement("strong", null, level.newCursorPlacement),
+        ".",
+      );
+};
+
+export const areActiveKeysPressed = (
+  e: React.KeyboardEvent<HTMLTextAreaElement>,
+  activeKeys: string[],
+) => {
+  return (
+    activeKeys.includes("alt") == e.altKey &&
+    activeKeys.includes("shift") == e.shiftKey &&
+    activeKeys.includes("control") == e.ctrlKey &&
+    activeKeys.includes("meta") == e.metaKey
+  );
 };

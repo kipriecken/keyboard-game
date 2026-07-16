@@ -12,10 +12,10 @@ export type GameLevel = {
 };
 
 // Data
-export const games = [
+export const tracks = [
   [
     {
-      actionKeys: ["right arrow"],
+      actionKeys: ["ArrowRight"],
       cursorPlacement: "the beginning",
       newCursorPlacement: "after the first character",
       newKey: "ArrowRight",
@@ -26,7 +26,7 @@ export const games = [
       finalCursorLocation: [1, 1],
     },
     {
-      actionKeys: ["right arrow", "right arrow"],
+      actionKeys: ["ArrowRight", "ArrowRight"],
       cursorPlacement: "the beginning",
       newCursorPlacement: "after the second character",
       keyword: "Right",
@@ -36,7 +36,7 @@ export const games = [
       finalCursorLocation: [2, 2],
     },
     {
-      actionKeys: ["right arrow", "right arrow", "right arrow"],
+      actionKeys: ["ArrowRight", "ArrowRight", "ArrowRight"],
       cursorPlacement: "the beginning",
       newCursorPlacement: "after the third character",
       keyword: "Right",
@@ -46,9 +46,9 @@ export const games = [
       finalCursorLocation: [3, 3],
     },
     {
-      actionKeys: ["right arrow", "right arrow", "right arrow", "right arrow"],
+      actionKeys: ["ArrowRight", "ArrowRight", "ArrowRight", "ArrowRight"],
       cursorPlacement: "the beginning",
-      newCursorPlacement: "to after the fourth character",
+      newCursorPlacement: "after the fourth character",
       keyword: "Right",
       activeKeys: [],
       minKeystrokes: 4,
@@ -57,11 +57,11 @@ export const games = [
     },
     {
       actionKeys: [
-        "right arrow",
-        "right arrow",
-        "right arrow",
-        "right arrow",
-        "right arrow",
+        "ArrowRight",
+        "ArrowRight",
+        "ArrowRight",
+        "ArrowRight",
+        "ArrowRight",
       ],
       cursorPlacement: "the beginning",
       newCursorPlacement: "after the fifth character",
@@ -72,7 +72,7 @@ export const games = [
       finalCursorLocation: [5, 5],
     },
     {
-      actionKeys: ["right arrow"],
+      actionKeys: ["ArrowRight"],
       cursorPlacement: "the beginning",
       newCursorPlacement: "the end of the first word",
       newKey: "AltLeft",
@@ -83,7 +83,7 @@ export const games = [
       finalCursorLocation: [5, 5],
     },
     {
-      actionKeys: ["right arrow", "right arrow"],
+      actionKeys: ["ArrowRight", "ArrowRight"],
       cursorPlacement: "the beginning",
       newCursorPlacement: "the end of the second word",
       keyword: "Right",
@@ -93,7 +93,7 @@ export const games = [
       finalCursorLocation: [11, 11],
     },
     {
-      actionKeys: ["right arrow", "right arrow", "right arrow"],
+      actionKeys: ["ArrowRight", "ArrowRight", "ArrowRight"],
       cursorPlacement: "the beginning",
       newCursorPlacement: "the end of the third word",
       keyword: "Right",
@@ -103,7 +103,7 @@ export const games = [
       finalCursorLocation: [17, 17],
     },
     {
-      actionKeys: ["right arrow", "right arrow", "right arrow", "right arrow"],
+      actionKeys: ["ArrowRight", "ArrowRight", "ArrowRight", "ArrowRight"],
       cursorPlacement: "the beginning",
       newCursorPlacement: "the end of the fourth word",
       keyword: "Right",
@@ -113,7 +113,7 @@ export const games = [
       finalCursorLocation: [21, 21],
     },
     {
-      actionKeys: ["right arrow"],
+      actionKeys: ["ArrowRight"],
       cursorPlacement: "the beginning",
       newCursorPlacement: "the end of the line",
       newKey: "MetaLeft",
@@ -123,7 +123,7 @@ export const games = [
       finalCursorLocation: [56, 56],
     },
     {
-      actionKeys: ["left arrow"],
+      actionKeys: ["ArrowLeft"],
       cursorPlacement: "the middle",
       newCursorPlacement: "the beginning of the line",
       keyword: "Left",
@@ -132,7 +132,7 @@ export const games = [
       startingCursorPosition: [12, 12],
     },
     {
-      actionKeys: ["up arrow"],
+      actionKeys: ["ArrowUp"],
       cursorPlacement: "the end",
       newCursorPlacement: "the beginning of the text",
       keyword: "Up",
@@ -142,7 +142,7 @@ export const games = [
       finalCursorLocation: [0, 0],
     },
     {
-      actionKeys: ["down arrow"],
+      actionKeys: ["ArrowDown"],
       cursorPlacement: "the beginning",
       newCursorPlacement: "the end of the text",
       keyword: "Down",
@@ -153,8 +153,8 @@ export const games = [
   ],
   [
     {
-      actionKeys: ["right arrow"],
-      action: "highlight the first word",
+      actionKeys: ["ArrowRight"],
+      action: "Highlight the first word",
       cursorPlacement: "the beginning of the text",
       newKey: "ShiftLeft",
       keyword: "Right",
@@ -163,8 +163,8 @@ export const games = [
       finalCursorLocation: [0, 5],
     },
     {
-      actionKeys: ["left arrow"],
-      action: "highlight the first word",
+      actionKeys: ["ArrowLeft"],
+      action: "Highlight the first word",
       cursorPlacement: "after the first word",
       keyword: "Left",
       activeKeys: ["alt", "shift"],
@@ -173,20 +173,20 @@ export const games = [
       finalCursorLocation: [0, 5],
     },
     {
-      actionKeys: ["down arrow"],
-      action: "highlight the first line",
+      actionKeys: ["ArrowDown"],
+      action: "Highlight the first line",
       cursorPlacement: "the beginning of the text",
       keyword: "Down",
-      activeKeys: ["alt", "shift"],
+      activeKeys: ["shift"],
       minKeystrokes: 3,
       finalCursorLocation: [0, 57],
     },
     {
-      actionKeys: ["up arrow"],
-      action: "highlight the first line",
+      actionKeys: ["ArrowUp"],
+      action: "Highlight the first line",
       cursorPlacement: "at the end of the first line",
       keyword: "Up",
-      activeKeys: ["alt", "shift"],
+      activeKeys: ["shift"],
       minKeystrokes: 3,
       startingCursorPosition: [56, 56],
       finalCursorLocation: [0, 56],
@@ -194,8 +194,8 @@ export const games = [
   ],
   [
     {
-      actionKeys: ["delete"],
-      action: "delete the first word",
+      actionKeys: ["Backspace"],
+      action: "Delete the first word",
       cursorPlacement: "after the first word",
       newKey: "Backspace",
       keyword: "Backspace",
@@ -205,8 +205,8 @@ export const games = [
       finalCursorLocation: [0, 0],
     },
     {
-      actionKeys: ["delete"],
-      action: "delete the first line",
+      actionKeys: ["Backspace"],
+      action: "Delete the first line",
       cursorPlacement: "at the end of the first line",
       keyword: "Backspace",
       activeKeys: ["meta"],
@@ -216,7 +216,7 @@ export const games = [
     },
     {
       actionKeys: ["K"],
-      action: "delete the last word of the first line",
+      action: "Delete the last word of the first line",
       cursorPlacement: "before the last word of the first line",
       newKey: "ControlLeft",
       keyword: "K",

@@ -180,11 +180,7 @@ label > h4 {
 }
 
 .label {
-  min-height: 200px;
-  max-width: 500px;
-  padding: 1rem;
-  text-align: center;
-  margin: 2em 0;
+  max-width: 800px;
 }
 
 .achieved {

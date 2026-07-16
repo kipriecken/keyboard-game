@@ -1,78 +1,51 @@
 import "../App.css";
-import { useEffect, useState, useRef, useMemo } from "react";
-import { games as levelsData } from "../data";
-import Modal from "../components/Modal/Modal";
-import { populateLabel } from "../utils/helpers";
+import "./Tutorial.css";
+import { useEffect, useState, useRef, useReducer } from "react";
+import { reducer, initialState } from "../hooks/useGameState";
+import { tracks } from "../data";
+import { areActiveKeysPressed, getLabelTitle } from "../utils/helpers";
 import Button from "../components/Button/Button";
 import Spinner from "../components/Spinner/Spinner";
 import Keyboard from "../components/Keyboard/Keyboard";
 import Textarea from "../components/Textarea";
+import Label from "../components/Label/Label";
+import Confetti from "../components/Confetti/Confetti";
 import { useNavigate } from "react-router-dom";
 
 const userAgent = window.navigator.userAgent;
-const isMac = userAgent.includes("Macintosh");
-const isSafari = userAgent.includes("Safari") && !userAgent.includes("Chrome");
 const isMobile =
   /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
     userAgent,
   );
 
-function Game() {
+function Tutorial() {
+  const [state, dispatch] = useReducer(reducer, initialState);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const navigate = useNavigate();
 
-  const [isModalVisible, setIsModalVisible] = useState(false);
   const [newKey, setNewKey] = useState("Tab"); // if truthy, keyboard is displayed
-  const [levelIndex, setLevelIndex] = useState(0);
-  const [gameIndex, setGameIndex] = useState(0);
-  const [acceptableKeys, setAcceptableKeys] = useState([
-    "Arrow",
-    "Shift",
-    "Alt",
-    "Escape",
-    "Meta",
-    "Tab",
-    "Control",
-    "KeyL",
-  ]);
-  const [areRequirementsMet, setAreRequirementsMet] = useState(false);
-  const [isLevelOver, setIsLevelOver] = useState(false);
-  const [isAchievedVisible, setIsAchievedVisible] = useState(false);
-  const [isTwoVisible, setIsTwoVisible] = useState(false);
-  const [isThreeVisible, setIsThreeVisible] = useState(false);
-  const [isIntroVisible, setIsIntroVisible] = useState(true);
-  const [isPreGameVisible, setIsPreGameVisible] = useState(!isMobile);
-  const [isGamePlayVisible, setIsGamePlayVisible] = useState(false);
-  const [isNextBtnDisabled, setIsNextBtnDisabled] = useState(true);
-  const [isNextBtnVisible, setIsNextBtnVisible] = useState(true);
-  const [isResetBtnVisible, setIsResetBtnVisible] = useState(true);
-  const [isKeystrokesTextVisible, setIsKeystrokesTextVisible] = useState(false);
-  const [keystrokes, setKeystrokes] = useState(0);
-  const [isLoadingLevel, setIsLoadingLevel] = useState(true);
-  const [isOnFirstLevel, setIsOnFirstLevel] = useState(true);
-
-  const levelData = levelsData[gameIndex][levelIndex];
+  const [confettiTrigger, setConfettiTrigger] = useState(false);
+  const areRequirementsMet = state.areRequirementsMet;
+  const isAchievedVisible = state.phase === "exercise-complete";
+  const isResetBtnVisible = state.phase === "tutorial-complete";
+  const isKeystrokesTextVisible =
+    state.phase === "exercise-complete" &&
+    state.keystrokes ==
+      tracks[state.trackIndex][state.exerciseIndex].minKeystrokes;
+  const keystrokes = state.keystrokes;
+  const isLoadingExercise = state.phase === "loading";
+  const currentExercise = tracks[state.trackIndex][state.exerciseIndex];
 
   useEffect(() => {
-    const setModalVisible = () => {
-      setIsModalVisible(true);
-    };
-    const setModalInvisible = () => {
-      setIsModalVisible(false);
-    };
-    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
-      e.preventDefault();
-    };
-    window.addEventListener("blur", setModalVisible);
-    window.addEventListener("focus", setModalInvisible);
-    window.addEventListener("beforeunload", handleBeforeUnload);
-
-    return () => {
-      window.removeEventListener("blur", setModalVisible);
-      window.removeEventListener("focus", setModalInvisible);
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    };
+    handleReset();
   }, []);
+
+  useEffect(() => {
+    if (state.phase === "exercise-complete") {
+      setConfettiTrigger((prev) => !prev);
+      return;
+    }
+  }, [state.phase]);
 
   // Constants
   const text =
@@ -81,6 +54,7 @@ function Game() {
   const handleNewKeydown = (e: KeyboardEvent) => {
     const keyboard = document.getElementById("keyboard");
     if (e.code == newKey) {
+      dispatch({ type: "KEY_INTRODUCED" });
       e.preventDefault();
       if (keyboard) {
         keyboard.style.opacity = "0";
@@ -125,101 +99,38 @@ function Game() {
   });
 
   const handleReset = () => {
-    setIsLoadingLevel(true);
+    dispatch({ type: "RESET" });
     window.setTimeout(() => {
-      setIsKeystrokesTextVisible(false);
-      setGameIndex(0);
-      setLevelIndex(0);
-      setIsLevelOver(false);
-      setKeystrokes(0);
-      setIsNextBtnVisible(true);
-      setIsResetBtnVisible(false);
-      setAcceptableKeys([
-        "Arrow",
-        "Shift",
-        "Alt",
-        "Escape",
-        "Meta",
-        "Tab",
-        "Control",
-      ]);
-      setIsLoadingLevel(false);
       window.setTimeout(() => {
         textareaRef.current?.focus();
       }, 1);
     }, 1000);
   };
 
-  const isOnFinalLevel = useMemo(
-    () => levelIndex == levelsData[gameIndex].length - 1,
-    [levelIndex, gameIndex],
-  );
-  const isOnFinalGame = useMemo(
-    () => gameIndex == levelsData.length - 1,
-    [gameIndex],
-  );
-
-  const partOneFocusHandler = () => {
-    setIsTwoVisible(true);
-  };
-  const partTwoFocusHandler = () => {
-    setIsThreeVisible(true);
-  };
-  const partThreeClickHandler = () => {
-    setIsIntroVisible(true);
-    setIsPreGameVisible(false);
-    setIsGamePlayVisible(true);
-    handleReset();
-  };
-
-  const handleNextClick = () => {
-    setIsOnFirstLevel(false);
-    setIsLoadingLevel(true);
-    setIsAchievedVisible(false);
-    if (isOnFinalLevel) {
-      if (isOnFinalGame) {
-        setGameIndex(0); // not sure if should be done here or later
-        setIsNextBtnDisabled(true);
-        return;
-      }
-      setGameIndex((i) => i + 1);
-      if (gameIndex == 1) {
-        // gameIndex will be 1 when on final level
-        setAcceptableKeys((k) => [...k, "Backspace", "KeyK", "KeyZ"]);
-      }
-      setLevelIndex(0);
-    } else {
-      setLevelIndex((i) => i + 1);
+  const handleExerciseCompletion = () => {
+    // TODO: Why is this necessary? Unexpected behavior that inaccurately increments the exercise index starting with the second track (index 1). This is a bandaid fix, but I haven't been able to track down the root cause.
+    if (state.phase === "exercise-complete") {
+      return;
     }
-    setIsLevelOver(false);
+    dispatch({ type: "NEXT_CLICKED" });
     window.setTimeout(() => {
-      setIsLoadingLevel(false);
+      dispatch({ type: "LOADED" });
       window.setTimeout(() => {
         textareaRef.current?.focus();
       }, 1);
     }, 1000);
-  };
-
-  const handleLevelWin = () => {
-    setIsLevelOver(true);
-    setIsAchievedVisible(true);
-    if (keystrokes == levelData.minKeystrokes) {
-      setIsKeystrokesTextVisible(true);
-    }
-    if (isOnFinalGame && isOnFinalLevel) {
-      setIsResetBtnVisible(true);
-      setIsNextBtnVisible(false);
-    } else {
-      setIsNextBtnDisabled(false);
-    }
   };
 
   const handleKeyup = () => {
+    // TODO: Related to the bandaid fix above. This seems to be getting triggered too many times.
+    if (state.phase === "exercise-complete") {
+      return;
+    }
     if (!areRequirementsMet) {
       return;
     }
-    const finalCursorLocation = levelData.finalCursorLocation
-      ? levelData.finalCursorLocation
+    const finalCursorLocation = currentExercise.finalCursorLocation
+      ? currentExercise.finalCursorLocation
       : [0, 0];
 
     const isCursorInPlace =
@@ -227,21 +138,30 @@ function Game() {
       textareaRef.current?.selectionEnd == finalCursorLocation[1];
 
     if (isCursorInPlace) {
-      handleLevelWin();
+      dispatch({ type: "EXERCISE_WON" });
+      if (
+        state.trackIndex === tracks.length - 1 &&
+        state.exerciseIndex === tracks[state.trackIndex].length - 1
+      ) {
+        return;
+      }
+      window.setTimeout(() => {
+        handleExerciseCompletion();
+      }, 1000);
     }
   };
 
   const handleKeydown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (!acceptableKeys.some((key) => e.code.includes(key))) {
+    if (!state.acceptableKeys.some((key) => e.code.includes(key))) {
       e.preventDefault();
       return;
     }
-    if (e.repeat || isLevelOver) {
+    if (e.repeat || state.phase === "exercise-complete") {
       return;
     }
 
     if (!e.code.includes("Tab") && !e.code.includes("Escape")) {
-      setKeystrokes((s) => s + 1);
+      dispatch({ type: "KEY_PRESSED" });
     }
     if (
       !e.code.includes("Arrow") &&
@@ -251,23 +171,16 @@ function Game() {
       return;
     }
 
-    const areActiveKeysPressed = () => {
-      return (
-        levelData.activeKeys.includes("alt") == e.altKey &&
-        levelData.activeKeys.includes("shift") == e.shiftKey &&
-        levelData.activeKeys.includes("control") == e.ctrlKey &&
-        levelData.activeKeys.includes("meta") == e.metaKey
-      );
-    };
-
-    if (e.code.includes(levelData.keyword) && areActiveKeysPressed()) {
-      setAreRequirementsMet(true);
+    if (
+      e.code.includes(currentExercise.keyword) &&
+      areActiveKeysPressed(e, currentExercise.activeKeys)
+    ) {
+      dispatch({ type: "REQUIREMENTS_MET" });
     }
   };
 
   useEffect(() => {
     const textarea = textareaRef.current;
-    const label = document.getElementsByTagName("label")[0] as HTMLElement;
     const innerContainer = document.getElementsByClassName(
       "inner",
     )[0] as HTMLElement;
@@ -279,15 +192,11 @@ function Game() {
       }
     }
 
-    if (textarea && label) {
-      const levelData = levelsData[gameIndex][levelIndex];
-      if (levelIndex == 1) {
-        setIsOnFirstLevel(false);
-      }
+    if (textarea) {
+      const levelData = tracks[state.trackIndex][state.exerciseIndex];
 
       // Update UI for new level
       innerContainer.style.display = !isMobile && !newKey ? "flex" : "none";
-      label.innerHTML = populateLabel(levelData, gameIndex, levelIndex);
       textarea.style.display = "block";
       textarea.value = text;
       textarea.focus();
@@ -299,25 +208,19 @@ function Game() {
           ? levelData.startingCursorPosition[1]
           : 0,
       );
-
-      setIsNextBtnDisabled(true);
-      setIsAchievedVisible(false);
-      setKeystrokes(0);
-      setIsKeystrokesTextVisible(false);
-      setAreRequirementsMet(false);
     }
-  }, [gameIndex, levelIndex, newKey, isGamePlayVisible]);
+  }, [state.trackIndex, state.exerciseIndex, newKey]);
 
   useEffect(() => {
-    if (levelData.newKey && isGamePlayVisible) {
-      setNewKey(levelData.newKey);
+    if (currentExercise.newKey) {
+      setNewKey(currentExercise.newKey);
     }
-  }, [levelData.newKey, isGamePlayVisible]);
+  }, [currentExercise.newKey]);
 
   return (
     <>
-      <Modal visibility={isModalVisible}></Modal>
       <Keyboard newKey={newKey} isDisplayed={!isMobile}></Keyboard>
+      <Confetti trigger={confettiTrigger} />
       <div
         className="is-mobile container"
         style={{ display: isMobile ? "block" : "none" }}
@@ -330,84 +233,28 @@ function Game() {
         style={{ display: !isMobile && !newKey ? "flex" : "none" }}
       >
         <div className="drawer"></div>
-        <div
-          className="pre-game container"
-          style={{ display: isPreGameVisible ? "flex" : "none" }}
-        >
-          <div
-            className="intro"
-            style={{ visibility: isIntroVisible ? "visible" : "hidden" }}
-          >
-            <p
-              className="safari"
-              style={{ display: isSafari ? "block" : "none" }}
-            >
-              To play on Safari, click on Safari at the top, then &gt;
-              Preferences &gt;. Check the box at Press Tab to highlight each
-              item on a web page.
-              <br></br>
-              <br></br>
-              If using an iPad, go to Settings &gt; Accessibility &gt; Keyboards
-              & Typing, select Full Keyboard Access and switch on.
-            </p>
-            <p
-              className="windows"
-              style={{ display: !isMac ? "block" : "none" }}
-            >
-              Note: this game is not configured for Windows.
-            </p>
-            <div>Press tab again</div>
-            <Button
-              focus="Selected"
-              blur="Tab to me"
-              className="one"
-              onFocus={partOneFocusHandler}
-            ></Button>
-            <div
-              className="part-two"
-              style={{ display: isTwoVisible ? "flex" : "none" }}
-            >
-              <div>
-                Tab allows you to navigate through elements on any webpage
-              </div>
-              <Button
-                focus="Selected"
-                blur="Tab to me"
-                className="two"
-                onFocus={partTwoFocusHandler}
-              ></Button>
-            </div>
-            <div
-              className="part-three"
-              style={{ display: isThreeVisible ? "flex" : "none" }}
-            >
-              <div>Press return or spacebar to "click" on elements</div>
-              <Button
-                onClick={partThreeClickHandler}
-                focus="Hit return"
-                blur="Tab to me"
-                className="three"
-              ></Button>
-              <div>"Click" the final button to continue!</div>
-            </div>
-          </div>
-        </div>
-        <div
-          className="game-play container"
-          style={{ display: isGamePlayVisible ? "flex" : "none" }}
-        >
-          <Spinner isDisplayed={isLoadingLevel}></Spinner>
+        <div className="game-play container" style={{ display: "flex" }}>
+          <Spinner isDisplayed={isLoadingExercise}></Spinner>
           <div
             style={{
-              display: !isLoadingLevel ? "flex" : "none",
+              display: !isLoadingExercise ? "flex" : "none",
               flexDirection: "column",
             }}
             className="container game"
           >
-            <div className="label">
-              <label htmlFor="text"></label>
-            </div>
-            <div className="relative">
+            <h3
+              style={{
+                margin: "0 0 4rem 0",
+                textAlign: "center",
+                color: "white",
+              }}
+            >
+              {getLabelTitle(state.trackIndex, state.exerciseIndex)}
+            </h3>
+            <div className="card">
+              <div className="label">
+                <Label level={currentExercise} />
+              </div>
               <Textarea
                 textareaRef={textareaRef}
                 handleKeyup={handleKeyup}
@@ -416,14 +263,6 @@ function Game() {
               ></Textarea>
             </div>
             <div className="stats">
-              <Button
-                focus={isOnFirstLevel ? "Use Enter" : "Next level"}
-                blur={isOnFirstLevel ? "Tab here" : "Next level"}
-                className="next"
-                onClick={handleNextClick}
-                disabled={isNextBtnDisabled}
-                isVisible={isNextBtnVisible}
-              />
               <Button
                 focus="Redo tutorial"
                 blur="Redo tutorial"
@@ -452,9 +291,11 @@ function Game() {
               <div className="achieved-container">
                 <div
                   className="achieved"
-                  style={{ display: isAchievedVisible ? "block" : "none" }}
+                  style={{
+                    visibility: isAchievedVisible ? "visible" : "hidden",
+                  }}
                 >
-                  Achieved level {levelIndex + 1}!
+                  Exercise {state.exerciseIndex + 1} complete!
                 </div>
               </div>
             </div>
@@ -466,4 +307,4 @@ function Game() {
   );
 }
 
-export default Game;
+export default Tutorial;
