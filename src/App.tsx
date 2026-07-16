@@ -1,5 +1,6 @@
 import "./App.css";
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
+import Header from "./components/Header/Header";
 import { useEffect, useState } from "react";
 import Tutorial from "./pages/Tutorial";
 import About from "./pages/About";
@@ -23,12 +24,7 @@ function App() {
   return (
     <>
       <Modal visibility={isModalVisible}></Modal>
-      <header style={{ padding: 12 }}>
-        <nav>
-          <Link to="/">Keyboard Shortcuts Tutorial</Link>
-          <Link to="/about">About</Link>
-        </nav>
-      </header>
+      <Header />
       <Routes>
         <Route path="/" element={<Tutorial />} />
         <Route path="/about" element={<About />} />

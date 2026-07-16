@@ -1,12 +1,13 @@
 import "./Header.css";
+import { Link } from "react-router-dom";
 
-export default function Header(props: { visibility: string }) {
+export default function Header() {
   return (
-    <div
-      className="header"
-      style={{ visibility: props.visibility ? "hidden" : "visible" }}
-    >
-      <h3>Keyboard Shortcuts Game</h3>
-    </div>
+    <header>
+      <nav>
+        <Link to="/">lowkey</Link>
+        <Link to="/about">About</Link>
+      </nav>
+    </header>
   );
 }
