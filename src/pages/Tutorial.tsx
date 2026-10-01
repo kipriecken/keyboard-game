@@ -242,15 +242,7 @@ function Tutorial() {
             }}
             className="container game"
           >
-            <h3
-              style={{
-                margin: "0 0 4rem 0",
-                textAlign: "center",
-                color: "white",
-              }}
-            >
-              {getLabelTitle(state.trackIndex, state.exerciseIndex)}
-            </h3>
+            <h3>{getLabelTitle(state.trackIndex, state.exerciseIndex)}</h3>
             <div className="card">
               <div className="label">
                 <Label level={currentExercise} />
