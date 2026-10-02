@@ -5,22 +5,24 @@ import "./Intro.css";
 import { useEffect, useReducer, useState } from "react";
 import { initialState, reducer } from "../hooks/useGameState";
 
+const userAgent = window.navigator.userAgent;
+const isMobile =
+  /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+    userAgent,
+  );
+const isMac = userAgent.includes("Macintosh");
+const isSafari = userAgent.includes("Safari") && !userAgent.includes("Chrome");
+
 const Intro = () => {
-  const userAgent = window.navigator.userAgent;
-  const isMobile =
-    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-      userAgent,
-    );
-  const isMac = userAgent.includes("Macintosh");
-  const isSafari =
-    userAgent.includes("Safari") && !userAgent.includes("Chrome");
   const navigate = useNavigate();
   const [isTwoVisible, setIsTwoVisible] = useState(false);
   const [isThreeVisible, setIsThreeVisible] = useState(false);
   const [state, dispatch] = useReducer(reducer, initialState);
-  const [isKeyboardDisplayed, setIsKeyboardDisplayed] = useState(
-    !isMobile
-  );
+  const [isKeyboardDisplayed, setIsKeyboardDisplayed] = useState(!isMobile);
+
+  if (isMobile) {
+    document.body.classList.add("body-mobile");
+  }
 
   const partOneFocusHandler = () => {
     setIsTwoVisible(true);
@@ -66,7 +68,6 @@ const Intro = () => {
   };
 
   useEffect(() => {
-    console.log({ initialState });
     document.addEventListener("keydown", handleNewKeydown);
     document.addEventListener("keyup", handleNewKeyup);
 
@@ -84,11 +85,15 @@ const Intro = () => {
           style={{ display: isMobile ? "block" : "none" }}
         >
           <p>Thank you for your interest in learning shortcuts!</p>
-          <p>This game has no current applications for mobile devices. Please visit
-          on a computer.</p>
+          <p>
+            This game has no current applications for mobile devices. Please
+            visit on a computer.
+          </p>
           <p>*</p>
-          <p>If using an iPad with an external keyboard, press the tab key to activate the game.
-            </p>
+          <p>
+            If using an iPad with an external keyboard, press the tab key to
+            activate the game.
+          </p>
         </div>
       )}
       <Keyboard newKey={"Tab"} isDisplayed={isKeyboardDisplayed}></Keyboard>

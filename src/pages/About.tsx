@@ -1,12 +1,26 @@
 import "../App.css";
 
 export default function About() {
+  const userAgent = window.navigator.userAgent;
+  const isMobile =
+    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      userAgent,
+    );
+
   return (
     <div className="container" style={{ padding: 16 }}>
-      <div>
-        <h1 style={{ padding: "2rem" }}>About</h1>
-      </div>
-      <div style={{ maxWidth: 800, lineHeight: 1.6, textAlign: "left" }}>
+      {!isMobile && (
+        <div>
+          <h1 style={{ padding: "2rem" }}>About</h1>
+        </div>
+      )}
+      <div
+        style={{
+          maxWidth: 800,
+          lineHeight: 1.6,
+          textAlign: isMobile ? "center" : "left",
+        }}
+      >
         <p>A computer screen displays visually represented code.</p>
         <p>
           To allow you to interact without being a developer, computer designers

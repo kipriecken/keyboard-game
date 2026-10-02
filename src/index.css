@@ -30,6 +30,10 @@ body {
   font-variation-settings: "wdth" 400;
 }
 
+.body-mobile {
+  pointer-events: auto !important;
+}
+
 nav {
   display: flex;
   gap: 12;
