@@ -18,7 +18,9 @@ const Intro = () => {
   const [isTwoVisible, setIsTwoVisible] = useState(false);
   const [isThreeVisible, setIsThreeVisible] = useState(false);
   const [state, dispatch] = useReducer(reducer, initialState);
-  const [isKeyboardDisplayed, setIsKeyboardDisplayed] = useState(!isMobile);
+  const [isKeyboardDisplayed, setIsKeyboardDisplayed] = useState(
+    !isMobile && isMac,
+  );
 
   if (isMobile) {
     document.body.classList.add("body-mobile");
@@ -96,6 +98,14 @@ const Intro = () => {
           </p>
         </div>
       )}
+      {!isMac && (
+        <>
+          <p className="windows" style={{ display: "block" }}>
+            This game is not yet configured for Windows.
+          </p>
+          <p>Please check back later for a Windows version!</p>
+        </>
+      )}
       <Keyboard newKey={"Tab"} isDisplayed={isKeyboardDisplayed}></Keyboard>
       {state.phase === "intro" && (
         <div className="card">
@@ -109,11 +119,6 @@ const Intro = () => {
                 <br></br>
                 If using an iPad, go to Settings &gt; Accessibility &gt;
                 Keyboards & Typing, select Full Keyboard Access and switch on.
-              </p>
-            )}
-            {!isMac && (
-              <p className="windows" style={{ display: "block" }}>
-                Note: this game is not configured for Windows.
               </p>
             )}
             <div>Press tab again</div>
