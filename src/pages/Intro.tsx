@@ -5,20 +5,24 @@ import "./Intro.css";
 import { useEffect, useReducer, useState } from "react";
 import { initialState, reducer } from "../hooks/useGameState";
 
-
 const Intro = () => {
   const userAgent = window.navigator.userAgent;
+  const isMobile =
+    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      userAgent,
+    );
   const isMac = userAgent.includes("Macintosh");
   const isSafari =
     userAgent.includes("Safari") && !userAgent.includes("Chrome");
   const navigate = useNavigate();
-    const [isTwoVisible, setIsTwoVisible] = useState(false);
+  const [isTwoVisible, setIsTwoVisible] = useState(false);
   const [isThreeVisible, setIsThreeVisible] = useState(false);
-    const [state, dispatch] = useReducer(reducer, initialState);
-  const [isKeyboardDisplayed, setIsKeyboardDisplayed] = useState(true);
-  
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const [isKeyboardDisplayed, setIsKeyboardDisplayed] = useState(
+    !isMobile
+  );
 
-    const partOneFocusHandler = () => {
+  const partOneFocusHandler = () => {
     setIsTwoVisible(true);
   };
   const partTwoFocusHandler = () => {
@@ -53,7 +57,7 @@ const Intro = () => {
     }
   };
 
-    const handleNewKeyup = (e: KeyboardEvent) => {
+  const handleNewKeyup = (e: KeyboardEvent) => {
     const keyElement = document.getElementById(e.code)!;
     keyElement.classList.remove("key-pressed");
     keyElement.style.transform = "";
@@ -61,40 +65,53 @@ const Intro = () => {
     window.setTimeout(() => (keyElement.style.animation = ""), 750);
   };
 
-    useEffect(() => {
-      console.log({initialState})
-      document.addEventListener("keydown", handleNewKeydown);
-      document.addEventListener("keyup", handleNewKeyup);
-  
-      return () => {
-        document.removeEventListener("keydown", handleNewKeydown);
-        document.removeEventListener("keyup", handleNewKeyup);
-      };
-    });
+  useEffect(() => {
+    console.log({ initialState });
+    document.addEventListener("keydown", handleNewKeydown);
+    document.addEventListener("keyup", handleNewKeyup);
+
+    return () => {
+      document.removeEventListener("keydown", handleNewKeydown);
+      document.removeEventListener("keyup", handleNewKeyup);
+    };
+  });
 
   return (
     <>
+      {isMobile && (
+        <div
+          className="is-mobile container"
+          style={{ display: isMobile ? "block" : "none" }}
+        >
+          <p>Thank you for your interest in learning shortcuts!</p>
+          <p>This game has no current applications for mobile devices. Please visit
+          on a computer.</p>
+          <p>*</p>
+          <p>If using an iPad with an external keyboard, press the tab key to activate the game.
+            </p>
+        </div>
+      )}
       <Keyboard newKey={"Tab"} isDisplayed={isKeyboardDisplayed}></Keyboard>
       {state.phase === "intro" && (
-      <div className="card">
-        <div className="intro">
-          {isSafari && (
-            <p className="safari" style={{ display: "block" }}>
-              To play on Safari, click on Safari at the top, then &gt; Preferences
-              &gt;. Check the box at Press Tab to highlight each item on a web
-              page.
-              <br></br>
-              <br></br>
-              If using an iPad, go to Settings &gt; Accessibility &gt; Keyboards &
-              Typing, select Full Keyboard Access and switch on.
-            </p>
-          )}
-          {!isMac && (
-            <p className="windows" style={{ display: "block" }}>
-              Note: this game is not configured for Windows.
-            </p>
-          )}
-          <div>Press tab again</div>
+        <div className="card">
+          <div className="intro">
+            {isSafari && (
+              <p className="safari" style={{ display: "block" }}>
+                To play on Safari, click on Safari at the top, then &gt;
+                Preferences &gt;. Check the box at Press Tab to highlight each
+                item on a web page.
+                <br></br>
+                <br></br>
+                If using an iPad, go to Settings &gt; Accessibility &gt;
+                Keyboards & Typing, select Full Keyboard Access and switch on.
+              </p>
+            )}
+            {!isMac && (
+              <p className="windows" style={{ display: "block" }}>
+                Note: this game is not configured for Windows.
+              </p>
+            )}
+            <div>Press tab again</div>
             <Button
               focus="Selected"
               blur="Tab to me"
@@ -127,40 +144,12 @@ const Intro = () => {
                 className="three"
               ></Button>
               <div>"Click" the final button to continue!</div>
-          {/* <p>
-            Using a computer… lowkey{" "}
-            <b>
-              <i>stressful</i>
-            </b>
-            .
-          </p>
-          <p>
-            Reaching for the mouse all day… highkey{" "}
-            <b>
-              <i>tiring</i>.
-            </b>
-          </p>
-          <br />
-          <p>Ditching the mouse for the keyboard?</p>
-          <br></br>
-          <p>
-            just…
-            <b>
-              <i> lowkey</i>
-            </b>
-            .
-          </p>
-          <Button
-            blur="go lowkey"
-            className="sd"
-            onClick={() => navigate("/tutorial")}
-          /> */}
-              </div>
             </div>
           </div>
+        </div>
       )}
-          </>
-        );
+    </>
+  );
 };
 
 export default Intro;

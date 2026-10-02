@@ -133,6 +133,7 @@ body:focus {
 .is-mobile {
   text-align: center;
   padding: 2rem;
+  max-width: 40rem;
 }
 
 .game-play {

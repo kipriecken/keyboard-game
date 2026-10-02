@@ -222,13 +222,6 @@ function Tutorial() {
       <Keyboard newKey={newKey} isDisplayed={!isMobile}></Keyboard>
       <Confetti trigger={confettiTrigger} />
       <div
-        className="is-mobile container"
-        style={{ display: isMobile ? "block" : "none" }}
-      >
-        This game has no current applications for mobile devices. Please visit
-        on a computer.
-      </div>
-      <div
         className="inner container"
         style={{ display: !isMobile && !newKey ? "flex" : "none" }}
       >
