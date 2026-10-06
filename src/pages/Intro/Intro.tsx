@@ -1,9 +1,9 @@
-import Button from "../components/Button/Button";
+import Button from "../../components/Button/Button";
 import { useNavigate } from "react-router-dom";
-import Keyboard from "../components/Keyboard/Keyboard";
+import Keyboard from "../../components/Keyboard/Keyboard";
 import "./Intro.css";
 import { useEffect, useReducer, useState } from "react";
-import { initialState, reducer } from "../hooks/useGameState";
+import { initialState, reducer } from "../../hooks/useGameState";
 
 const userAgent = window.navigator.userAgent;
 const isMobile =
@@ -99,7 +99,7 @@ const Intro = () => {
         </div>
       )}
       {!isMac && !isMobile && (
-        <div className="windows">
+        <div>
           <p>This game is not yet configured for Windows.</p>
           <p>Please check back later for a Windows version!</p>
         </div>
@@ -110,9 +110,9 @@ const Intro = () => {
           <div className="intro">
             {isSafari && (
               <p className="safari" style={{ display: "block" }}>
-                To play on Safari, click on Safari at the top, then &gt;
-                Preferences &gt;. Check the box at Press Tab to highlight each
-                item on a web page.
+                To play on Safari, select Safari from the menu at the top of the
+                screen, then &gt; Settings &gt; Advanced. Check the box at Press
+                Tab to highlight each item on a web page.
                 <br></br>
                 <br></br>
                 If using an iPad, go to Settings &gt; Accessibility &gt;

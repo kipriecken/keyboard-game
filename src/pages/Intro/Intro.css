@@ -8,7 +8,6 @@
 .intro,
 .part-two,
 .part-three {
-  color: var(--color-light);
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -32,9 +31,4 @@
   text-align: center;
   padding: 2rem;
   max-width: 40rem;
-  color: var(--color-light);
-}
-
-.windows {
-  color: var(--color-light);
 }

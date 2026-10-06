@@ -1,15 +1,15 @@
-import "../App.css";
+import "../../App.css";
 import "./Tutorial.css";
 import { useEffect, useState, useRef, useReducer } from "react";
-import { reducer, initialState } from "../hooks/useGameState";
-import { tracks } from "../data";
-import { areActiveKeysPressed, getLabelTitle } from "../utils/helpers";
-import Button from "../components/Button/Button";
-import Spinner from "../components/Spinner/Spinner";
-import Keyboard from "../components/Keyboard/Keyboard";
-import Textarea from "../components/Textarea/Textarea";
-import Label from "../components/Label/Label";
-import Confetti from "../components/Confetti/Confetti";
+import { reducer, initialState } from "../../hooks/useGameState";
+import { tracks } from "../../data";
+import { areActiveKeysPressed, getLabelTitle } from "../../utils/helpers";
+import Button from "../../components/Button/Button";
+import Spinner from "../../components/Spinner/Spinner";
+import Keyboard from "../../components/Keyboard/Keyboard";
+import Textarea from "../../components/Textarea/Textarea";
+import Label from "../../components/Label/Label";
+import Confetti from "../../components/Confetti/Confetti";
 import { useNavigate } from "react-router-dom";
 
 const userAgent = window.navigator.userAgent;

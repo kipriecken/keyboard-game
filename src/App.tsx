@@ -2,13 +2,13 @@ import "./App.css";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Header from "./components/Header/Header";
 import { useState } from "react";
-import Tutorial from "./pages/Tutorial";
-import About from "./pages/About";
-import Game from "./pages/Game";
+import Tutorial from "./pages/Tutorial/Tutorial";
+import About from "./pages/About/About";
+import Game from "./pages/Game/Game";
 import Modal from "./components/Modal/Modal";
 import { useModalVisibility } from "./hooks/useModalVisibility";
 import useBeforeUnload from "./hooks/useBeforeUnload";
-import Intro from "./pages/Intro";
+import Intro from "./pages/Intro/Intro";
 
 function App() {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -20,7 +20,7 @@ function App() {
     <>
       <Modal visibility={isModalVisible}></Modal>
       <Header />
-       <Routes>
+      <Routes>
         <Route path="/" element={<Intro />} />
         <Route path="/tutorial" element={<Tutorial />} />
         <Route path="/about" element={<About />} />

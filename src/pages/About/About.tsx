@@ -1,4 +1,4 @@
-import "../App.css";
+import "../../App.css";
 
 export default function About() {
   const userAgent = window.navigator.userAgent;
