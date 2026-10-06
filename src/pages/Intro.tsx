@@ -98,7 +98,7 @@ const Intro = () => {
           </p>
         </div>
       )}
-      {!isMac && (
+      {!isMac && !isMobile && (
         <div className="windows">
           <p>This game is not yet configured for Windows.</p>
           <p>Please check back later for a Windows version!</p>
