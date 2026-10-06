@@ -99,12 +99,10 @@ const Intro = () => {
         </div>
       )}
       {!isMac && (
-        <>
-          <p className="windows" style={{ display: "block" }}>
-            This game is not yet configured for Windows.
-          </p>
+        <div className="windows">
+          <p>This game is not yet configured for Windows.</p>
           <p>Please check back later for a Windows version!</p>
-        </>
+        </div>
       )}
       <Keyboard newKey={"Tab"} isDisplayed={isKeyboardDisplayed}></Keyboard>
       {state.phase === "intro" && (
