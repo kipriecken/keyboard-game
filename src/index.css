@@ -25,7 +25,7 @@ body {
   object-fit: cover;
   background: var(--bg-dark-gradient);
   pointer-events: none;
-  font-size: 2.3vh;
+  font-size: 1.6rem;
   line-height: 1.4;
   font-family: "Noto Sans Display", sans-serif;
   font-optical-sizing: auto;
