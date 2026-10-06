@@ -1,14 +1,7 @@
-.intro {
-  height: 100%;
-  margin-top: 1rem;
-  text-align: center;
-  display: flex;
-}
-
 .intro,
 .part-two,
 .part-three {
-  color: var(--color-light);
+  color: #f0f4ff;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -26,15 +19,4 @@
   backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 16px;
-}
-
-.is-mobile {
-  text-align: center;
-  padding: 2rem;
-  max-width: 40rem;
-  color: var(--color-light);
-}
-
-.windows {
-  color: var(--color-light);
 }

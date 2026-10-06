@@ -68,6 +68,13 @@ a:has(.game-link-button) {
   animation: fadeInOpacity 0.3s ease-in;
 }
 
+.intro {
+  height: 100%;
+  margin-top: 1rem;
+  text-align: center;
+  display: flex;
+}
+
 .container {
   margin: auto;
   display: flex;
@@ -99,6 +106,12 @@ a:has(.game-link-button) {
   flex-direction: column;
   align-items: center;
   min-height: 180px;
+}
+
+.is-mobile {
+  text-align: center;
+  padding: 2rem;
+  max-width: 40rem;
 }
 
 .game-play {
