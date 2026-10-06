@@ -1,4 +1,4 @@
-import Textarea from "../components/Textarea";
+import Textarea from "../components/Textarea/Textarea";
 import { useEffect, useRef, useState } from "react";
 
 export default function Game() {

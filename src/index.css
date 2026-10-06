@@ -7,10 +7,13 @@
 }
 
 :root {
-  --air-superiority-blue: #009fcc;
-  --charcoal: #36454f;
-  --isabelline: #f4f0ec;
-  --contrast: #d97f18;
+  --bg: #009fcc;
+  --color: #36454f;
+  --bg-secondary: #f4f0ec;
+  --accent: #d97f18;
+  --color-light: #f4f0ec;
+  --bg-dark: #161618;
+  --bg-dark-gradient: radial-gradient(ellipse at left, #35353d 0%, #09090b 80%);
 }
 
 body {
@@ -19,7 +22,7 @@ body {
   width: 100%;
   background-repeat: no-repeat;
   object-fit: cover;
-  background-color: #009fcc;
+  background: var(--bg-dark-gradient);
   pointer-events: none;
   font-size: 2.3vh;
   line-height: 1.4;
@@ -30,8 +33,12 @@ body {
   font-variation-settings: "wdth" 400;
 }
 
+body:focus {
+  background-color: var(--bg-dark);
+}
+
 .body-mobile {
-  pointer-events: auto !important;
+  pointer-events: auto !important; /* allow navigation on mobile devices */
 }
 
 nav {
@@ -45,12 +52,11 @@ nav {
 
 a {
   text-decoration: none;
-  color: var(--charcoal);
+  color: var(--color-light);
 }
 
 a:focus-visible {
-  outline: 3px solid rgb(217, 127, 24);
-  outline: 3px solid var(--isabelline);
+  outline: 3px solid var(--bg-secondary);
   outline-offset: 2px;
 }
 
@@ -58,35 +64,8 @@ a:has(.game-link-button) {
   outline: none;
 }
 
-.warning {
-  background-color: var(--charcoal);
-  height: 30%;
-  width: 30%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 1rem;
-  border-radius: 1rem;
-  box-shadow: 0px 1px 10px darkgray;
-}
-
 .game {
   animation: fadeInOpacity 0.3s ease-in;
-}
-
-body:focus {
-  background-color: black;
-}
-
-.pre-game {
-  align-items: flex-start;
-  height: 100%;
-}
-
-.pre-game div {
-  align-items: center;
-  flex-direction: column;
 }
 
 .intro {
@@ -122,11 +101,6 @@ body:focus {
   }
 }
 
-.outer {
-  height: 100%;
-  position: relative;
-}
-
 .stats {
   display: flex;
   flex-direction: column;
@@ -147,33 +121,11 @@ body:focus {
   position: relative;
 }
 
-.main {
-  flex-direction: row;
-  height: calc(100vh - 82px);
-}
-
 .achieved-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
-}
-
-textarea {
-  background: var(--isabelline);
-  border-radius: 6px;
-  padding: 4px;
-  height: 100%;
-  font-size: 2vh;
-}
-
-textarea:focus-visible {
-  outline: 5px solid var(--contrast);
-  outline-offset: 2px;
-}
-
-.text-game {
-  height: 100%;
 }
 
 label > h3 {
@@ -191,51 +143,12 @@ label > h4 {
 
 .achieved {
   margin: 0.25em;
-  background: lightblue;
+  /* background: var(--background-contrast); */
   border-radius: 4px;
   padding: 2px 6px;
-  color: var(--contrast);
+  color: var(--color-light);
   font-weight: 600;
   text-align: center;
-}
-
-.relative {
-  position: relative;
-}
-
-button {
-  border: 0;
-  height: 32px;
-  position: relative;
-  display: block;
-  width: 100px;
-  height: 32px;
-  background: transparent;
-  border: 1px solid rgb(198, 198, 198);
-  border-radius: 0;
-  box-sizing: border-box;
-  margin: 1em;
-  padding: 0.5em 3em;
-  font-size: 2vh;
-}
-
-button:focus {
-  transition: 1s ease-in-out;
-  background: var(--charcoal);
-  color: white;
-  outline: none;
-}
-
-button:focus svg {
-  stroke-dashoffset: -256;
-}
-
-button span {
-  width: 100px;
-  position: absolute;
-  left: 0;
-  top: 6px;
-  height: 32px;
 }
 
 .display-none {

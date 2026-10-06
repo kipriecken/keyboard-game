@@ -1,0 +1,36 @@
+button {
+  border: 0;
+  height: 32px;
+  position: relative;
+  display: block;
+  width: 100px;
+  height: 32px;
+  background: transparent;
+  border: 1px solid rgb(198, 198, 198);
+  border-radius: 0;
+  box-sizing: border-box;
+  margin: 1em;
+  padding: 0.5em 3em;
+  font-size: 2vh;
+  color: white;
+  font-family: "Noto Sans Display", sans-serif;
+}
+
+button:focus {
+  transition: 1s ease-in-out;
+  background: var(--bg-secondary);
+  color: black;
+  outline: none;
+}
+
+button:focus svg {
+  stroke-dashoffset: -256;
+}
+
+button span {
+  width: 100px;
+  position: absolute;
+  left: 0;
+  top: 4px;
+  height: 32px;
+}

@@ -3,6 +3,22 @@ body {
   align-items: center;
   font-family: sans-serif;
   letter-spacing: 1.5px;
+  /* --bg-key: black;
+  --bg-key-pressed: lightgreen; */
+  --bg-key: linear-gradient(180deg, #1b1b1d 0%, #19191b 55%, #18181a 100%);
+  --bg-key-pressed: linear-gradient(
+    180deg,
+    #202022 0%,
+    #1d1d1f 55%,
+    #1c1c1e 100%
+  );
+  --box-shadow-key:
+    0 1px 0 rgba(255, 255, 255, 0.45),
+    /* top highlight */ inset 0 -1px 0 rgba(255, 255, 255, 0.08); /* bottom highlight, dimmer */
+  --box-shadow-key-pressed:
+    /* top highlight — slight blue tint */
+    inset 0 -1px 0 rgba(230, 235, 255, 0.08),
+    /* bottom highlight */ inset 1px 0 0 rgba(230, 235, 255, 0.15);
 }
 
 #keyboard {
@@ -54,10 +70,10 @@ body {
 
 @keyframes flash {
   from {
-    background: lightgreen;
+    background: var(--bg-key-pressed);
   }
   to {
-    background: black;
+    background: var(--bg-key);
   }
 }
 
@@ -76,24 +92,35 @@ body {
 
 .key {
   background: black;
+  position: relative;
+  background: var(--bg-key);
   height: var(--u);
   max-height: 100%;
   width: var(--u); /* standard letter key */
-  border-radius: 8px;
+  overflow: hidden;
+  border-radius: 5px;
   padding: calc(var(--u) * 0.1);
   box-sizing: border-box;
   color: white;
   align-items: end;
   font-weight: 300;
-  box-shadow: 2px 1px 2px black;
+  box-shadow: var(--box-shadow-key);
   svg {
     position: relative;
   }
 }
 
 .key-pressed {
-  box-shadow: 0 0 0 black;
-  background: lightgreen;
+  /* box-shadow: 0 0 0 black; */
+  /* background: lightgreen; */
+  background: var(--bg-key-pressed);
+
+  box-shadow:
+    inset 0 1px 0 rgba(230, 235, 255, 0.45),
+    /* top highlight — slight blue tint */ inset 0 -1px 0
+      rgba(230, 235, 255, 0.08),
+    /* bottom highlight */ inset 1px 0 0 rgba(230, 235, 255, 0.15),
+    /* left edge */ inset -1px 0 0 rgba(230, 235, 255, 0.15); /* right edge */
 }
 
 .key[data-type="char"] {
@@ -107,15 +134,23 @@ body {
 }
 
 .new-key {
-  background: rgb(219, 224, 0);
   animation: pulse 1s ease-in-out infinite;
   background: linear-gradient(
-    120deg,
-    rgb(219, 224, 0),
-    rgba(255, 255, 255, 0.7),
-    rgb(219, 224, 0)
+    135deg,
+    #8a8c8f 0%,
+    #b8babd 20%,
+    #f2f3f4 42%,
+    #ffffff 48%,
+    #f2f3f4 54%,
+    #a5a7aa 72%,
+    #75777a 100%
   );
-  color: black;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.3),
+    0 2px 4px rgba(0, 0, 0, 0.3);
+  color: #2c2d2f;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
 }
 
 /* arrow key height */
@@ -160,10 +195,6 @@ body {
 /* magic bar width */
 .w-1418 {
   width: calc(var(--u) * 14.18);
-}
-
-.key-pressed {
-  box-shadow: 0 0 0 black;
 }
 
 .key-group {

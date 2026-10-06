@@ -7,7 +7,7 @@ import { areActiveKeysPressed, getLabelTitle } from "../utils/helpers";
 import Button from "../components/Button/Button";
 import Spinner from "../components/Spinner/Spinner";
 import Keyboard from "../components/Keyboard/Keyboard";
-import Textarea from "../components/Textarea";
+import Textarea from "../components/Textarea/Textarea";
 import Label from "../components/Label/Label";
 import Confetti from "../components/Confetti/Confetti";
 import { useNavigate } from "react-router-dom";
@@ -24,7 +24,7 @@ function Tutorial() {
   const navigate = useNavigate();
 
   const [newKey, setNewKey] = useState("Tab"); // if truthy, keyboard is displayed
-  const [confettiTrigger, setConfettiTrigger] = useState(false);
+  // const [confettiTrigger, setConfettiTrigger] = useState(false);
   const areRequirementsMet = state.areRequirementsMet;
   const isAchievedVisible = state.phase === "exercise-complete";
   const isResetBtnVisible = state.phase === "tutorial-complete";
@@ -42,7 +42,7 @@ function Tutorial() {
 
   useEffect(() => {
     if (state.phase === "exercise-complete") {
-      setConfettiTrigger((prev) => !prev);
+      // setConfettiTrigger((prev) => !prev);
       return;
     }
   }, [state.phase]);
@@ -84,7 +84,7 @@ function Tutorial() {
     const keyElement = document.getElementById(e.code)!;
     keyElement.classList.remove("key-pressed");
     keyElement.style.transform = "";
-    keyElement.style.animation = "flash 0.75s";
+    keyElement.style.animation = "flash 0.25s";
     window.setTimeout(() => (keyElement.style.animation = ""), 750);
   };
 
@@ -220,7 +220,7 @@ function Tutorial() {
   return (
     <>
       <Keyboard newKey={newKey} isDisplayed={!isMobile}></Keyboard>
-      <Confetti trigger={confettiTrigger} />
+      <Confetti trigger={false} />
       <div
         className="inner container"
         style={{ display: !isMobile && !newKey ? "flex" : "none" }}
@@ -267,7 +267,7 @@ function Tutorial() {
                 <div
                   className="keystrokes"
                   style={{
-                    visibility: isKeystrokesTextVisible ? "visible" : "hidden",
+                    visibility: isKeystrokesTextVisible ? "hidden" : "hidden",
                   }}
                 >
                   Minimum keystrokes!

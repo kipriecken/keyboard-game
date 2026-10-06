@@ -1,0 +1,12 @@
+textarea {
+  background: var(--bg-secondary);
+  border-radius: 6px;
+  padding: 4px;
+  height: 100%;
+  font-size: 2vh;
+}
+
+textarea:focus-visible {
+  outline: 5px solid var(--accent);
+  outline-offset: 2px;
+}

@@ -65,8 +65,8 @@ const Intro = () => {
     const keyElement = document.getElementById(e.code)!;
     keyElement.classList.remove("key-pressed");
     keyElement.style.transform = "";
-    keyElement.style.animation = "flash 0.75s";
-    window.setTimeout(() => (keyElement.style.animation = ""), 750);
+    keyElement.style.animation = "flash 0.25s";
+    window.setTimeout(() => (keyElement.style.animation = ""), 250);
   };
 
   useEffect(() => {
