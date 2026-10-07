@@ -4,6 +4,7 @@ textarea {
   padding: 4px;
   height: 100%;
   font-size: 2vh;
+  color: var(--color);
 }
 
 textarea:focus-visible {
