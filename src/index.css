@@ -21,18 +21,41 @@
 body {
   margin: 0;
   height: 100vh;
+  min-height: 100dvh;
   width: 100%;
   background-repeat: no-repeat;
   object-fit: cover;
-  background: var(--bg-dark-gradient);
   pointer-events: none;
   font-size: 1rem;
   line-height: 1.4;
   font-family: "Noto Sans Display", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 400;
-  font-style: normal;
-  font-variation-settings: "wdth" 400;
+}
+
+@layer base {
+  :root {
+    --bg-dark-gradient: radial-gradient(
+      ellipse at left,
+      #35353d 0%,
+      #09090b 80%
+    );
+  }
+
+  html {
+    background-color: #09090b; /* matches the gradient's end color */
+    color-scheme: dark;
+  }
+
+  body {
+    min-height: 100dvh;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: var(--bg-dark-gradient);
+  }
 }
 
 body:focus {
